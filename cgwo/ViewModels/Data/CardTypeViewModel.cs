@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cgwo.ViewModels.Data
 {
@@ -25,24 +22,40 @@ namespace cgwo.ViewModels.Data
 			{
 				_clone.Name = value;
 				RaisePropertyChanged(nameof(Name));
-				RaisePropertyChanged(nameof(HasChanges));
+				NotifyChanges();
 			}
 		}
 
-		public bool HasChanges
+		public bool HasChanges => _clone.Name != _original.Name;			
+
+		public bool CardTypeAlreadyExists
 		{
 			get
 			{
-				return _clone.Name != _original.Name;
+				return Core.ProjectManager.Instance.LoadedProject.CardTypes.Any(ct => ct.Name == Name && ct.Id != _original.Id);
 			}
 		}
 
+		public bool CanSave => HasChanges && !CardTypeAlreadyExists;
+
 		public void Save()
 		{
+			if (!CanSave)
+				throw new InvalidOperationException("Save called when saving is not allowed");
+
 			_clone.Imprint(_original);
 			if (Core.ProjectManager.Instance.LoadedProject.CardTypes.Any(ct => ct.Id == _original.Id) == false)
 				Core.ProjectManager.Instance.LoadedProject.CardTypes.Add(_original);
+
+			NotifyChanges();
+			Core.ProjectManager.Instance.SaveProject();
+		}
+
+		private void NotifyChanges()
+		{
 			RaisePropertyChanged(nameof(HasChanges));
+			RaisePropertyChanged(nameof(CardTypeAlreadyExists));
+			RaisePropertyChanged(nameof(CanSave));
 		}
 	}
 }

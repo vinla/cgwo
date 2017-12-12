@@ -22,11 +22,15 @@ namespace cgwo.ViewModels
 		public IEnumerable<object> CardTypes => _project.CardTypes.Select(x => x);
 
 		public Data.CardTypeViewModel CardType => _cardType;
-		
+
 
 		public ICommand AddType => new Mvvm.DelegateCommand(() =>
 		{
-			var newType = new Core.CardType();
+			var newType = new Core.CardType
+			{
+				Name = String.Empty
+			};
+
 			_cardType = new Data.CardTypeViewModel(newType);
 			
 			RaisePropertyChanged(nameof(CardType));

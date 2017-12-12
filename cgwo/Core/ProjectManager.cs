@@ -9,10 +9,12 @@ namespace cgwo.Core
 		public static readonly ProjectManager Instance = new ProjectManager();
 
 		private Project _loadedProject;
+		private string _savePath;
 		public void LoadProject(string path)
 		{
 			var json = File.ReadAllText(path);
 			_loadedProject = JsonConvert.DeserializeObject<Project>(json);
+			_savePath = path;
 			OnProjectLoaded();
 		}		
 
@@ -24,11 +26,18 @@ namespace cgwo.Core
 
 		public void SaveProject(string projectFolder)
 		{
+			_savePath = Path.Combine(projectFolder, $"{_loadedProject.Name}.dcproj");
+			SaveProject(); 			
+		}
+
+		public void SaveProject()
+		{
 			if (_loadedProject == null)
 				throw new InvalidOperationException("No project has been loaded");
+			if (String.IsNullOrEmpty(_savePath))
+				throw new InvalidOperationException("No save location has been set");
 
-			var filename = Path.Combine(projectFolder, $"{_loadedProject.Name}.dcproj");
-			File.WriteAllText(filename, JsonConvert.SerializeObject(_loadedProject));
+			File.WriteAllText(_savePath, JsonConvert.SerializeObject(_loadedProject));
 		}
 
 		public event EventHandler ProjectLoaded;

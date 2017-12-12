@@ -15,8 +15,21 @@
 
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10">
                 <TextBlock Margin="3" FontSize="14">Name</TextBlock>
-                <TextBox Template="{StaticResource FlatLineTextBox}" Tag="Enter a name for the card type" Text="{Binding CardType.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Template="{StaticResource FlatLineTextBox}" MaxLength="50" Tag="Enter a name for the card type" Text="{Binding CardType.Name, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
+
+            <TextBlock Foreground="Red" Margin="40,0,0,0" Text="A card type with this name already exists.">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CardType.CardTypeAlreadyExists}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </DockPanel>
     </Border>
 </UserControl>
