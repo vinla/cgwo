@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border BorderBrush="Black" BorderThickness="0,0,1,1" Width="205" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+        <Border BorderBrush="Black" BorderThickness="0,0,1,0" Width="205" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <DockPanel>
                 <StackPanel Margin="36">
                     <Button Template="{StaticResource MenuButton}" Command="{Binding NewProject}">
