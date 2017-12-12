@@ -5,6 +5,7 @@ namespace cgwo.ViewModels
 {
 	public class HomePageViewModel : ViewModel
 	{
+		public string Title => "Welcome to Cogs 0.1";
 		private ViewModel _childViewModel;
 		public ICommand NewProject => new DelegateCommand(() =>
 		{

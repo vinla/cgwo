@@ -19,7 +19,7 @@ namespace cgwo.ViewModels
 			
 			projectManager.ProjectLoaded += (s, e) =>
 			{
-				_viewModel = new ProjectViewModel();
+				_viewModel = new ProjectViewModel(projectManager.LoadedProject);
 				RaisePropertyChanged(nameof(CurrentViewModel));
 			};
 			

@@ -4,3 +4,5 @@
 
 /.vs
 /cgwo/obj
+/cgwo/bin/Debug
+/packages

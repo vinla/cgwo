@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:cgwo.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel LastChildFill="False">
+    <DockPanel>
         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
             <Rectangle DockPanel.Dock="Left" Width="32" Fill="Gray">
 
             </Rectangle>
-            <Border BorderBrush="Black" BorderThickness="0,0,1,1" DockPanel.Dock="Left" Padding="3" Background="LightGray">
+            <Border BorderBrush="Black" BorderThickness="0,0,1,1" DockPanel.Dock="Left" Padding="3">
                 <TextBlock FontSize="14" Margin="5" Opacity=".7">Card Types</TextBlock>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="0,0,1,1" DockPanel.Dock="Left" Padding="3">
+            <Border BorderBrush="Black" BorderThickness="0,0,1,1" DockPanel.Dock="Left" Padding="3" Background="LightGray">
                 <TextBlock FontSize="14" Margin="5">Cards</TextBlock>
             </Border>
             <Border BorderBrush="Black" BorderThickness="0,0,1,1" DockPanel.Dock="Left" Padding="3" Background="LightGray">
@@ -24,5 +24,70 @@
 
             </Rectangle>
         </DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="175"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Gray" BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
+                        <TextBlock FontSize="14">Actions</TextBlock>
+                    </Border>
+                    <StackPanel DockPanel.Dock="Top" Margin="10">
+                        <Button Template="{StaticResource MenuButton}" Command="{Binding AddType}">
+                            <TextBlock FontSize="16" Margin="6">New card type</TextBlock>
+                        </Button>
+                        <Button Template="{StaticResource MenuButton}" Command="{Binding Save}">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CardType.HasChanges}" Value="True">
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <TextBlock FontSize="16" Margin="6">Save</TextBlock>
+                        </Button>
+                    </StackPanel>
+                    <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
+                        <TextBlock FontSize="14">Types</TextBlock>
+                    </Border>
+                    <ListView ItemsSource="{Binding CardTypes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="5">
+                                    <Border Width="50" Height="70" BorderBrush="Black" BorderThickness="1" Background="LightSteelBlue" CornerRadius="3" HorizontalAlignment="Center"/>
+                                    <TextBlock Margin="3" Text="{Binding Name}" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
+            </Border>
+
+            <DockPanel Grid.Column="1">
+                <local:CardTypeEditor>
+                    <local:CardTypeEditor.Style>
+                        <Style TargetType="local:CardTypeEditor">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CardType}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </local:CardTypeEditor.Style>
+                </local:CardTypeEditor>
+            </DockPanel>
+            
+        </Grid>
     </DockPanel>
 </UserControl>

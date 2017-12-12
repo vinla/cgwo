@@ -67,6 +67,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\CardType.cs" />
+    <Compile Include="Core\CardTypeProperty.cs" />
+    <Compile Include="Core\CoreObject.cs" />
     <Compile Include="Core\Project.cs" />
     <Compile Include="Core\ProjectManager.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
@@ -74,11 +76,14 @@
     <Compile Include="Mvvm\ViewModel.cs" />
     <Compile Include="Mvvm\ViewModelStack.cs" />
     <Compile Include="Validation\ProjectNameValidation.cs" />
-    <Compile Include="ViewModels\CardTypesViewModel.cs" />
+    <Compile Include="ViewModels\Data\CardTypeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\NewProjectViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="Views\CardTypeEditor.xaml.cs">
+      <DependentUpon>CardTypeEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CardTypes.xaml.cs">
       <DependentUpon>CardTypes.xaml</DependentUpon>
     </Compile>
@@ -112,6 +117,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Dictionaries\MainViewMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CardTypeEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,7 +172,7 @@
     <Resource Include="Resources\Images\home.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Resource Include="Resources\Images\cogs.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\error.png" />
@@ -176,6 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

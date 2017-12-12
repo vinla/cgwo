@@ -6,12 +6,20 @@ using System.Threading.Tasks;
 
 namespace cgwo.Core
 {
-	public class CardType : Mvvm.ViewModel
+	public class CardType : CoreObject
 	{
-		public string Name
+		public string Name { get; set; }			
+
+		public CardType Clone()
 		{
-			get { return GetValue<string>(nameof(Name)); }
-			set { SetValue(nameof(Name), value); }
+			var clone = new CardType();
+			Imprint(clone);
+			return clone;
 		}
+
+		public void Imprint(CardType target)
+		{
+			target.Name = Name;
+		}		
 	}
 }

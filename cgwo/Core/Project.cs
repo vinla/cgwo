@@ -6,17 +6,13 @@ namespace cgwo.Core
 {
 	public class Project : Mvvm.ViewModel
 	{
+		private readonly List<CardType> _cardTypes;
 		public Project()
 		{
-			
+			_cardTypes = new List<CardType>();
 		}
 		public string Name { get; set; }
 
-		public IEnumerable<CardType> CardTypes
-		{
-			get;
-			set;
-		}
-		
+		public List<CardType> CardTypes => _cardTypes;		
 	}
 }

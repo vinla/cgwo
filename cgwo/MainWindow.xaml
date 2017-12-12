@@ -8,7 +8,7 @@
         xmlns:mvvm="clr-namespace:cgwo.Mvvm"
         xmlns:local="clr-namespace:cgwo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="840">
+        Title="MainWindow" Height="768" Width="1024">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,7 +17,7 @@
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="15">
             <Image Source="/Resources/Images/cards.png" Width="64"/>
-            <TextBlock FontSize="22" Margin="15">Deckchair 0.1</TextBlock>
+            <TextBlock FontSize="26" Margin="15,8" Text="{Binding CurrentViewModel.Title}"/>
         </StackPanel>
 
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}">
