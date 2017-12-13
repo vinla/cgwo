@@ -23,7 +23,7 @@ namespace cgwo
 		public MainWindow()
 		{
 			InitializeComponent();
-			DataContext = new ViewModels.MainViewModel(Core.ProjectManager.Instance);
+			DataContext = new ViewModels.MainViewModel(new Cogs.Core.JsonCardGameDataStoreFactory());
 		}
 	}
 }

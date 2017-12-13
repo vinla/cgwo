@@ -1,37 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using Cogs.Common;
 
 namespace cgwo.ViewModels
 {
 	public class ProjectViewModel : Mvvm.ViewModel
 	{
-		private readonly Core.Project _project;
+        private ICardGameDataStore _cardGameDataStore;
+        private readonly string _projectName;
 		private Data.CardTypeViewModel _cardType;
 		
-		public ProjectViewModel(Core.Project project)
+		public ProjectViewModel(ICardGameDataStore cardGameDataStore)
 		{
-			_project = project ?? throw new ArgumentNullException(nameof(project));
+            _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
+            _projectName = _cardGameDataStore.GetProjectInfo().Name;
 		}
 
-		public string Title => $"Project > {_project.Name}";
+		public string Title => $"Project > {_projectName}";
 
-		public IEnumerable<object> CardTypes => _project.CardTypes.Select(x => x);
+		public IEnumerable<object> CardTypes => _cardGameDataStore.GetCardTypes().Select(x => x);
 
 		public Data.CardTypeViewModel CardType => _cardType;
 
 
 		public ICommand AddType => new Mvvm.DelegateCommand(() =>
 		{
-			var newType = new Core.CardType
+			var newType = new CardType
 			{
 				Name = String.Empty
 			};
 
-			_cardType = new Data.CardTypeViewModel(newType);
+			_cardType = new Data.CardTypeViewModel(_cardGameDataStore, newType);
 			
 			RaisePropertyChanged(nameof(CardType));
 		});

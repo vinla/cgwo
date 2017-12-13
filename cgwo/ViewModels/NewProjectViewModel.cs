@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
+using Cogs.Common;
 
 namespace cgwo.ViewModels
 {
 	public class NewProjectViewModel: Mvvm.ViewModel
 	{
-		private readonly Core.ProjectManager _projectManager;
-		public NewProjectViewModel(Core.ProjectManager projectManager)
+		private readonly ICardGameDataStoreFactory _dataStoreFactory;
+		public NewProjectViewModel(ICardGameDataStoreFactory dataStoreFactory)
 		{
-			_projectManager = projectManager ?? throw new ArgumentNullException(nameof(projectManager));
+            _dataStoreFactory = dataStoreFactory ?? throw new ArgumentNullException(nameof(dataStoreFactory));
 			ErrorsChanged += (s, e) => RaisePropertyChanged(nameof(IsValid));
 			PropertyChanged += (s, e) =>
 			{
@@ -38,13 +40,16 @@ namespace cgwo.ViewModels
 		{
 			if( Path.IsPathRooted(SaveLocation) )
 			{
-				var project = new Core.Project
-				{
-					Name = ProjectName
-				};
+                var path = Path.Combine(SaveLocation, $"{ProjectName}.dcproj");
 
-				_projectManager.LoadProject(project);
-				_projectManager.SaveProject(SaveLocation);				
+                var parameters = new Dictionary<string, string>
+                {
+                    {"FilePath", path }
+                };
+
+                var dataStore = _dataStoreFactory.Create(parameters);
+                dataStore.SetProjectInfo(new ProjectInfo { Name = ProjectName });
+                MainViewModel.Current.ProjectLoaded(dataStore);
 			}			
 		});
 

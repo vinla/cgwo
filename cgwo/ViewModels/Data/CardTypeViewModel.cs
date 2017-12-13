@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Linq;
+using Cogs.Common;
 
 namespace cgwo.ViewModels.Data
 {
 	public class CardTypeViewModel : Mvvm.ViewModel
 	{
-		private readonly Core.Project _project;
-		private readonly Core.CardType _original;
-		private readonly Core.CardType _clone;
-
-		public CardTypeViewModel(Core.CardType original)
-		{
-			_original = original;
-			_clone = original.Clone();
-		}
+        private readonly ICardGameDataStore _cardGameDataStore;
+		private readonly CardType _original;
+		private readonly CardType _clone;
+        
+        public CardTypeViewModel(ICardGameDataStore cardGameDataStore, CardType original)
+        {
+            _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
+            _original = original;
+            _clone = new CardType
+            {
+                Id = _original.Id,
+                Name = _original.Name
+            };
+        }
 
 		public string Name
 		{
@@ -32,7 +38,7 @@ namespace cgwo.ViewModels.Data
 		{
 			get
 			{
-				return Core.ProjectManager.Instance.LoadedProject.CardTypes.Any(ct => ct.Name == Name && ct.Id != _original.Id);
+				return _cardGameDataStore.GetCardTypes().Any(ct => ct.Name == Name && ct.Id != _original.Id);
 			}
 		}
 
@@ -43,12 +49,10 @@ namespace cgwo.ViewModels.Data
 			if (!CanSave)
 				throw new InvalidOperationException("Save called when saving is not allowed");
 
-			_clone.Imprint(_original);
-			if (Core.ProjectManager.Instance.LoadedProject.CardTypes.Any(ct => ct.Id == _original.Id) == false)
-				Core.ProjectManager.Instance.LoadedProject.CardTypes.Add(_original);
+            _cardGameDataStore.SaveCardType(_clone);
+            _original.Name = _clone.Name;
 
-			NotifyChanges();
-			Core.ProjectManager.Instance.SaveProject();
+			NotifyChanges();			
 		}
 
 		private void NotifyChanges()

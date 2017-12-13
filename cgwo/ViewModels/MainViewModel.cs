@@ -2,27 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using cgwo.Mvvm;
+using Cogs.Common;
 
 namespace cgwo.ViewModels
 {
 	public class MainViewModel : ViewModel
 	{
 		public static MainViewModel Current { get; private set; }
+        private ViewModel _viewModel;		
 
-		private ViewModel _viewModel;
-		private readonly Core.ProjectManager _projectManager;
-
-		public MainViewModel(Core.ProjectManager projectManager)
-		{
-			_projectManager = projectManager ?? throw new ArgumentNullException(nameof(projectManager));
-			_viewModel = new HomePageViewModel();			
-			
-			projectManager.ProjectLoaded += (s, e) =>
-			{
-				_viewModel = new ProjectViewModel(projectManager.LoadedProject);
-				RaisePropertyChanged(nameof(CurrentViewModel));
-			};
-			
+		public MainViewModel(ICardGameDataStoreFactory dataStoreFactory)
+		{			
+			_viewModel = new HomePageViewModel(dataStoreFactory);
 			Current = this;
 		}
 
@@ -33,5 +24,10 @@ namespace cgwo.ViewModels
 			_viewModel = null;
 			RaisePropertyChanged(nameof(CurrentViewModel));
 		}
+
+        public void ProjectLoaded(ICardGameDataStore dataStore)
+        {
+            _viewModel = new ProjectViewModel(dataStore);
+        }
 	}
 }
