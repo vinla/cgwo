@@ -64,7 +64,21 @@ namespace Cogs.Core
 
         public void SaveCardType(CardType cardType)
         {
-            throw new NotImplementedException();
+			var existingCardType = _cardGameData.CardTypes.SingleOrDefault(ct => ct.Id == cardType.Id);
+			if(existingCardType != null)
+			{
+				existingCardType.Name = cardType.Name;
+			}
+			else
+			{
+				_cardGameData.CardTypes.Add(new JsonCardType
+				{
+					Id = cardType.Id,
+					Name = cardType.Name
+				});
+			}
+
+			SaveChanges();
         }
 
 

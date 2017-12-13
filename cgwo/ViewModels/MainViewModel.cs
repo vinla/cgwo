@@ -28,6 +28,7 @@ namespace cgwo.ViewModels
         public void ProjectLoaded(ICardGameDataStore dataStore)
         {
             _viewModel = new ProjectViewModel(dataStore);
+			RaisePropertyChanged(nameof(CurrentViewModel));
         }
 	}
 }

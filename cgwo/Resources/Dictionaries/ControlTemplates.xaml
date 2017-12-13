@@ -48,4 +48,18 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate TargetType="ListViewItem" x:Key="CardTypeListItem">
+        <Border Name="Border" BorderThickness="0,1" BorderBrush="Transparent" Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+            <ContentPresenter/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="BorderBrush" Value="LightGray"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
 </ResourceDictionary>

@@ -24,6 +24,34 @@ namespace cgwo.ViewModels
 
 		public Data.CardTypeViewModel CardType => _cardType;
 
+		public CardType SelectedCardType
+		{
+			get { return GetValue<CardType>(nameof(SelectedCardType)); }
+			set
+			{
+				if (_cardType != null && value != null)
+				{
+					if (_cardType.Id == value.Id)
+						return;
+
+					if (_cardType.HasChanges)
+					{
+						if (System.Windows.Forms.MessageBox
+								.Show("Do you want to swap and lose unsaved changes", "Unsaved changes", 
+									System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+							return;
+					}
+				}
+
+				SetValue(nameof(SelectedCardType), value);
+
+				if (value != null)
+				{
+					_cardType = new Data.CardTypeViewModel(_cardGameDataStore, SelectedCardType);
+					RaisePropertyChanged(nameof(CardType));
+				}
+			}
+		}
 
 		public ICommand AddType => new Mvvm.DelegateCommand(() =>
 		{

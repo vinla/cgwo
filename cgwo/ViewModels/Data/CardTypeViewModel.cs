@@ -21,6 +21,8 @@ namespace cgwo.ViewModels.Data
             };
         }
 
+		public Guid Id => _original.Id;
+
 		public string Name
 		{
 			get { return _clone.Name; }
@@ -42,7 +44,7 @@ namespace cgwo.ViewModels.Data
 			}
 		}
 
-		public bool CanSave => HasChanges && !CardTypeAlreadyExists;
+		public bool CanSave => HasChanges && !CardTypeAlreadyExists && !String.IsNullOrEmpty(Name);
 
 		public void Save()
 		{
