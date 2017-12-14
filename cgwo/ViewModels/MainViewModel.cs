@@ -7,27 +7,19 @@ using Cogs.Common;
 namespace cgwo.ViewModels
 {
 	public class MainViewModel : ViewModel
-	{
-		public static MainViewModel Current { get; private set; }
+	{		
         private ViewModel _viewModel;		
 
 		public MainViewModel(ICardGameDataStoreFactory dataStoreFactory)
 		{			
-			_viewModel = new HomePageViewModel(dataStoreFactory);
-			Current = this;
+			_viewModel = new HomePageViewModel(dataStoreFactory, ProjectLoaded);
 		}
 
 		public ViewModel CurrentViewModel => _viewModel;		
-
-		public void Clear()
-		{
-			_viewModel = null;
-			RaisePropertyChanged(nameof(CurrentViewModel));
-		}
-
+        
         public void ProjectLoaded(ICardGameDataStore dataStore)
         {
-            _viewModel = new ProjectViewModel(dataStore);
+            _viewModel = new ProjectViewModel(dataStore);            
         }
 	}
 }

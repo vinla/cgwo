@@ -11,16 +11,29 @@ namespace cgwo.ViewModels
 		public string Title => "Welcome to Cogs 0.1";
 
         private readonly ICardGameDataStoreFactory _dataStoreFactory;
+        private readonly Action<ICardGameDataStore> _onDataStoreLoad;
 		private ViewModel _childViewModel;
 
-        public HomePageViewModel(ICardGameDataStoreFactory dataStoreFactory)
+        public HomePageViewModel(ICardGameDataStoreFactory dataStoreFactory, Action<ICardGameDataStore> onDataStoreLoad)
         {
             _dataStoreFactory = dataStoreFactory ?? throw new ArgumentNullException(nameof(dataStoreFactory));
+            _onDataStoreLoad = onDataStoreLoad ?? throw new ArgumentNullException(nameof(onDataStoreLoad));
         }
 
 		public ICommand NewProject => new DelegateCommand(() =>
 		{
-			_childViewModel = new NewProjectViewModel(_dataStoreFactory);
+			var newProjectViewModel = new NewProjectViewModel(_dataStoreFactory, _onDataStoreLoad);
+            newProjectViewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(newProjectViewModel.Cancelled)
+                    && newProjectViewModel.Cancelled
+                    && _childViewModel == newProjectViewModel)
+                {
+                    _childViewModel = null;
+                    RaisePropertyChanged(nameof(ChildViewModel));
+                }
+            };
+            _childViewModel = newProjectViewModel;
 			RaisePropertyChanged(nameof(ChildViewModel));
 		});
 
@@ -43,7 +56,7 @@ namespace cgwo.ViewModels
                     };
 
                     var dataStore = _dataStoreFactory.Open(parameters);
-                    MainViewModel.Current.ProjectLoaded(dataStore);
+                    _onDataStoreLoad?.Invoke(dataStore);
 				}
 			}
 		});

@@ -8,9 +8,11 @@ namespace cgwo.ViewModels
 {
 	public class NewProjectViewModel: Mvvm.ViewModel
 	{
+        private readonly Action<ICardGameDataStore> _onDataStoreLoad;
 		private readonly ICardGameDataStoreFactory _dataStoreFactory;
-		public NewProjectViewModel(ICardGameDataStoreFactory dataStoreFactory)
+		public NewProjectViewModel(ICardGameDataStoreFactory dataStoreFactory, Action<ICardGameDataStore> onDataStoreLoad)
 		{
+            _onDataStoreLoad = onDataStoreLoad;
             _dataStoreFactory = dataStoreFactory ?? throw new ArgumentNullException(nameof(dataStoreFactory));
 			ErrorsChanged += (s, e) => RaisePropertyChanged(nameof(IsValid));
 			PropertyChanged += (s, e) =>
@@ -22,8 +24,14 @@ namespace cgwo.ViewModels
 
 		public ICommand Cancel => new Mvvm.DelegateCommand(() =>
 		{
-			MainViewModel.Current.Clear();
+            Cancelled = true;
 		});
+
+        public bool Cancelled
+        {
+            get { return GetValue<bool>(nameof(Cancelled)); }
+            private set { SetValue(nameof(Cancelled), true); }
+        }
 
 		public ICommand Browse => new Mvvm.DelegateCommand(() =>
 		{
@@ -49,7 +57,7 @@ namespace cgwo.ViewModels
 
                 var dataStore = _dataStoreFactory.Create(parameters);
                 dataStore.SetProjectInfo(new ProjectInfo { Name = ProjectName });
-                MainViewModel.Current.ProjectLoaded(dataStore);
+                _onDataStoreLoad?.Invoke(dataStore);
 			}			
 		});
 
