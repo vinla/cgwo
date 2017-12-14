@@ -41,11 +41,31 @@ namespace cgwo.ViewModels
             }			
 		});
 
-		public ICommand Create => new Mvvm.DelegateCommand(() =>
-		{
-			if( Path.IsPathRooted(SaveLocation) )
-			{
+        public ICommand Create => new Mvvm.DelegateCommand(() =>
+        {
+            if (Path.IsPathRooted(SaveLocation))
+            {
                 var path = Path.Combine(SaveLocation, $"{ProjectName}.dcproj");
+
+                if (File.Exists(path))
+                {
+                    if (_dialogService.Prompt("Overwrite", "A project with this name already exists in this folder, do you want to overwrite it?") == Mvvm.DialogResult.Reject)
+                        return;
+
+                    try
+                    {
+                        File.Delete(path);
+                    }
+                    finally
+                    {
+                    }
+
+                    if (File.Exists(path))
+                    {
+                        _dialogService.Message("Could not overwrite the existing file");
+                        return;
+                    }
+                }
 
                 var parameters = new Dictionary<string, string>
                 {
@@ -55,8 +75,8 @@ namespace cgwo.ViewModels
                 var dataStore = _dataStoreFactory.Create(parameters);
                 dataStore.SetProjectInfo(new ProjectInfo { Name = ProjectName });
                 _onDataStoreLoad?.Invoke(dataStore);
-			}			
-		});
+            }
+        });
 
 		public string SaveLocation
 		{

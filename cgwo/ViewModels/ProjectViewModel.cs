@@ -67,7 +67,8 @@ namespace cgwo.ViewModels
 				Name = String.Empty
 			};
 
-			CardType = new Data.CardTypeViewModel(_cardGameDataStore, newType);			
+			CardType = new Data.CardTypeViewModel(_cardGameDataStore, newType);
+            SelectedCardType = null;
 		});
 
         public ICommand DeleteType => new Mvvm.DelegateCommand(() =>

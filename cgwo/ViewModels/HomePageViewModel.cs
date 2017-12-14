@@ -54,8 +54,15 @@ namespace cgwo.ViewModels
                         { "FilePath", dlg.Path }
                     };
 
-                var dataStore = _dataStoreFactory.Open(parameters);
-                _onDataStoreLoad?.Invoke(dataStore);
+                try
+                {
+                    var dataStore = _dataStoreFactory.Open(parameters);
+                    _onDataStoreLoad?.Invoke(dataStore);
+                }
+                catch
+                {
+                    _dialogService.Message("An error occurred trying to load the project file. Make sure you have chosen a valid project.");
+                }
             }			
 		});
 

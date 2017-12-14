@@ -4,6 +4,11 @@ namespace cgwo.Mvvm
 {
     public class WindowsDialogService : IDialogService
     {
+        public void Message(string message)
+        {
+            System.Windows.Forms.MessageBox.Show(message);
+        }
+
         public (DialogResult Result, string Path) ChooseFile(string startingPath, string fileFilter)
         {
             using (var dlg = new System.Windows.Forms.OpenFileDialog())
