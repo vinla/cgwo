@@ -11,7 +11,7 @@
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Image Source="/Resources/Images/cards.png" Height="80"/>
             <TextBlock HorizontalAlignment="Center" Margin="5" FontFamily="Raleway" FontWeight="Bold" FontSize="16">New project</TextBlock>
-            <TextBox Style="{StaticResource DefaultTextBox}" Tag="Enter a project name" Margin="5" MinWidth="200" Template="{StaticResource FlatLineTextBox}" Text="{Binding ProjectName}"/>
+            <TextBox Style="{StaticResource DefaultTextBox}" Tag="Enter a project name" Margin="5" MinWidth="200" Template="{StaticResource FlatLineTextBox}" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}"/>
             <StackPanel Orientation="Horizontal">
                 <TextBox IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Template="{StaticResource FlatLineTextBox}" Tag="Choose project location" MinWidth="200" Margin="5" Text="{Binding SaveLocation}">
                     <TextBox.InputBindings>

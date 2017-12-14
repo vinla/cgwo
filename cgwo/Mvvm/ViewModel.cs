@@ -26,17 +26,27 @@ namespace cgwo.Mvvm
 		}
 
 		public void RaisePropertyChanged(string propertyName)
-		{			
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+		{
+            RaisePropertyChanged(propertyName, new List<string>());
+        }
+        
+        private void RaisePropertyChanged(string propertyName, List<string> raisedTo)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-		protected void SetValue(string name, object value)
+            raisedTo.Add(propertyName);
+            foreach (var property in GetCalculatedProperties(propertyName).Except(raisedTo))
+                RaisePropertyChanged(property, raisedTo);
+        }
+
+
+        protected void SetValue(string name, object value)
 		{
 			if (_values.ContainsKey(name))
 				_values.Remove(name);
 			_values.Add(name, value);
 			ValidateProperty(name, value);
-			RaisePropertyChanged(name);
+			RaisePropertyChanged(name);            
 			RaisePropertyChanged(nameof(HasErrors));
 		}
 
@@ -79,5 +89,14 @@ namespace cgwo.Mvvm
 				.GetMethods(BindingFlags.Public| BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
 				.Where(m => m.GetCustomAttributes<ValidationForAttribute>().Any(attr => attr.PropertyName == propertyName));
 		}
+
+        private IEnumerable<string> GetCalculatedProperties(string propertyName)
+        {
+            return
+                GetType()
+                .GetProperties()
+                .Where(p => p.GetCustomAttributes<CalculateFromAttribute>().Any(attr => attr.PropertyName == propertyName))
+                .Select(p => p.Name);
+        }
 	}
 }

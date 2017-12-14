@@ -12,17 +12,19 @@ namespace cgwo.ViewModels
 
         private readonly ICardGameDataStoreFactory _dataStoreFactory;
         private readonly Action<ICardGameDataStore> _onDataStoreLoad;
+        private readonly IDialogService _dialogService;
 		private ViewModel _childViewModel;
 
-        public HomePageViewModel(ICardGameDataStoreFactory dataStoreFactory, Action<ICardGameDataStore> onDataStoreLoad)
+        public HomePageViewModel(ICardGameDataStoreFactory dataStoreFactory, IDialogService dialogService, Action<ICardGameDataStore> onDataStoreLoad)
         {
+            _dialogService = dialogService;
             _dataStoreFactory = dataStoreFactory ?? throw new ArgumentNullException(nameof(dataStoreFactory));
             _onDataStoreLoad = onDataStoreLoad ?? throw new ArgumentNullException(nameof(onDataStoreLoad));
         }
 
 		public ICommand NewProject => new DelegateCommand(() =>
 		{
-			var newProjectViewModel = new NewProjectViewModel(_dataStoreFactory, _onDataStoreLoad);
+			var newProjectViewModel = new NewProjectViewModel(_dataStoreFactory, _dialogService, _onDataStoreLoad);
             newProjectViewModel.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(newProjectViewModel.Cancelled)
@@ -44,21 +46,17 @@ namespace cgwo.ViewModels
 
 		public ICommand LoadProject => new DelegateCommand(() =>
 		{
-			using (var dlg = new System.Windows.Forms.OpenFileDialog())
-			{
-				dlg.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-				dlg.Filter = "Card Project|*.dcproj";
-				if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-				{
-                    var parameters = new Dictionary<string, string>
+            var dlg = _dialogService.ChooseFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "Card Project|*.dcproj");
+            if(dlg.Result == DialogResult.Accept)
+            {
+                var parameters = new Dictionary<string, string>
                     {
-                        { "FilePath", dlg.FileName }
+                        { "FilePath", dlg.Path }
                     };
 
-                    var dataStore = _dataStoreFactory.Open(parameters);
-                    _onDataStoreLoad?.Invoke(dataStore);
-				}
-			}
+                var dataStore = _dataStoreFactory.Open(parameters);
+                _onDataStoreLoad?.Invoke(dataStore);
+            }			
 		});
 
 		public ViewModel ChildViewModel => _childViewModel;

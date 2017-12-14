@@ -21,6 +21,8 @@ namespace cgwo.ViewModels.Data
             };
         }
 
+		public Guid Id => _original.Id;
+
 		public string Name
 		{
 			get { return _clone.Name; }
@@ -28,10 +30,10 @@ namespace cgwo.ViewModels.Data
 			{
 				_clone.Name = value;
 				RaisePropertyChanged(nameof(Name));
-				NotifyChanges();
 			}
 		}
 
+        [Mvvm.CalculateFrom(nameof(Name))]
 		public bool HasChanges => _clone.Name != _original.Name;			
 
 		public bool CardTypeAlreadyExists
@@ -42,7 +44,8 @@ namespace cgwo.ViewModels.Data
 			}
 		}
 
-		public bool CanSave => HasChanges && !CardTypeAlreadyExists;
+        [Mvvm.CalculateFrom(nameof(HasChanges))]
+		public bool CanSave => HasChanges && !CardTypeAlreadyExists && !String.IsNullOrEmpty(Name);
 
 		public void Save()
 		{

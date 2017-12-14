@@ -9,17 +9,14 @@ namespace cgwo.ViewModels
 	public class NewProjectViewModel: Mvvm.ViewModel
 	{
         private readonly Action<ICardGameDataStore> _onDataStoreLoad;
+        private readonly Mvvm.IDialogService _dialogService;
 		private readonly ICardGameDataStoreFactory _dataStoreFactory;
-		public NewProjectViewModel(ICardGameDataStoreFactory dataStoreFactory, Action<ICardGameDataStore> onDataStoreLoad)
+		public NewProjectViewModel(ICardGameDataStoreFactory dataStoreFactory, Mvvm.IDialogService dialogService, Action<ICardGameDataStore> onDataStoreLoad)
 		{
             _onDataStoreLoad = onDataStoreLoad;
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _dataStoreFactory = dataStoreFactory ?? throw new ArgumentNullException(nameof(dataStoreFactory));
-			ErrorsChanged += (s, e) => RaisePropertyChanged(nameof(IsValid));
-			PropertyChanged += (s, e) =>
-			{
-				if (e.PropertyName == nameof(ProjectName) || e.PropertyName == nameof(SaveLocation))
-					RaisePropertyChanged(nameof(IsValid));
-			};
+			ErrorsChanged += (s, e) => RaisePropertyChanged(nameof(IsValid));			
 		}
 
 		public ICommand Cancel => new Mvvm.DelegateCommand(() =>
@@ -35,13 +32,13 @@ namespace cgwo.ViewModels
 
 		public ICommand Browse => new Mvvm.DelegateCommand(() =>
 		{
-			using (var dlg = new System.Windows.Forms.FolderBrowserDialog())
-			{
-				if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-				{
-					SaveLocation = dlg.SelectedPath;
-				}
-			}
+            var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var dialog = _dialogService.ChooseFolder(myDocuments);
+
+            if(dialog.Result == Mvvm.DialogResult.Accept)
+            {
+                SaveLocation = dialog.Path;
+            }			
 		});
 
 		public ICommand Create => new Mvvm.DelegateCommand(() =>
@@ -73,6 +70,8 @@ namespace cgwo.ViewModels
 			set { SetValue(nameof(ProjectName), value); }
 		}
 
+        [Mvvm.CalculateFrom(nameof(ProjectName))]
+        [Mvvm.CalculateFrom(nameof(SaveLocation))]
 		public bool IsValid =>
 			HasErrors == false
 			&& String.IsNullOrEmpty(ProjectName) == false

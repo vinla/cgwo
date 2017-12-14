@@ -52,11 +52,19 @@
                             </Button.Style>
                             <TextBlock FontSize="16" Margin="6">Save</TextBlock>
                         </Button>
+                        <Button Template="{StaticResource MenuButton}" Command="{Binding DeleteType}" IsEnabled="{Binding CanDelete}">
+                            <TextBlock FontSize="16" Margin="6">Delete</TextBlock>
+                        </Button>
                     </StackPanel>
                     <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
                         <TextBlock FontSize="14">Types</TextBlock>
                     </Border>
-                    <ListView ItemsSource="{Binding CardTypes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0">
+                    <ListView ItemsSource="{Binding CardTypes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectedItem="{Binding SelectedCardType}">
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template" Value="{StaticResource CardTypeListItem}"/>
+                            </Style>
+                        </ListView.Resources>
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
@@ -65,8 +73,8 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="5">
-                                    <Border Width="50" Height="70" BorderBrush="Black" BorderThickness="1" Background="LightSteelBlue" CornerRadius="3" HorizontalAlignment="Center"/>
-                                    <TextBlock Margin="3" Text="{Binding Name}" HorizontalAlignment="Center"/>
+                                    <Border Width="50" Height="70" BorderBrush="Black" BorderThickness="1" Background="LightSteelBlue" CornerRadius="3" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
+                                    <TextBlock Margin="3" Text="{Binding Name}" MaxWidth="45" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

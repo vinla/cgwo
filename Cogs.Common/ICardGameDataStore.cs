@@ -12,6 +12,7 @@ namespace Cogs.Common
         void SetProjectInfo(ProjectInfo projectInfo);
         IEnumerable<CardType> GetCardTypes();
         void SaveCardType(CardType cardType);
+        void DeleteCardType(CardType cardType);
     }    
 
     public interface ICardGameDataStoreFactory
