@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\InlineFormButtons.xaml.cs">
+      <DependentUpon>InlineFormButtons.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mvvm\CalculateFromAttribute.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\IDialogService.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="Mvvm\ViewModelStack.cs" />
     <Compile Include="Mvvm\WindowsDialogService.cs" />
     <Compile Include="Validation\ProjectNameValidation.cs" />
+    <Compile Include="ViewModels\Data\CardAttributeViewModel.cs" />
     <Compile Include="ViewModels\Data\CardTypeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
@@ -97,6 +101,10 @@
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\InlineFormButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -188,7 +196,7 @@
     <Resource Include="Resources\Images\find.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Resource Include="Resources\Images\bin.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cogs.Common\Cogs.Common.csproj">
@@ -199,6 +207,12 @@
       <Project>{8f3527ff-6660-49a0-99e6-7763bac08736}</Project>
       <Name>Cogs.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\tick.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

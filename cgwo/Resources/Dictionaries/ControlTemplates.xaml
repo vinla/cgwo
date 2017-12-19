@@ -19,6 +19,24 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate TargetType="Button" x:Key="CircleButton">
+        <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+            <Ellipse x:Name="Host" Stroke="Gray" Fill="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+            <Grid x:Name="Outer" Margin="0">
+                <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Host" Property="Fill" Value="Gray"/>
+                <Setter TargetName="Content" Property="Opacity" Value=".4"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="Outer" Property="Margin" Value="0,1,0,0"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <ControlTemplate TargetType="Button" x:Key="ActionButton">
         <Border x:Name="Border" Background="Black" BorderBrush="White" BorderThickness="1" CornerRadius="5" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
             <ContentPresenter x:Name="Inner" HorizontalAlignment="Center" />

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cgwo.Views"
+             xmlns:ctrl="clr-namespace:cgwo.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Border BorderThickness="0,0,1,0" BorderBrush="Gray">
@@ -15,21 +16,134 @@
 
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10">
                 <TextBlock Margin="3" FontSize="14">Name</TextBlock>
-                <TextBox Template="{StaticResource FlatLineTextBox}" MaxLength="50" Tag="Enter a name for the card type" Text="{Binding CardType.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Template="{StaticResource FlatLineTextBox}" MaxLength="50" Tag="Enter a name for the card type" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding SaveCommand}"/>
+                        <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <ctrl:InlineFormButtons CanSave="{Binding CanSave}" SaveCommand="{Binding SaveCommand}" CancelCommand="{Binding CancelCommand}">
+                    <ctrl:InlineFormButtons.Style>
+                        <Style TargetType="ctrl:InlineFormButtons">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding HasChanges}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ctrl:InlineFormButtons.Style>
+                </ctrl:InlineFormButtons>
             </StackPanel>
 
-            <TextBlock Foreground="Red" Margin="40,0,0,0" Text="A card type with this name already exists.">
+            <TextBlock DockPanel.Dock="Top" Foreground="Red" Margin="40,0,0,0" Text="A card type with this name already exists.">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="Visibility" Value="Hidden"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding CardType.CardTypeAlreadyExists}" Value="True">
+                            <DataTrigger Binding="{Binding CardTypeAlreadyExists}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
+
+            <DockPanel DockPanel.Dock="Top">
+                <DockPanel.Style>
+                    <Style TargetType="DockPanel">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsCreated}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DockPanel.Style>
+                
+                <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5,15,5,5">
+                    <TextBlock Margin="3" FontSize="14">Attributes</TextBlock>
+                </Border>
+
+                <ItemsControl ItemsSource="{Binding Attributes}" Margin="25, 10" DockPanel.Dock="Top">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Grid.IsSharedSizeScope="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Width="120" Height="24" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="3,0">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Key="Return" Command="{Binding SaveCommand}"/>
+                                        <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
+                                    </TextBox.InputBindings>
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding HasChanges}" Value="False"/>
+                                                        <Condition Binding="{Binding DataContext.IsEditingAttribute, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsReadOnly" Value="True"/>
+                                                </MultiDataTrigger>
+                                                <Trigger Property="IsReadOnly" Value="True">
+                                                    <Setter Property="Background" Value="LightGray"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <Button Grid.Column="1" Template="{StaticResource CircleButton}" Width="20" Height="20" Padding="4" Margin="2" Command="{Binding DeleteCommand}">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasChanges}" Value="True">
+                                                    <Setter Property="Visibility" Value="Hidden"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Image Source="/Resources/Images/bin.png"/>
+                                </Button>
+                                <ctrl:InlineFormButtons CanSave="{Binding IsValid}" SaveCommand="{Binding SaveCommand}" CancelCommand="{Binding CancelCommand}" Grid.Column="1">
+                                    <ctrl:InlineFormButtons.Style>
+                                        <Style TargetType="ctrl:InlineFormButtons">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasChanges}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ctrl:InlineFormButtons.Style>
+                                </ctrl:InlineFormButtons>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock DockPanel.Dock="Top" Margin="35,2">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditingAttribute}" Value="True">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    <Hyperlink Command="{Binding AddAttribute}">Add attribute</Hyperlink>
+                </TextBlock>
+
+            </DockPanel>
+
         </DockPanel>
     </Border>
 </UserControl>

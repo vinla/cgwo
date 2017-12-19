@@ -65,6 +65,12 @@ namespace cgwo.Mvvm
 				return null;
 		}
 
+        public bool IsPropertyValid(string propertyName)
+        {
+            var errors = GetErrors(propertyName);
+            return errors == null || errors.Cast<string>().Any() == false;
+        }
+
 		private void ValidateProperty(string propertyName, object value)
 		{
 			if (_validators.ContainsKey(propertyName) == false)

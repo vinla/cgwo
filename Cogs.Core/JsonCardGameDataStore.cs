@@ -64,26 +64,63 @@ namespace Cogs.Core
 
         public void SaveCardType(CardType cardType)
         {
-			var existingCardType = _cardGameData.CardTypes.SingleOrDefault(ct => ct.Id == cardType.Id);
-			if(existingCardType != null)
+			var cardTypeData = _cardGameData.CardTypes.SingleOrDefault(ct => ct.Id == cardType.Id);
+
+			if(cardTypeData == null)
 			{
-				existingCardType.Name = cardType.Name;
-			}
-			else
-			{
-				_cardGameData.CardTypes.Add(new JsonCardType
-				{
-					Id = cardType.Id,
-					Name = cardType.Name
-				});
+                cardTypeData = new JsonCardType
+                {
+                    Id = cardType.Id
+                };
+                _cardGameData.CardTypes.Add(cardTypeData);				
 			}
 
+            cardTypeData.Name = cardType.Name;
 			SaveChanges();
         }
 
         public void DeleteCardType(CardType cardType)
         {
             _cardGameData.CardTypes.RemoveAll(ct => ct.Id == cardType.Id);
+            SaveChanges();
+        }
+
+        public IEnumerable<CardAttribute> GetCardAttributes(Guid cardTypeId)
+        {
+            return
+                _cardGameData.CardAttributes
+                    .Where(ca => ca.CardTypeId == cardTypeId)
+                    .Select(ca => new CardAttribute
+                    {
+                        Id = ca.Id,
+                        Name = ca.Name
+                    });
+        }
+
+        public void SaveCardAttribute(Guid cardTypeId, CardAttribute attribute)
+        {
+            var attributeData = _cardGameData.CardAttributes.SingleOrDefault(ca => ca.Id == attribute.Id);
+
+            if(attributeData == null)
+            {
+                attributeData = new JsonCardAttribute
+                {
+                    Id = attribute.Id,
+                    CardTypeId = cardTypeId
+                };
+                _cardGameData.CardAttributes.Add(attributeData);
+            }
+
+            if (attributeData.CardTypeId != cardTypeId)
+                throw new InvalidOperationException("Mismatch between card type ids");
+
+            attributeData.Name = attribute.Name;
+            SaveChanges();
+        }
+
+        public void DeleteCardAttribute(CardAttribute attribute)
+        {
+            _cardGameData.CardAttributes.RemoveAll(ca => ca.Id == attribute.Id);
             SaveChanges();
         }
 

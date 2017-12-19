@@ -46,7 +46,7 @@ namespace cgwo.ViewModels
 
 		public ICommand LoadProject => new DelegateCommand(() =>
 		{
-            var dlg = _dialogService.ChooseFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "Card Project|*.dcproj");
+            var dlg = _dialogService.ChooseFile("c:\\utilities", "Card Project|*.dcproj");
             if(dlg.Result == DialogResult.Accept)
             {
                 var parameters = new Dictionary<string, string>

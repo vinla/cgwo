@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonCardAttribute.cs" />
     <Compile Include="JsonCardGameData.cs" />
     <Compile Include="JsonCardGameDataStore.cs" />
     <Compile Include="JsonCardGameDataStoreFactory.cs" />

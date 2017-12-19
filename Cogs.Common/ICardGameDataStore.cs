@@ -13,6 +13,9 @@ namespace Cogs.Common
         IEnumerable<CardType> GetCardTypes();
         void SaveCardType(CardType cardType);
         void DeleteCardType(CardType cardType);
+        IEnumerable<CardAttribute> GetCardAttributes(Guid cardTypeId);
+        void SaveCardAttribute(Guid cardTypeId, CardAttribute attribute);
+        void DeleteCardAttribute(CardAttribute attribute);
     }    
 
     public interface ICardGameDataStoreFactory

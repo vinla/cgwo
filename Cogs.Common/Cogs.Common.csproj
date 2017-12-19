@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardAttribute.cs" />
     <Compile Include="CardType.cs" />
     <Compile Include="CoreObject.cs" />
     <Compile Include="ICardGameDataStore.cs" />

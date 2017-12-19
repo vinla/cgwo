@@ -51,7 +51,7 @@ namespace cgwo.ViewModels
 
 				if (value != null)
 				{
-					CardType = new Data.CardTypeViewModel(_cardGameDataStore, SelectedCardType);
+					CardType = new Data.CardTypeViewModel(_cardGameDataStore, _dialogService, SelectedCardType, CardTypeUpdated);
 				}
 			}
 		}
@@ -67,7 +67,7 @@ namespace cgwo.ViewModels
 				Name = String.Empty
 			};
 
-			CardType = new Data.CardTypeViewModel(_cardGameDataStore, newType);
+			CardType = new Data.CardTypeViewModel(_cardGameDataStore, _dialogService, newType, CardTypeUpdated);
             SelectedCardType = null;
 		});
 
@@ -82,15 +82,14 @@ namespace cgwo.ViewModels
                     CardType = null;
                 }
             }
-        });
+        });		
 
-		public ICommand Save => new Mvvm.DelegateCommand(() =>
-		{
-            if (CardType != null)
-            {
-                CardType.Save();
+        private void CardTypeUpdated(bool clear)
+        {
+            if (clear)
+                CardType = null;
+            else
                 RaisePropertyChanged(nameof(CardTypes));
-            }
-		});
+        }
 	}
 }

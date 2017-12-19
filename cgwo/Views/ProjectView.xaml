@@ -39,19 +39,6 @@
                         <Button Template="{StaticResource MenuButton}" Command="{Binding AddType}">
                             <TextBlock FontSize="16" Margin="6">New card type</TextBlock>
                         </Button>
-                        <Button Template="{StaticResource MenuButton}" Command="{Binding Save}">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CardType.CanSave}" Value="True">
-                                            <Setter Property="IsEnabled" Value="True"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            <TextBlock FontSize="16" Margin="6">Save</TextBlock>
-                        </Button>
                         <Button Template="{StaticResource MenuButton}" Command="{Binding DeleteType}" IsEnabled="{Binding CanDelete}">
                             <TextBlock FontSize="16" Margin="6">Delete</TextBlock>
                         </Button>
@@ -83,11 +70,11 @@
             </Border>
 
             <DockPanel Grid.Column="1">
-                <local:CardTypeEditor>
+                <local:CardTypeEditor DataContext="{Binding CardType}">
                     <local:CardTypeEditor.Style>
                         <Style TargetType="local:CardTypeEditor">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding CardType}" Value="{x:Null}">
+                                <DataTrigger Binding="{Binding}" Value="{x:Null}">
                                     <Setter Property="Visibility" Value="Hidden"/>
                                 </DataTrigger>
                             </Style.Triggers>
