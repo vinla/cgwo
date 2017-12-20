@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Border BorderThickness="0,0,1,0" BorderBrush="Gray">
-        <DockPanel Grid.Column="1" LastChildFill="False">
+        <DockPanel LastChildFill="False">
 
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5,15,5,5">
                 <TextBlock Margin="3" FontSize="14">Details</TextBlock>

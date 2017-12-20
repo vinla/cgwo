@@ -63,15 +63,45 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\DesignerCanvas.xaml.cs">
+      <DependentUpon>DesignerCanvas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InlineFormButtons.xaml.cs">
       <DependentUpon>InlineFormButtons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Designer\CardElement.cs" />
+    <Compile Include="Designer\EllipseElement.cs" />
+    <Compile Include="Designer\HighlightAdorner.cs" />
+    <Compile Include="Designer\IZIndexManager.cs" />
+    <Compile Include="Designer\RectangleElement.cs" />
+    <Compile Include="Designer\ResizeAdorner.cs" />
+    <Compile Include="Designer\ShapeElement.cs" />
+    <Compile Include="Designer\TextElement.cs" />
+    <Compile Include="Designer\ThumbPosition.cs" />
     <Compile Include="Mvvm\CalculateFromAttribute.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\IDialogService.cs" />
@@ -82,10 +112,14 @@
     <Compile Include="Validation\ProjectNameValidation.cs" />
     <Compile Include="ViewModels\Data\CardAttributeViewModel.cs" />
     <Compile Include="ViewModels\Data\CardTypeViewModel.cs" />
+    <Compile Include="ViewModels\Data\LayoutViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\NewProjectViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="Views\CardLayoutDesigner.xaml.cs">
+      <DependentUpon>CardLayoutDesigner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CardTypeEditor.xaml.cs">
       <DependentUpon>CardTypeEditor.xaml</DependentUpon>
     </Compile>
@@ -101,6 +135,10 @@
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\DesignerCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\InlineFormButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Dictionaries\MainViewMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CardLayoutDesigner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,6 +255,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\back.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

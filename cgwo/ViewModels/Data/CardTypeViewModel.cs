@@ -14,6 +14,7 @@ namespace cgwo.ViewModels.Data
 		private readonly CardType _original;
 		private readonly CardType _clone;        
         private readonly Action<bool> _updateCallback;
+        private readonly LayoutViewModel _layoutViewModel;
         private List<CardAttributeViewModel> _attributes;
 
         public CardTypeViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService, CardType original, Action<bool> updateCallback)
@@ -22,6 +23,7 @@ namespace cgwo.ViewModels.Data
             _updateCallback = updateCallback;
             _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));            
             _original = original;
+            _layoutViewModel = new LayoutViewModel();
             LoadAttributes();
 
             _clone = new CardType
@@ -42,6 +44,9 @@ namespace cgwo.ViewModels.Data
 				RaisePropertyChanged(nameof(Name));
 			}
 		}
+
+        [Mvvm.CalculateFrom(nameof(IsCreated))]
+        public LayoutViewModel Layout => IsCreated ? _layoutViewModel : null;
 
         [Mvvm.CalculateFrom(nameof(Name))]
 		public bool HasChanges => _clone.Name != _original.Name;			

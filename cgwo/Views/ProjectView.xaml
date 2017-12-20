@@ -27,8 +27,8 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="175"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Gray" BorderThickness="0,0,1,0">
                 <DockPanel>
@@ -69,7 +69,7 @@
                 </DockPanel>
             </Border>
 
-            <DockPanel Grid.Column="1">
+            <DockPanel Grid.Column="1" MinWidth="250">
                 <local:CardTypeEditor DataContext="{Binding CardType}">
                     <local:CardTypeEditor.Style>
                         <Style TargetType="local:CardTypeEditor">
@@ -82,7 +82,19 @@
                     </local:CardTypeEditor.Style>
                 </local:CardTypeEditor>
             </DockPanel>
-            
+
+            <local:CardLayoutDesigner Grid.Column="2" DataContext="{Binding CardType.Layout}">
+                <local:CardLayoutDesigner.Style>
+                    <Style TargetType="local:CardLayoutDesigner">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:CardLayoutDesigner.Style>
+            </local:CardLayoutDesigner>
+
         </Grid>
     </DockPanel>
 </UserControl>

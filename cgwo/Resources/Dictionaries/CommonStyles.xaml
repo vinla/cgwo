@@ -30,4 +30,22 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="Thumb">
+        <Setter Property="Width" Value="6"/>
+        <Setter Property="Height" Value="6"/>
+        <Setter Property="Opacity" Value=".5"/>
+        <Setter Property="Background" Value="Blue"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Rectangle Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Opacity="{TemplateBinding Opacity}" Fill="White"/>
+                        <Rectangle Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="Transparent" Stroke="{TemplateBinding Background}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

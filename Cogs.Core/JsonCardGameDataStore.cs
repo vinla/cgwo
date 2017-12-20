@@ -82,6 +82,7 @@ namespace Cogs.Core
         public void DeleteCardType(CardType cardType)
         {
             _cardGameData.CardTypes.RemoveAll(ct => ct.Id == cardType.Id);
+            _cardGameData.CardAttributes.RemoveAll(ca => ca.CardTypeId == cardType.Id);
             SaveChanges();
         }
 
