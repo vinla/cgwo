@@ -27,7 +27,7 @@
                 <DataTemplate DataType="{x:Type des:TextElement}">
                     <Grid Width="{Binding Width}" Height="{Binding Height}" Background="Transparent" MouseLeftButtonDown="ItemMouseClick">
                         <Rectangle Fill="Transparent" StrokeDashArray="4,4" Stroke="Black" IsHitTestVisible="False"/>
-                        <TextBlock Margin="2" Text="{Binding Text}" IsHitTestVisible="False" FontSize="{Binding TextSize}" Foreground="{Binding TextBrush}"/>
+                        <TextBlock Margin="2" Text="{Binding Text}" IsHitTestVisible="False" FontSize="{Binding TextSize}" Foreground="{Binding TextBrush}" TextWrapping="Wrap"/>
                     </Grid>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type des:RectangleElement}">
