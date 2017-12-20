@@ -116,6 +116,9 @@
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
+            <StackPanel>
+                <Button Margin="3" Command="{Binding SaveLayoutCommand}">Save Layout</Button>
+            </StackPanel>
         </DockPanel>
     </Grid>
 </UserControl>

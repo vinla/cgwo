@@ -125,6 +125,21 @@ namespace Cogs.Core
             SaveChanges();
         }
 
+        public CardLayout GetLayout(Guid cardTypeId)
+        {
+            if (_cardGameData.CardLayouts.ContainsKey(cardTypeId))
+                return _cardGameData.CardLayouts[cardTypeId];
+
+            return null;
+        }
+
+        public void SaveLayout(Guid cardTypeId, CardLayout cardLayout)
+        {
+            _cardGameData.CardLayouts.Remove(cardTypeId);
+            _cardGameData.CardLayouts.Add(cardTypeId, cardLayout);
+            SaveChanges();
+        }
+
         private void SaveChanges()
         {
             lock(_cardGameData)

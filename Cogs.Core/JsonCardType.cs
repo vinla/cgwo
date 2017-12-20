@@ -1,4 +1,5 @@
 ﻿using System;
+using Cogs.Common;
 
 namespace Cogs.Core
 {
@@ -6,5 +7,5 @@ namespace Cogs.Core
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-    }
+    }    
 }

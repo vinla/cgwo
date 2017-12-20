@@ -23,7 +23,7 @@ namespace cgwo.ViewModels.Data
             _updateCallback = updateCallback;
             _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));            
             _original = original;
-            _layoutViewModel = new LayoutViewModel();
+            _layoutViewModel = new LayoutViewModel(cardGameDataStore, original.Id);
             LoadAttributes();
 
             _clone = new CardType

@@ -4,12 +4,23 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cogs.Designer;
+using Cogs.Common;
+using Cogs.Mvvm;
 
 namespace cgwo.ViewModels.Data
 {
     public class LayoutViewModel : Mvvm.ViewModel, IZIndexManager
     {
+        private readonly ICardGameDataStore _cardGameDataStore;
+        private readonly Guid _cardTypeId;
         private List<CardElement> _elements = new List<CardElement>();
+
+        public LayoutViewModel(ICardGameDataStore cardGameDataStore, Guid cardTypeId)
+        {
+            _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
+            _cardTypeId = cardTypeId;
+            LoadLayout();
+        }
 
         public Color BackgroundColor
         {
@@ -115,6 +126,51 @@ namespace cgwo.ViewModels.Data
         public void SendToBack(CardElement element)
         {
             element.ZIndex = _elements.Min(e => e.ZIndex) - 1;
+        }
+
+        public ICommand SaveLayoutCommand => new Mvvm.DelegateCommand(() =>
+        {
+            SaveLayout();
+        });        
+
+        private void LoadLayout()
+        {
+            var layout = _cardGameDataStore.GetLayout(_cardTypeId);
+
+            if(layout != null)
+            {
+                BackgroundColor = (Color)ColorConverter.ConvertFromString(layout.BackgroundColor);
+                foreach(var element in layout.Elements)
+                {
+                    if (element is TextElementLayout text)
+                        _elements.Add(AutoMapper.Mapper.Map<TextElement>(text));
+                    if (element is RectangleElementLayout rect)
+                        _elements.Add(AutoMapper.Mapper.Map<RectangleElement>(rect));
+                    if (element is EllipseElementLayout ellipse)
+                        _elements.Add(AutoMapper.Mapper.Map<EllipseElement>(ellipse));
+                }
+            }
+        }
+
+        private void SaveLayout()
+        {
+            var layout = new CardLayout
+            {
+                BackgroundColor = BackgroundColor.ToHex()
+            };
+
+            foreach(var element in Elements)
+            {
+                if (element is TextElement text)
+                    layout.Elements.Add(AutoMapper.Mapper.Map<TextElementLayout>(text));
+                else if (element is RectangleElement rect)
+                    layout.Elements.Add(AutoMapper.Mapper.Map<RectangleElementLayout>(rect));
+                else if (element is EllipseElement ellipse)
+                    layout.Elements.Add(AutoMapper.Mapper.Map<EllipseElementLayout>(ellipse));
+
+            }
+
+            _cardGameDataStore.SaveLayout(_cardTypeId, layout);
         }
     }    
 }

@@ -37,6 +37,9 @@
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -87,6 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\AutoMapperConfiguration.cs" />
     <Compile Include="Controls\DesignerCanvas.xaml.cs">
       <DependentUpon>DesignerCanvas.xaml</DependentUpon>
     </Compile>
@@ -103,6 +107,7 @@
     <Compile Include="Designer\TextElement.cs" />
     <Compile Include="Designer\ThumbPosition.cs" />
     <Compile Include="Mvvm\CalculateFromAttribute.cs" />
+    <Compile Include="Mvvm\ColorExtensionMethods.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\IDialogService.cs" />
     <Compile Include="Mvvm\ValidationForAttribute.cs" />
