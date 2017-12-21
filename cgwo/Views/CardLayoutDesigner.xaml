@@ -124,6 +124,7 @@
                 <Button Margin="3" Command="{Binding DeleteCommand}">Delete</Button>
                 <Button Margin="3" Command="{Binding ReloadCommand}">Reload</Button>
                 <Button Margin="3" Command="{Binding SaveLayoutCommand}">Save Layout</Button>
+                <Button Margin="3" Command="{Binding SaveImageCommand}">Save Image</Button>
             </StackPanel>
         </DockPanel>
     </Grid>

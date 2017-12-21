@@ -14,7 +14,6 @@ namespace cgwo.ViewModels
         private readonly ICardGameDataStore _cardGameDataStore;
         private readonly IDialogService _dialogService;
         private string _currentModuleName;
-        private ModuleViewModel _currentModule;
 
         public ProjectViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService)
         {
@@ -43,7 +42,7 @@ namespace cgwo.ViewModels
             if (_currentModuleName == moduleToLoad)
                 return;
 
-            if (_currentModule == null || _currentModule.BeforeUnload())
+            if (CurrentModule == null || CurrentModule.BeforeUnload())
             {
                 switch (moduleToLoad)
                 {

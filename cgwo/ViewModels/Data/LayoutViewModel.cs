@@ -6,6 +6,9 @@ using System.Windows.Media;
 using Cogs.Designer;
 using Cogs.Common;
 using Cogs.Mvvm;
+using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace cgwo.ViewModels.Data
 {
@@ -186,6 +189,53 @@ namespace cgwo.ViewModels.Data
             }
 
             _cardGameDataStore.SaveLayout(_cardTypeId, layout);
+        }
+
+        public ICommand SaveImageCommand => new Mvvm.DelegateCommand(() =>
+        {
+            SaveCardImage();
+        });
+
+        private void SaveCardImage()
+        {
+            var size = new Size(250, 350);
+
+            var border = new Border();
+            border.Width = size.Width;
+            border.Height = size.Height;
+            border.Background = Background;
+            border.BorderThickness = new Thickness(2);
+            border.BorderBrush = Brushes.Black;
+            border.CornerRadius = new CornerRadius(5);
+
+            var canvas = new Controls.DesignerCanvas();
+            canvas.Width = size.Width;
+            canvas.Height = size.Height;
+            canvas.Elements = Elements;
+
+            canvas.Measure(size);
+            canvas.Arrange(new Rect(new Point(0, 0), size));
+            canvas.UpdateLayout();
+
+            border.Child = canvas;
+
+            border.Measure(size);
+            border.Arrange(new Rect(new Point(0, 0), size));
+            border.UpdateLayout();
+                        
+            var renderTarget = new RenderTargetBitmap(250, 350, 96, 96, PixelFormats.Pbgra32);
+            renderTarget.Render(border);
+            renderTarget.Render(canvas);
+
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderTarget));
+
+            using (var stream = System.IO.File.OpenWrite(@"c:\utilities\test.png"))
+            {
+                encoder.Save(stream);
+                stream.Flush();
+                stream.Close();
+            }
         }
     }    
 }
