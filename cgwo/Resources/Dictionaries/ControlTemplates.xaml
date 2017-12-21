@@ -80,4 +80,18 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate TargetType="ToggleButton" x:Key="TabItem">
+        <Border Name="Border" BorderBrush="LightGray" BorderThickness="0,0,1,0" DockPanel.Dock="Left" Padding="3" Background="Gray">
+            <ContentPresenter Margin="1"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="LightSteelBlue"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
 </ResourceDictionary>

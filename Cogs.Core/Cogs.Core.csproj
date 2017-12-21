@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElementLayoutDeserializer.cs" />
     <Compile Include="JsonCardAttribute.cs" />
+    <Compile Include="JsonCardElement.cs" />
     <Compile Include="JsonCardGameData.cs" />
     <Compile Include="JsonCardGameDataStore.cs" />
     <Compile Include="JsonCardGameDataStoreFactory.cs" />
+    <Compile Include="JsonCardLayout.cs" />
     <Compile Include="JsonCardType.cs" />
     <Compile Include="JsonProjectInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

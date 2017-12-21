@@ -1,95 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using cgwo.Mvvm;
 using Cogs.Common;
 
 namespace cgwo.ViewModels
 {
-	public class ProjectViewModel : ViewModel
-	{
-        private ICardGameDataStore _cardGameDataStore;
-        private readonly string _projectName;
-        private readonly IDialogService _dialogService; 
-				
-		public ProjectViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService)
-		{
-            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
-            _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
-            _projectName = _cardGameDataStore.GetProjectInfo().Name;
-		}
+    public class ProjectViewModel : ViewModel
+    {
+        private readonly ICardGameDataStore _cardGameDataStore;
+        private readonly IDialogService _dialogService;
+        private string _currentModuleName;
+        private ModuleViewModel _currentModule;
 
-		public string Title => $"Project > {_projectName}";
-
-		public IEnumerable<object> CardTypes => _cardGameDataStore.GetCardTypes().Select(x => x);
-
-		public Data.CardTypeViewModel CardType
+        public ProjectViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService)
         {
-            get { return GetValue<Data.CardTypeViewModel>(nameof(CardType)); }
-            private set { SetValue(nameof(CardType), value); }
+            _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException();
+            _dialogService = dialogService ?? throw new ArgumentNullException();
+            LoadModule(ModuleNames.CardTypes);
         }
 
-		public CardType SelectedCardType
-		{
-			get { return GetValue<CardType>(nameof(SelectedCardType)); }
-			set
-			{
-				if (CardType != null && value != null)
-				{
-					if (CardType.Id == value.Id)
-						return;
-
-					if (CardType.HasChanges)
-					{
-                        if (_dialogService.Prompt("Unsaved changes", "Do you want to swap and lose unsaved changes?") == DialogResult.Reject)
-                            return;						
-					}
-				}
-
-				SetValue(nameof(SelectedCardType), value);                
-
-				if (value != null)
-				{
-					CardType = new Data.CardTypeViewModel(_cardGameDataStore, _dialogService, SelectedCardType, CardTypeUpdated);
-				}
-			}
-		}
-
-        [Mvvm.CalculateFrom(nameof(SelectedCardType))]
-        [Mvvm.CalculateFrom(nameof(CardType))]
-        public bool CanDelete => SelectedCardType != null && CardType != null && SelectedCardType.Id == CardType.Id;
-
-		public ICommand AddType => new Mvvm.DelegateCommand(() =>
-		{
-			var newType = new CardType
-			{
-				Name = String.Empty
-			};
-
-			CardType = new Data.CardTypeViewModel(_cardGameDataStore, _dialogService, newType, CardTypeUpdated);
-            SelectedCardType = null;
-		});
-
-        public ICommand DeleteType => new Mvvm.DelegateCommand(() =>
+        public ICommand LoadModuleCommand => new DelegateCommand(o =>
         {
-            if (SelectedCardType != null)
+            var moduleToLoad = o.ToString();
+            LoadModule(moduleToLoad);            
+        });
+
+        public ModuleViewModel CurrentModule
+        {
+            get { return GetValue<ModuleViewModel>(nameof(CurrentModule)); }
+            private set { SetValue(nameof(CurrentModule), value); }
+        }
+
+        [Mvvm.CalculateFrom(nameof(CurrentModule))]
+        public string CurrentModuleName => _currentModuleName;
+
+        private void LoadModule(string moduleToLoad)
+        {
+            if (_currentModuleName == moduleToLoad)
+                return;
+
+            if (_currentModule == null || _currentModule.BeforeUnload())
             {
-                if (_dialogService.Prompt("Confirm deletion", "Are you sure you want to delete this card?") == DialogResult.Accept)
-                {                    
-                    _cardGameDataStore.DeleteCardType(SelectedCardType);
-                    RaisePropertyChanged(nameof(CardTypes));
-                    CardType = null;
+                switch (moduleToLoad)
+                {
+                    case ModuleNames.CardTypes:
+                        _currentModuleName = ModuleNames.CardTypes;
+                        CurrentModule = new CardTypesViewModel(_cardGameDataStore, _dialogService);                        
+                        break;
+                    case ModuleNames.Cards:
+                        _currentModuleName = ModuleNames.Cards;
+                        CurrentModule = new CardsViewModel();
+                        break;
                 }
             }
-        });		
-
-        private void CardTypeUpdated(bool clear)
-        {
-            if (clear)
-                CardType = null;
-            else
-                RaisePropertyChanged(nameof(CardTypes));
         }
-	}
+    }
+
+    public static class ModuleNames
+    {
+        public const string CardTypes = "Card Types";
+        public const string Cards = "Cards";
+        public const string Rules = "Rules";
+    }
 }

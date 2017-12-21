@@ -127,16 +127,18 @@ namespace Cogs.Core
 
         public CardLayout GetLayout(Guid cardTypeId)
         {
-            if (_cardGameData.CardLayouts.ContainsKey(cardTypeId))
-                return _cardGameData.CardLayouts[cardTypeId];
-
+            var jsonLayout = _cardGameData.CardLayouts.SingleOrDefault(l => l.CardTypeId == cardTypeId);
+            if (jsonLayout != null)
+                return jsonLayout.ToLayout();
             return null;
         }
 
         public void SaveLayout(Guid cardTypeId, CardLayout cardLayout)
         {
-            _cardGameData.CardLayouts.Remove(cardTypeId);
-            _cardGameData.CardLayouts.Add(cardTypeId, cardLayout);
+            _cardGameData.CardLayouts.RemoveAll(l => l.CardTypeId == cardTypeId);
+            var layoutData = JsonCardLayout.FromLayout(cardLayout);
+            layoutData.CardTypeId = cardTypeId;
+            _cardGameData.CardLayouts.Add(layoutData);
             SaveChanges();
         }
 

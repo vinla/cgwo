@@ -30,7 +30,7 @@ namespace cgwo.Controls
             InitializeComponent();
         }
 
-        public DependencyProperty ElementsProperty = DependencyProperty.Register(nameof(Elements), typeof(IEnumerable<CardElement>), typeof(DesignerCanvas));
+        public static readonly DependencyProperty ElementsProperty = DependencyProperty.Register(nameof(Elements), typeof(IEnumerable<CardElement>), typeof(DesignerCanvas));
 
         public IEnumerable<CardElement> Elements
         {
@@ -38,7 +38,7 @@ namespace cgwo.Controls
             set { SetValue(ElementsProperty, value); }
         }
 
-        public DependencyProperty SelectedElementProperty = DependencyProperty.Register(nameof(SelectedElement), typeof(CardElement), typeof(DesignerCanvas));
+        public static readonly DependencyProperty SelectedElementProperty = DependencyProperty.Register(nameof(SelectedElement), typeof(CardElement), typeof(DesignerCanvas));
 
         public CardElement SelectedElement
         {

@@ -97,6 +97,9 @@
     <Compile Include="Controls\InlineFormButtons.xaml.cs">
       <DependentUpon>InlineFormButtons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TabHeader.xaml.cs">
+      <DependentUpon>TabHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Designer\CardElement.cs" />
     <Compile Include="Designer\EllipseElement.cs" />
     <Compile Include="Designer\HighlightAdorner.cs" />
@@ -110,17 +113,21 @@
     <Compile Include="Mvvm\ColorExtensionMethods.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\IDialogService.cs" />
+    <Compile Include="Mvvm\StringComparisonConverter.cs" />
     <Compile Include="Mvvm\ValidationForAttribute.cs" />
     <Compile Include="Mvvm\ViewModel.cs" />
     <Compile Include="Mvvm\ViewModelStack.cs" />
     <Compile Include="Mvvm\WindowsDialogService.cs" />
     <Compile Include="Validation\ProjectNameValidation.cs" />
+    <Compile Include="ViewModels\CardsViewModel.cs" />
     <Compile Include="ViewModels\Data\CardAttributeViewModel.cs" />
     <Compile Include="ViewModels\Data\CardTypeViewModel.cs" />
     <Compile Include="ViewModels\Data\LayoutViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\ModuleViewModel.cs" />
     <Compile Include="ViewModels\NewProjectViewModel.cs" />
+    <Compile Include="ViewModels\CardTypesViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="Views\CardLayoutDesigner.xaml.cs">
       <DependentUpon>CardLayoutDesigner.xaml</DependentUpon>
@@ -145,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\InlineFormButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TabHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

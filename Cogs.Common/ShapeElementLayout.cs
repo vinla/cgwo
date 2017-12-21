@@ -7,12 +7,12 @@
         public int BorderWidth { get; set; }
     }
 
-    public class RectangleElementLayout : ElementLayout
+    public class RectangleElementLayout : ShapeElementLayout
     {
 
     }
 
-    public class EllipseElementLayout : ElementLayout
+    public class EllipseElementLayout : ShapeElementLayout
     {
 
     }

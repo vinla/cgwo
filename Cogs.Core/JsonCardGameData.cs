@@ -11,7 +11,7 @@ namespace Cogs.Core
             ProjectInfo = new JsonProjectInfo();
             CardTypes = new List<JsonCardType>();
             CardAttributes = new List<JsonCardAttribute>();
-            CardLayouts = new Dictionary<Guid, CardLayout>();
+            CardLayouts = new List<JsonCardLayout>();
         }
 
         public JsonProjectInfo ProjectInfo { get; set; }
@@ -20,6 +20,6 @@ namespace Cogs.Core
 
         public List<JsonCardAttribute> CardAttributes { get; set; }
 
-        public Dictionary<Guid, CardLayout> CardLayouts { get; set; }
+        public List<JsonCardLayout> CardLayouts { get; set; }
     }
 }

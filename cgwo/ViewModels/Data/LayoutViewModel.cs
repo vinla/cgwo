@@ -96,6 +96,22 @@ namespace cgwo.ViewModels.Data
             }
         });
 
+        public ICommand DeleteCommand => new Mvvm.DelegateCommand(() =>
+        {
+            if (SelectedElement != null)
+            {
+                _elements.Remove(SelectedElement);
+                RaisePropertyChanged(nameof(Elements));
+                SelectedElement = null;
+            }
+        });
+        public ICommand ReloadCommand => new Mvvm.DelegateCommand(() =>
+        {
+            LoadLayout();
+            RaisePropertyChanged(nameof(Background));
+            RaisePropertyChanged(nameof(Elements));
+        });
+
         public void BringForwards(CardElement element)
         {
             var currentZIndex = element.ZIndex;
@@ -167,7 +183,6 @@ namespace cgwo.ViewModels.Data
                     layout.Elements.Add(AutoMapper.Mapper.Map<RectangleElementLayout>(rect));
                 else if (element is EllipseElement ellipse)
                     layout.Elements.Add(AutoMapper.Mapper.Map<EllipseElementLayout>(ellipse));
-
             }
 
             _cardGameDataStore.SaveLayout(_cardTypeId, layout);
