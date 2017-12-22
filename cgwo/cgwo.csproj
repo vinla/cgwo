@@ -104,6 +104,7 @@
     <Compile Include="Designer\EllipseElement.cs" />
     <Compile Include="Designer\HighlightAdorner.cs" />
     <Compile Include="Designer\IZIndexManager.cs" />
+    <Compile Include="Designer\LayoutConverter.cs" />
     <Compile Include="Designer\RectangleElement.cs" />
     <Compile Include="Designer\ResizeAdorner.cs" />
     <Compile Include="Designer\ShapeElement.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Validation\ProjectNameValidation.cs" />
     <Compile Include="ViewModels\CardsViewModel.cs" />
     <Compile Include="ViewModels\Data\CardAttributeViewModel.cs" />
+    <Compile Include="ViewModels\Data\CardEditorViewModel.cs" />
     <Compile Include="ViewModels\Data\CardTypeViewModel.cs" />
     <Compile Include="ViewModels\Data\LayoutViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -131,6 +133,9 @@
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="Views\CardLayoutDesigner.xaml.cs">
       <DependentUpon>CardLayoutDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cards.xaml.cs">
+      <DependentUpon>Cards.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CardTypeEditor.xaml.cs">
       <DependentUpon>CardTypeEditor.xaml</DependentUpon>
@@ -184,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CardLayoutDesigner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cards.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,6 +18,8 @@ namespace Cogs.Common
         void DeleteCardAttribute(CardAttribute attribute);
         CardLayout GetLayout(Guid cardTypeId);
         void SaveLayout(Guid cardTypeId, CardLayout layout);
+        void SaveCard(Card card);
+        IEnumerable<Card> GetCards();
     }    
 
     public interface ICardGameDataStoreFactory

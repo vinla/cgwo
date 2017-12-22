@@ -46,8 +46,19 @@ namespace cgwo.Controls
             set { SetValue(SelectedElementProperty, value); UpdateSelection(); }
         }
 
+        public static readonly DependencyProperty IsDisplayOnlyProperty = DependencyProperty.Register(nameof(IsDisplayOnly), typeof(bool), typeof(DesignerCanvas));
+
+        public bool IsDisplayOnly
+        {
+            get { return (bool)GetValue(IsDisplayOnlyProperty); }
+            set { SetValue(IsDisplayOnlyProperty, value); }
+        }
+
         private void ItemMouseEnter(object sender, MouseEventArgs e)
         {
+            if (IsDisplayOnly)
+                return;
+
             var item = sender as FrameworkElement;
             _adorner = new HighlightAdorner(item);
             AdornerLayer.GetAdornerLayer(item).Add(_adorner);
@@ -56,7 +67,7 @@ namespace cgwo.Controls
         private void ItemMouseLeave(object sender, MouseEventArgs e)
         {
             var item = sender as FrameworkElement;
-            AdornerLayer.GetAdornerLayer(item).Remove(_adorner);
+            AdornerLayer.GetAdornerLayer(item)?.Remove(_adorner);
         }
 
         private void UpdateSelection()
@@ -87,6 +98,9 @@ namespace cgwo.Controls
 
         private void ItemMouseClick(object sender, MouseButtonEventArgs e)
         {
+            if (IsDisplayOnly)
+                return;
+
             var frameworkElement = (sender as FrameworkElement);
             if (frameworkElement != null && _selection != frameworkElement)
                 SelectedElement = frameworkElement.DataContext as CardElement;
@@ -94,6 +108,9 @@ namespace cgwo.Controls
 
         private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
+            if (IsDisplayOnly)
+                return;
+
             if (sender == e.OriginalSource)
                 Deselect();
         }

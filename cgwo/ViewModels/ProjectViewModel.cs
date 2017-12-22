@@ -52,7 +52,7 @@ namespace cgwo.ViewModels
                         break;
                     case ModuleNames.Cards:
                         _currentModuleName = ModuleNames.Cards;
-                        CurrentModule = new CardsViewModel();
+                        CurrentModule = new CardsViewModel(_cardGameDataStore, _dialogService);
                         break;
                 }
             }

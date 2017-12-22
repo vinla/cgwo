@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElementLayoutDeserializer.cs" />
+    <Compile Include="JsonCard.cs" />
     <Compile Include="JsonCardAttribute.cs" />
+    <Compile Include="JsonCardAttributeValue.cs" />
     <Compile Include="JsonCardElement.cs" />
     <Compile Include="JsonCardGameData.cs" />
     <Compile Include="JsonCardGameDataStore.cs" />

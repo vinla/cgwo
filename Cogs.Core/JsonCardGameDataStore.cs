@@ -142,6 +142,50 @@ namespace Cogs.Core
             SaveChanges();
         }
 
+        public void SaveCard(Card card)
+        {
+            _cardGameData.Cards.RemoveAll(c => c.Id == card.Id);
+            _cardGameData.CardAttributeValues.RemoveAll(c => c.CardId == card.Id);
+
+            _cardGameData.Cards.Add(new JsonCard
+            {
+                Id = card.Id,
+                CardTypeId = card.CardType.Id,
+                Name = card.Name
+            });
+
+            _cardGameData.CardAttributeValues.AddRange(card.AttributeValues.Select(av => new JsonCardAttributeValue
+            {
+                CardId = card.Id,
+                CardAttributeId = av.CardAttribute.Id,
+                Value = av.Value
+            }));
+
+            SaveChanges();
+        }
+
+        public IEnumerable<Card> GetCards()
+        {
+            var results = new List<Card>();
+            var cardTypes = GetCardTypes();
+
+            foreach(var jsonCard in _cardGameData.Cards)
+            {
+                var attributes = GetCardAttributes(jsonCard.CardTypeId);
+                var cardAttributeValues = _cardGameData.CardAttributeValues.Where(cav => cav.CardId == jsonCard.Id).Select(cav => new CardAttributeValue(attributes.Single(attr => attr.Id == cav.CardAttributeId))
+                {
+                    Value = cav.Value
+                });
+
+                results.Add(new Card(cardTypes.Single(ct => ct.Id == jsonCard.CardTypeId), cardAttributeValues)
+                {
+                    Name = jsonCard.Name
+                });
+            }
+
+            return results;
+        }
+
         private void SaveChanges()
         {
             lock(_cardGameData)

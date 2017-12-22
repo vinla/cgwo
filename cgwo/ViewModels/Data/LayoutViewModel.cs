@@ -159,15 +159,7 @@ namespace cgwo.ViewModels.Data
             if(layout != null)
             {
                 BackgroundColor = (Color)ColorConverter.ConvertFromString(layout.BackgroundColor);
-                foreach(var element in layout.Elements)
-                {
-                    if (element is TextElementLayout text)
-                        _elements.Add(AutoMapper.Mapper.Map<TextElement>(text));
-                    if (element is RectangleElementLayout rect)
-                        _elements.Add(AutoMapper.Mapper.Map<RectangleElement>(rect));
-                    if (element is EllipseElementLayout ellipse)
-                        _elements.Add(AutoMapper.Mapper.Map<EllipseElement>(ellipse));
-                }
+                _elements.AddRange(LayoutConverter.ToDesignerElements(layout.Elements));                
             }
         }
 
@@ -178,15 +170,7 @@ namespace cgwo.ViewModels.Data
                 BackgroundColor = BackgroundColor.ToHex()
             };
 
-            foreach(var element in Elements)
-            {
-                if (element is TextElement text)
-                    layout.Elements.Add(AutoMapper.Mapper.Map<TextElementLayout>(text));
-                else if (element is RectangleElement rect)
-                    layout.Elements.Add(AutoMapper.Mapper.Map<RectangleElementLayout>(rect));
-                else if (element is EllipseElement ellipse)
-                    layout.Elements.Add(AutoMapper.Mapper.Map<EllipseElementLayout>(ellipse));
-            }
+            layout.Elements.AddRange(LayoutConverter.FromDesignerElements(Elements));
 
             _cardGameDataStore.SaveLayout(_cardTypeId, layout);
         }
