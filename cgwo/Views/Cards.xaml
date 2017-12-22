@@ -14,29 +14,55 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding Cards}" SelectedItem="{Binding SelectedCard}" Width="180">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Margin="5" Text="{Binding Name}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <DockPanel Width="220" LastChildFill="False" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                <ComboBox ItemsSource="{Binding CardTypes}" SelectedItem="{Binding SelectedCardType}" Width="150" Margin="3">
-                    <ComboBox.ItemTemplate>
+        <Border BorderBrush="Gray" BorderThickness="0,0,1,0">
+            <DockPanel>
+                <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
+                    <TextBlock FontSize="14">Actions</TextBlock>
+                </Border>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    <ComboBox ItemsSource="{Binding CardTypes}" SelectedItem="{Binding SelectedCardType}" Width="100" Margin="3">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Margin="3" Command="{Binding AddCard}" CommandParameter="{Binding SelectedCardType}">Add card</Button>
+                </StackPanel>
+                <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
+                    <TextBlock FontSize="14">Cards</TextBlock>
+                </Border>
+                <ListView ItemsSource="{Binding Cards}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectedItem="{Binding SelectedCard}" Width="180">
+                    <ListView.Resources>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template" Value="{StaticResource CardTypeListItem}"/>
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="5">
+                                <Border Width="50" Height="70" BorderBrush="Black" BorderThickness="1" Background="LightSteelBlue" CornerRadius="3" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
+                                <TextBlock Margin="3" Text="{Binding Name}" MaxWidth="45" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
+                            </StackPanel>
                         </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Margin="3" Command="{Binding AddCard}" CommandParameter="{Binding SelectedCardType}">Add card</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DockPanel>
+        </Border>
+        <DockPanel Width="220" LastChildFill="False" Grid.Column="1">
+            <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
+                <TextBlock FontSize="14">Card Details</TextBlock>
+            </Border>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10,0">
                 <TextBlock Margin="3" Width="60">Name</TextBlock>
                 <TextBox Margin="3" Width="120" Text="{Binding CardEditor.Name}"/>
             </StackPanel>
-            <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top">
+            <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
@@ -46,10 +72,10 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <Button Margin="3" DockPanel.Dock="Top" Command="{Binding CardEditor.UpdatePreview}">Preview</Button>
-            <Button Margin="3" DockPanel.Dock="Top" Command="{Binding CardEditor.SaveCard}">Save</Button>
+            <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.UpdatePreview}">Preview</Button>
+            <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.SaveCard}">Save</Button>
         </DockPanel>
-        <Border BorderThickness="2" BorderBrush="Black" Margin="10" Grid.Column="2" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.BackgroundColor}">
+        <Border BorderThickness="2" BorderBrush="Black" Margin="25" Grid.Column="2" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.BackgroundColor}" VerticalAlignment="Top">
             <ctrl:DesignerCanvas Elements="{Binding CardEditor.Elements}" IsDisplayOnly="True"/>
         </Border>
         
