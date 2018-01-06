@@ -73,7 +73,7 @@
                 <ItemsControl ItemsSource="{Binding Attributes}" Margin="25, 0" DockPanel.Dock="Top">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Grid.IsSharedSizeScope="True"/>.
+                            <StackPanel Grid.IsSharedSizeScope="True"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
