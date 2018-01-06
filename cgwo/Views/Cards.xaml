@@ -60,6 +60,15 @@
             </DockPanel>
         </Border>
         <DockPanel Width="220" LastChildFill="False" Grid.Column="1">
+            <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CardEditor}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DockPanel.Style>
             <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
                 <TextBlock FontSize="14">Card Details</TextBlock>
             </Border>
@@ -67,7 +76,7 @@
                 <TextBlock Margin="3" Width="60">Name</TextBlock>
                 <TextBox Margin="3" Width="120" Text="{Binding CardEditor.Name}"/>
             </StackPanel>
-            <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0">
+            <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0" Focusable="False">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
@@ -79,8 +88,18 @@
             </ItemsControl>
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.UpdatePreview}">Preview</Button>
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.SaveCard}">Save</Button>
+            <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.DeleteCard}">Delete</Button>
         </DockPanel>
         <Border BorderThickness="2" BorderBrush="Black" Margin="25" Grid.Column="2" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.BackgroundColor}" VerticalAlignment="Top">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CardEditor}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <ctrl:DesignerCanvas Elements="{Binding CardEditor.Elements}" IsDisplayOnly="True"/>
         </Border>
         

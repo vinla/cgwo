@@ -19,14 +19,14 @@ namespace cgwo.ViewModels.Data
         private readonly IDialogService _dialogService;
         private readonly Card _card;
         private readonly CardLayout _layout;
-		private readonly Action _onCardSaved;
+		private readonly Action<Card> _cardUpdated;		
         private IEnumerable<CardElement> _elements;
 
-        public CardEditorViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService, Card card, Action onCardSaved)
+        public CardEditorViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService, Card card, Action<Card> cardUpdated)
         {
             _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
-			_onCardSaved = onCardSaved;
+			_cardUpdated = cardUpdated;
             _card = card ?? throw new ArgumentNullException(nameof(card));
             _layout = _cardGameDataStore.GetLayout(card.CardType.Id);
         }
@@ -74,7 +74,16 @@ namespace cgwo.ViewModels.Data
         public ICommand SaveCard => new DelegateCommand(() =>
         {
             _cardGameDataStore.SaveCard(_card);
-			_onCardSaved?.Invoke();
+			_cardUpdated?.Invoke(_card);
         });
+
+		public ICommand DeleteCard => new DelegateCommand(() =>
+		{
+			if (_dialogService.Prompt("Confirm delete", "Are you sure you want to delete this card?") == DialogResult.Accept)
+			{
+				_cardGameDataStore.DeleteCard(_card);
+				_cardUpdated?.Invoke(null);
+			}
+		});
     }
 }

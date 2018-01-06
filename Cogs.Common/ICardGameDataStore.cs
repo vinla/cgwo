@@ -20,7 +20,9 @@ namespace Cogs.Common
         void SaveLayout(Guid cardTypeId, CardLayout layout);
         void SaveCard(Card card);
         IEnumerable<Card> GetCards();
-    }    
+		void DeleteCard(Card card);
+
+	}    
 
     public interface ICardGameDataStoreFactory
     {

@@ -152,8 +152,7 @@ namespace Cogs.Core
 
         public void SaveCard(Card card)
         {
-            _cardGameData.Cards.RemoveAll(c => c.Id == card.Id);
-            _cardGameData.CardAttributeValues.RemoveAll(c => c.CardId == card.Id);
+			DeleteCard(card);
 
             _cardGameData.Cards.Add(new JsonCard
             {
@@ -187,12 +186,20 @@ namespace Cogs.Core
 
                 results.Add(new Card(cardTypes.Single(ct => ct.Id == jsonCard.CardTypeId), cardAttributeValues)
                 {
+					Id = jsonCard.Id,
                     Name = jsonCard.Name
                 });
             }
 
             return results;
         }
+
+		public void DeleteCard(Card card)
+		{
+			_cardGameData.Cards.RemoveAll(c => c.Id == card.Id);
+			_cardGameData.CardAttributeValues.RemoveAll(c => c.CardId == card.Id);
+			SaveChanges();
+		}
 
         private void SaveChanges()
         {
