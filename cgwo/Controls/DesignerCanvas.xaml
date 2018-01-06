@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:cgwo.Controls"
              xmlns:des="clr-namespace:Cogs.Designer"
              mc:Ignorable="d" 
+             Focusable="True"
+             KeyboardNavigation.DirectionalNavigation="Contained"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <ItemsControl ItemsSource="{Binding Elements, RelativeSource={RelativeSource AncestorType=UserControl}}" x:Name="itemsHost">

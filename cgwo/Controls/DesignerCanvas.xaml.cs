@@ -72,6 +72,7 @@ namespace cgwo.Controls
 
         private void UpdateSelection()
         {
+			Focus();
             Deselect();
 
             for (int i = 0; i < itemsHost.Items.Count; i++)
@@ -114,5 +115,37 @@ namespace cgwo.Controls
             if (sender == e.OriginalSource)
                 Deselect();
         }
-    }
+
+		protected override void OnKeyDown(KeyEventArgs e)
+		{						
+			if (SelectedElement == null)
+				return;
+			var moveAmount = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ? 5 : 1;
+
+			if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+			{
+				if (e.Key == Key.Right)
+					SelectedElement.Width += moveAmount;
+				else if (e.Key == Key.Left)
+					SelectedElement.Width = Math.Max(1, SelectedElement.Width - moveAmount);
+				else if (e.Key == Key.Up)
+					SelectedElement.Height = Math.Max(1, SelectedElement.Height - moveAmount);
+				else if (e.Key == Key.Down)
+					SelectedElement.Height += moveAmount;
+			}
+			else
+			{				
+				if (e.Key == Key.Right)
+					SelectedElement.Left += moveAmount;
+				else if (e.Key == Key.Left)
+					SelectedElement.Left -= moveAmount;
+				else if (e.Key == Key.Up)
+					SelectedElement.Top -= moveAmount;
+				else if (e.Key == Key.Down)
+					SelectedElement.Top += moveAmount;
+			}
+
+			e.Handled = true;
+		}
+	}
 }
