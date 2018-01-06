@@ -44,13 +44,12 @@
             <ContentControl Content="{Binding SelectedElement}" DockPanel.Dock="Top">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type des:TextElement}">
-                        <Grid DockPanel.Dock="Top" Margin="5">
+                        <Grid Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -61,13 +60,6 @@
                             <xcd:ColorPicker Grid.Row="1" Grid.Column="1" Margin="3" SelectedColor="{Binding TextColor}"/>
                             <TextBlock Margin="3" Grid.Row="2">Text Size</TextBlock>
                             <xcd:DoubleUpDown Grid.Row="2" Grid.Column="1" Value="{Binding TextSize}"/>
-                            <TextBlock Grid.Row="3" Margin="3">Layer</TextBlock>
-                            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
-                                <Button Margin="3" Command="{Binding SendToBack}">Send to back</Button>
-                                <Button Margin="3" Command="{Binding SendBackwards}">Send backwards</Button>
-                                <Button Margin="3" Command="{Binding BringForwards}">Bring forwards</Button>
-                                <Button Margin="3" Command="{Binding BringToFront}">Bring to font</Button>
-                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type des:RectangleElement}">
@@ -79,19 +71,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Margin="3">Background</TextBlock>
                             <xcd:ColorPicker Grid.Column="1" Margin="3" SelectedColor="{Binding BackgroundColor}"/>
                             <TextBlock Grid.Row="1" Margin="3">Border</TextBlock>
                             <xcd:ColorPicker Grid.Row="1" Grid.Column="1" Margin="3" SelectedColor="{Binding BorderColor}"/>
-                            <TextBlock Grid.Row="2" Margin="3">Layer</TextBlock>
-                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
-                                <Button Margin="3" Command="{Binding SendToBack}">Send to back</Button>
-                                <Button Margin="3" Command="{Binding SendBackwards}">Send backwards</Button>
-                                <Button Margin="3" Command="{Binding BringForwards}">Bring forwards</Button>
-                                <Button Margin="3" Command="{Binding BringToFront}">Bring to font</Button>
-                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type des:EllipseElement}">
@@ -103,29 +87,63 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Margin="3">Background</TextBlock>
                             <xcd:ColorPicker Grid.Column="1" Margin="3" SelectedColor="{Binding BackgroundColor}"/>
                             <TextBlock Grid.Row="1" Margin="3">Border</TextBlock>
                             <xcd:ColorPicker Grid.Row="1" Grid.Column="1" Margin="3" SelectedColor="{Binding BorderColor}"/>
-                            <TextBlock Grid.Row="2" Margin="3">Layer</TextBlock>
-                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
-                                <Button Margin="3" Command="{Binding SendToBack}">Send to back</Button>
-                                <Button Margin="3" Command="{Binding SendBackwards}">Send backwards</Button>
-                                <Button Margin="3" Command="{Binding BringForwards}">Bring forwards</Button>
-                                <Button Margin="3" Command="{Binding BringToFront}">Bring to font</Button>
-                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
-            <StackPanel>
+            <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">
+                <TextBlock Margin="3" FontSize="14">Layout</TextBlock>
+            </Border>
+            <Grid Margin="5" DockPanel.Dock="Top" DataContext="{Binding SelectedElement}">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Margin="3">Left</TextBlock>
+                <xcd:DoubleUpDown Grid.Column="1" Value="{Binding Left}"/>
+                <TextBlock Margin="3" Grid.Row="1">Top</TextBlock>
+                <xcd:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Top}"/>
+                <TextBlock Margin="3" Grid.Row="2">Width</TextBlock>
+                <xcd:DoubleUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Width}"/>
+                <TextBlock Grid.Row="3" Margin="3">Height</TextBlock>
+                <xcd:DoubleUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Height}"/>
+                <UniformGrid Columns="2" Rows="2" Grid.Row="4" Grid.ColumnSpan="2" Margin="5">
+                    <Button Margin="3" Command="{Binding SendToBack}">Send to back</Button>
+                    <Button Margin="3" Command="{Binding SendBackwards}">Send backwards</Button>
+                    <Button Margin="3" Command="{Binding BringForwards}">Bring forwards</Button>
+                    <Button Margin="3" Command="{Binding BringToFront}">Bring to font</Button>
+                </UniformGrid>
+            </Grid>
+            <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">
+                <TextBlock Margin="3" FontSize="14">Actions</TextBlock>
+            </Border>
+            <UniformGrid Columns="2" Rows="2" Margin="5" DockPanel.Dock="Top">
                 <Button Margin="3" Command="{Binding DeleteCommand}">Delete</Button>
                 <Button Margin="3" Command="{Binding ReloadCommand}">Reload</Button>
                 <Button Margin="3" Command="{Binding SaveLayoutCommand}">Save Layout</Button>
                 <Button Margin="3" Command="{Binding SaveImageCommand}">Save Image</Button>
-            </StackPanel>
+            </UniformGrid>
         </DockPanel>
     </Grid>
 </UserControl>

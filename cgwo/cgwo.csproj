@@ -114,6 +114,7 @@
     <Compile Include="Mvvm\ColorExtensionMethods.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\IDialogService.cs" />
+    <Compile Include="Mvvm\KeyPreviewBehaviour.cs" />
     <Compile Include="Mvvm\StringComparisonConverter.cs" />
     <Compile Include="Mvvm\ValidationForAttribute.cs" />
     <Compile Include="Mvvm\ViewModel.cs" />
