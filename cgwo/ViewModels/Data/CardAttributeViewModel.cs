@@ -80,7 +80,7 @@ namespace cgwo.ViewModels.Data
             if (IsNew)
                 return;
 
-            if (_dialogService.Prompt("Confirm delete", "Are you sure you want to delete this property?") == DialogResult.Accept)
+            if (_dialogService.Prompt("Confirm delete", "Are you sure you want to delete this attribute?") == DialogResult.Accept)
             {
                 _cardGameDataStore.DeleteCardAttribute(_original);
                 _isDeleted = true;
