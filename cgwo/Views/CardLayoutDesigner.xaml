@@ -132,7 +132,7 @@
                     <Button Margin="3" Command="{Binding SendToBack}">Send to back</Button>
                     <Button Margin="3" Command="{Binding SendBackwards}">Send backwards</Button>
                     <Button Margin="3" Command="{Binding BringForwards}">Bring forwards</Button>
-                    <Button Margin="3" Command="{Binding BringToFront}">Bring to font</Button>
+                    <Button Margin="3" Command="{Binding BringToFront}">Bring to front</Button>
                 </UniformGrid>
             </Grid>
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">
