@@ -65,10 +65,15 @@
                     <TextBlock Margin="3" FontSize="14">Attributes</TextBlock>
                 </Border>
 
-                <ItemsControl ItemsSource="{Binding Attributes}" Margin="25, 10" DockPanel.Dock="Top">
+                <StackPanel DockPanel.Dock="Top" Margin="28, 10, 0, 0" Orientation="Horizontal">
+                    <TextBox IsReadOnly="True" Width="120" Height="24" Text="Name" Background="{x:Static SystemColors.InactiveCaptionBrush}"/>
+                    <TextBlock VerticalAlignment="Center" FontStyle="Italic" Margin="3">(Default Property)</TextBlock>
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{Binding Attributes}" Margin="25, 0" DockPanel.Dock="Top">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Grid.IsSharedSizeScope="True"/>
+                            <StackPanel Grid.IsSharedSizeScope="True"/>.
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
