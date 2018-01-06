@@ -18,8 +18,16 @@ namespace Cogs.Core
                 throw new FileNotFoundException("Could not open data files");
 
             var gameData = JsonConvert.DeserializeObject<JsonCardGameData>(File.ReadAllText(fileLocation));
+			RunFixups(gameData);
+			
             return new JsonCardGameDataStore(fileLocation, gameData);
         }
+
+		private static void RunFixups(JsonCardGameData gameData)
+		{
+			// Fix for deleted attributes
+			gameData.CardAttributeValues.RemoveAll(cav => gameData.CardAttributes.Exists(attr => attr.Id == cav.CardAttributeId) == false);
+		}
 
         public static ICardGameDataStore CreateNew(string fileLocation)
         {
