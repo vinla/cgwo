@@ -105,6 +105,9 @@
     <Compile Include="Controls\TabHeader.xaml.cs">
       <DependentUpon>TabHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TextEditBox.xaml.cs">
+      <DependentUpon>TextEditBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Designer\CardElement.cs" />
     <Compile Include="Designer\EllipseElement.cs" />
     <Compile Include="Designer\HighlightAdorner.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\IDialogService.cs" />
     <Compile Include="Mvvm\KeyPreviewBehaviour.cs" />
+    <Compile Include="Mvvm\NegatingConverter.cs" />
     <Compile Include="Mvvm\StringComparisonConverter.cs" />
     <Compile Include="Mvvm\ValidationForAttribute.cs" />
     <Compile Include="Mvvm\ViewModel.cs" />
@@ -170,6 +174,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\TextEditBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -191,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Dictionaries\MainViewMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Dictionaries\StaticResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

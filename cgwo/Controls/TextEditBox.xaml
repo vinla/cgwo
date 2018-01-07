@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="cgwo.Controls.TextEditBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:cgwo.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <TextBox x:Name="Editor" Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="0" Padding="0"
+                 TextWrapping="Wrap"
+                 LostFocus="TextBoxLostFocus"
+                 Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 Template="{StaticResource SeamlessTextBox}">
+        </TextBox>
+        <Grid Background="Transparent" MouseDown="TextBlockClick">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsEditing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+        </Grid>
+    </Grid>
+</UserControl>

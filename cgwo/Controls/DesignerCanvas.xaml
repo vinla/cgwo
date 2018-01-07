@@ -9,7 +9,7 @@
              Focusable="True"
              KeyboardNavigation.DirectionalNavigation="Contained"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid Focusable="True" Background="Transparent">
         <ItemsControl ItemsSource="{Binding Elements, RelativeSource={RelativeSource AncestorType=UserControl}}" x:Name="itemsHost">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -27,7 +27,7 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type des:TextElement}">
-                    <Grid Width="{Binding Width}" Height="{Binding Height}" Background="Transparent" MouseLeftButtonDown="ItemMouseClick">
+                    <Grid Width="{Binding Width}" Height="{Binding Height}" Background="Transparent" PreviewMouseLeftButtonUp="ItemMouseClick">
                         <Rectangle Fill="Transparent" StrokeDashArray="4,4" Stroke="Black" IsHitTestVisible="False" Opacity=".4">
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">
@@ -39,7 +39,7 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Margin="2" Text="{Binding Text}" IsHitTestVisible="False" FontSize="{Binding TextSize}" Foreground="{Binding TextBrush}" TextWrapping="Wrap"/>
+                        <local:TextEditBox Margin="2" Text="{Binding Text, Mode=TwoWay}" FontSize="{Binding TextSize}" Foreground="{Binding TextBrush}" IsEnabled="{Binding IsDisplayOnly, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NegatingConverter}}"/>
                     </Grid>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type des:RectangleElement}">

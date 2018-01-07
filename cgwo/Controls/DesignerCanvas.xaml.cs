@@ -77,7 +77,7 @@ namespace cgwo.Controls
 
             for (int i = 0; i < itemsHost.Items.Count; i++)
             {
-                var uiElement = (FrameworkElement)itemsHost.ItemContainerGenerator.ContainerFromIndex(i);
+				var uiElement = VisualTreeHelper.GetChild(itemsHost.ItemContainerGenerator.ContainerFromIndex(i), 0) as FrameworkElement;
                 if (uiElement.DataContext == SelectedElement)
                 {
                     _resizeAdorner = new ResizeAdorner(uiElement);
@@ -94,6 +94,7 @@ namespace cgwo.Controls
                 var adornerLayer = AdornerLayer.GetAdornerLayer(_selection);
                 if(adornerLayer != null)
                     adornerLayer.Remove(_resizeAdorner);
+				_selection = null;
             }
         }
 
@@ -112,14 +113,21 @@ namespace cgwo.Controls
             if (IsDisplayOnly)
                 return;
 
-            if (sender == e.OriginalSource)
-                Deselect();
+			if (sender == e.OriginalSource)
+			{
+				Focus();
+				Deselect();
+			}
         }
 
-		protected override void OnKeyDown(KeyEventArgs e)
-		{						
+		protected override void OnPreviewKeyDown(KeyEventArgs e)
+		{
 			if (SelectedElement == null)
 				return;
+
+			if (_selection != null && _selection.IsKeyboardFocusWithin)
+				return;
+			
 			var moveAmount = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ? 5 : 1;
 
 			if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
@@ -132,9 +140,11 @@ namespace cgwo.Controls
 					SelectedElement.Height = Math.Max(1, SelectedElement.Height - moveAmount);
 				else if (e.Key == Key.Down)
 					SelectedElement.Height += moveAmount;
+
+				e.Handled = true;
 			}
 			else
-			{				
+			{
 				if (e.Key == Key.Right)
 					SelectedElement.Left += moveAmount;
 				else if (e.Key == Key.Left)
@@ -143,9 +153,11 @@ namespace cgwo.Controls
 					SelectedElement.Top -= moveAmount;
 				else if (e.Key == Key.Down)
 					SelectedElement.Top += moveAmount;
+
+				e.Handled = true;
 			}
 
-			e.Handled = true;
+			base.OnPreviewKeyDown(e);
 		}
 	}
 }
