@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using cgwo.Mvvm;
 using Cogs.Common;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels
 {
@@ -34,7 +30,7 @@ namespace cgwo.ViewModels
             private set { SetValue(nameof(CurrentModule), value); }
         }
 
-        [Mvvm.CalculateFrom(nameof(CurrentModule))]
+        [CalculateFrom(nameof(CurrentModule))]
         public string CurrentModuleName => _currentModuleName;
 
         private void LoadModule(string moduleToLoad)

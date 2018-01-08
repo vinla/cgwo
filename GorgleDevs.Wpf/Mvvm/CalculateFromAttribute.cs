@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace cgwo.Mvvm
+namespace GorgleDevs.Wpf.Mvvm
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class CalculateFromAttribute : Attribute

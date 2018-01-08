@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace Cogs.Designer
 {
@@ -10,7 +11,7 @@ namespace Cogs.Designer
             set { SetValue(nameof(BackgroundColor), value); }
         }
 
-        [cgwo.Mvvm.CalculateFrom(nameof(BackgroundColor))]
+        [CalculateFrom(nameof(BackgroundColor))]
         public Brush Background => new SolidColorBrush(BackgroundColor);        
 
         public Color BorderColor
@@ -19,7 +20,7 @@ namespace Cogs.Designer
             set { SetValue(nameof(BorderColor), value); }
         }
 
-        [cgwo.Mvvm.CalculateFrom(nameof(BorderColor))]
+        [CalculateFrom(nameof(BorderColor))]
         public Brush Border => new SolidColorBrush(BorderColor);
 
         public float BorderWidth

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using cgwo.Mvvm;
 using Cogs.Common;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels
 {
@@ -56,11 +56,11 @@ namespace cgwo.ViewModels
 			}
 		}
 
-        [Mvvm.CalculateFrom(nameof(SelectedCardType))]
-        [Mvvm.CalculateFrom(nameof(CardType))]
+        [CalculateFrom(nameof(SelectedCardType))]
+        [CalculateFrom(nameof(CardType))]
         public bool CanDelete => SelectedCardType != null && CardType != null && SelectedCardType.Id == CardType.Id;
 
-		public ICommand AddType => new Mvvm.DelegateCommand(() =>
+		public ICommand AddType => new DelegateCommand(() =>
 		{
 			var newType = new CardType
 			{
@@ -71,7 +71,7 @@ namespace cgwo.ViewModels
             SelectedCardType = null;
 		});
 
-        public ICommand DeleteType => new Mvvm.DelegateCommand(() =>
+        public ICommand DeleteType => new DelegateCommand(() =>
         {
             if (SelectedCardType != null)
             {

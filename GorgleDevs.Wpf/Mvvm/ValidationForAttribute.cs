@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace cgwo.Mvvm
+namespace GorgleDevs.Wpf.Mvvm
 {
     public class ValidationForAttribute : Attribute
     {

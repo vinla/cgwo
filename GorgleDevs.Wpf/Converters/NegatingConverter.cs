@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Cogs.Mvvm
+namespace GorgleDevs.Wpf.Converters
 {
 	public class NegatingConverter : IValueConverter
 	{

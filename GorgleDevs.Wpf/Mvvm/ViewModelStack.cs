@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace cgwo.Mvvm
+namespace GorgleDevs.Wpf.Mvvm
 {
 	public class ViewModelStack : ViewModel
 	{

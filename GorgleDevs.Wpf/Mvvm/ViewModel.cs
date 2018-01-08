@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace cgwo.Mvvm
+namespace GorgleDevs.Wpf.Mvvm
 {
 	public abstract class ViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 	{

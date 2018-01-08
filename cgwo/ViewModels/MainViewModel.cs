@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using cgwo.Mvvm;
 using Cogs.Common;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels
 {

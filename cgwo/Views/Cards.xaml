@@ -4,15 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:mvvm="clr-namespace:Cogs.Mvvm"
-             xmlns:local="clr-namespace:cgwo.Views"
-             xmlns:xcd="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:gb="clr-namespace:GorgleDevs.Wpf.Behaviours;assembly=GorgleDevs.Wpf"             
              xmlns:ctrl="clr-namespace:cgwo.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <i:Interaction.Behaviors>
-            <mvvm:KeyPreviewBehaviour Key="N" Modifiers="Ctrl" Command="{Binding AddCard}" CommandParameter="{Binding SelectedCardType}"/>
+            <gb:KeyPreviewBehaviour Key="N" Modifiers="Ctrl" Command="{Binding AddCard}" CommandParameter="{Binding SelectedCardType}"/>
         </i:Interaction.Behaviors>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -102,6 +100,5 @@
             </Border.Style>
             <ctrl:DesignerCanvas Elements="{Binding CardEditor.Elements}" IsDisplayOnly="True"/>
         </Border>
-        
     </Grid>
 </UserControl>

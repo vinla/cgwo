@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using cgwo.Mvvm;
 using Cogs.Common;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels
 {
@@ -32,7 +30,7 @@ namespace cgwo.ViewModels
 
 		public IEnumerable<Card> Cards => _cards ?? (_cards = _cardGameDataStore.GetCards().ToList());
 
-        public ICommand AddCard => new Mvvm.DelegateCommand((o) =>
+        public ICommand AddCard => new DelegateCommand((o) =>
         {
             var cardType = (CardType)o;            
             var attributes = _cardGameDataStore.GetCardAttributes(cardType.Id);

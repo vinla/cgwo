@@ -7,6 +7,8 @@
              xmlns:ctrl="clr-namespace:cgwo.Controls"
              xmlns:xcd="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:des="clr-namespace:Cogs.Designer"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:gb="clr-namespace:GorgleDevs.Wpf.Behaviours;assembly=GorgleDevs.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -16,19 +18,67 @@
         </Grid.ColumnDefinitions>
         <Grid>
             <Border BorderBrush="Black" Background="{Binding Background}" BorderThickness="2" CornerRadius="5" Width="250" Height="350">
+                <i:Interaction.Behaviors>
+                    <gb:DropBehavior DropCommand="{Binding AddElement}"/>
+                    <gb:KeyPreviewBehaviour Key="Delete" Command="{Binding DeleteCommand}"/>
+                </i:Interaction.Behaviors>
                 <ctrl:DesignerCanvas Elements="{Binding Elements}" SelectedElement="{Binding SelectedElement, Mode=TwoWay}" Width="250" Height="350">
                     <ctrl:DesignerCanvas.InputBindings>
                         <KeyBinding Key="Delete" Command="{Binding DeleteItem}"/>
                     </ctrl:DesignerCanvas.InputBindings>
                 </ctrl:DesignerCanvas>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="0,0,1,1" Background="White" Width="80" Height="120" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical">
-                    <Button Margin="3" Padding="4" Command="{Binding AddElement}" CommandParameter="Text">Textbox</Button>
-                    <Button Margin="3" Padding="4" Command="{Binding AddElement}" CommandParameter="Rectangle">Rectangle</Button>
-                    <Button Margin="3" Padding="4" Command="{Binding AddElement}" CommandParameter="Ellipse">Ellipse</Button>
-                </StackPanel>
-            </Border>
+
+            <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <DockPanel LastChildFill="False" Margin="2">
+                    <i:Interaction.Behaviors>
+                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="Text"/>
+                        <gb:DragBehaviour DragData="Text" CanDrag="True"/>
+                    </i:Interaction.Behaviors>
+                    <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
+                    <Grid DockPanel.Dock="Left" Background="LightGray" Width="28" Height="28">
+                        <Image Source="/Resources/Images/ToolButtons/text.png" Width="20" Height="20"/>
+                    </Grid>
+                    <Grid DockPanel.Dock="Left" Background="DarkGray" Height="28" Width="64">
+                        <TextBlock Margin="3" VerticalAlignment="Center">Text</TextBlock>
+                    </Grid>
+                </DockPanel>
+                <DockPanel LastChildFill="False" Margin="2">
+                    <i:Interaction.Behaviors>
+                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="Rectangle"/>
+                        <gb:DragBehaviour DragData="Rectangle" CanDrag="True"/>
+                    </i:Interaction.Behaviors>
+                    <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
+                    <Grid DockPanel.Dock="Left" Background="LightGray" Width="28" Height="28">
+                        <Border Width="18" Height="16" BorderBrush="Black" BorderThickness="2"/>
+                    </Grid>
+                    <Grid DockPanel.Dock="Left" Background="DarkGray" Height="28" Width="64">
+                        <TextBlock Margin="3" VerticalAlignment="Center">Rectangle</TextBlock>
+                    </Grid>
+                </DockPanel>
+                <DockPanel LastChildFill="False" Margin="2">
+                    <i:Interaction.Behaviors>
+                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="Ellipse"/>
+                        <gb:DragBehaviour DragData="Ellipse" CanDrag="True"/>
+                    </i:Interaction.Behaviors>
+                    <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
+                    <Grid DockPanel.Dock="Left" Background="LightGray" Width="28" Height="28">
+                        <Ellipse Width="18" Height="16" Stroke="Black" StrokeThickness="2" Fill="Transparent"/>
+                    </Grid>
+                    <Grid DockPanel.Dock="Left" Background="DarkGray" Height="28" Width="64">
+                        <TextBlock Margin="3" VerticalAlignment="Center">Ellipse</TextBlock>
+                    </Grid>
+                </DockPanel>
+                <DockPanel LastChildFill="False" Margin="2">
+                    <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
+                    <Grid DockPanel.Dock="Left" Background="LightGray" Width="28" Height="28">
+                        <Image Source="/Resources/Images/ToolButtons/text.png" Width="20" Height="20"/>
+                    </Grid>
+                    <Grid DockPanel.Dock="Left" Background="DarkGray" Height="28" Width="64">
+                        <TextBlock Margin="3" VerticalAlignment="Center">Image</TextBlock>
+                    </Grid>
+                </DockPanel>
+            </StackPanel>
         </Grid>
         <DockPanel Grid.Column="1" LastChildFill="False">
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">

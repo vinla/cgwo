@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace cgwo.Mvvm
+namespace GorgleDevs.Wpf.Mvvm
 {
     public class WindowsDialogService : IDialogService
     {
@@ -15,7 +15,7 @@ namespace cgwo.Mvvm
             {
                 dlg.InitialDirectory = startingPath;
                 dlg.Filter = fileFilter;
-                if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     return (DialogResult.Accept, dlg.FileName);
                 }
@@ -40,7 +40,7 @@ namespace cgwo.Mvvm
         public DialogResult Prompt(string subject, string message)
         {
             var result = System.Windows.Forms.MessageBox.Show(message, subject, System.Windows.Forms.MessageBoxButtons.YesNo);
-            switch(result)
+            switch (result)
             {
                 case System.Windows.Forms.DialogResult.Yes:
                     return DialogResult.Accept;

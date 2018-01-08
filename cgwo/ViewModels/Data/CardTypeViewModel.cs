@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using cgwo.Mvvm;
 using Cogs.Common;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels.Data
 {
-	public class CardTypeViewModel : Mvvm.ViewModel
+	public class CardTypeViewModel : ViewModel
 	{
         private readonly ICardGameDataStore _cardGameDataStore;
         private readonly IDialogService _dialogService;
@@ -45,21 +45,21 @@ namespace cgwo.ViewModels.Data
 			}
 		}
 
-        [Mvvm.CalculateFrom(nameof(IsCreated))]
+        [CalculateFrom(nameof(IsCreated))]
         public LayoutViewModel Layout => IsCreated ? _layoutViewModel : null;
 
-        [Mvvm.CalculateFrom(nameof(Name))]
+        [CalculateFrom(nameof(Name))]
 		public bool HasChanges => _clone.Name != _original.Name;			
 
-        [Mvvm.CalculateFrom(nameof(Name))]
+        [CalculateFrom(nameof(Name))]
 		public bool CardTypeAlreadyExists => _cardGameDataStore.GetCardTypes().Any(ct => ct.Name == Name.Trim() && ct.Id != _original.Id);
 
-        [Mvvm.CalculateFrom(nameof(HasChanges))]
+        [CalculateFrom(nameof(HasChanges))]
 		public bool CanSave => HasChanges && !CardTypeAlreadyExists && !String.IsNullOrEmpty(Name);
 
         public bool IsCreated => _cardGameDataStore.GetCardTypes().Any(ct => ct.Id == _original.Id);
 
-        public ICommand SaveCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand SaveCommand => new DelegateCommand(() =>
         {
             if (!CanSave)
                 return;
@@ -73,7 +73,7 @@ namespace cgwo.ViewModels.Data
             NotifyChanges();
         });
 
-        public ICommand CancelCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand CancelCommand => new DelegateCommand(() =>
         {
             Name = _original.Name;
             if (_cardGameDataStore.GetCardTypes().Any(ct => ct.Id == _original.Id) == false)
@@ -90,14 +90,14 @@ namespace cgwo.ViewModels.Data
 
         public IEnumerable<CardAttributeViewModel> Attributes => _attributes.Select(x => x);
 
-        public ICommand AddAttribute => new Mvvm.DelegateCommand(() =>
+        public ICommand AddAttribute => new DelegateCommand(() =>
         {
             var cardAttribute = new CardAttribute();
             _attributes.Add(new CardAttributeViewModel(_cardGameDataStore, _dialogService, _original.Id, cardAttribute, CancelAddAttribute, () => RaisePropertyChanged(nameof(IsEditingAttribute))));
             RaisePropertyChanged(nameof(Attributes));
         });
 
-        [Mvvm.CalculateFrom(nameof(Attributes))]
+        [CalculateFrom(nameof(Attributes))]
         public bool IsEditingAttribute => _attributes.Any(attr => attr.HasChanges);
 
         private void LoadAttributes()

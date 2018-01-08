@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using cgwo.Mvvm;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace Cogs.Designer
 {

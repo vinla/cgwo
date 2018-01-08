@@ -1,6 +1,8 @@
-﻿namespace cgwo.ViewModels
+﻿using GorgleDevs.Wpf.Mvvm;
+
+namespace cgwo.ViewModels
 {
-    public abstract class ModuleViewModel : Mvvm.ViewModel
+    public abstract class ModuleViewModel : ViewModel
     {
         public abstract bool BeforeUnload();
     }

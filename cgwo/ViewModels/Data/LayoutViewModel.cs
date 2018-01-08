@@ -3,16 +3,18 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media;
-using Cogs.Designer;
-using Cogs.Common;
-using Cogs.Mvvm;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Cogs.Designer;
+using Cogs.Common;
+using GorgleDevs.Wpf;
+using GorgleDevs.Wpf.Mvvm;
+
 
 namespace cgwo.ViewModels.Data
 {
-    public class LayoutViewModel : Mvvm.ViewModel, IZIndexManager
+    public class LayoutViewModel : ViewModel, IZIndexManager
     {
         private readonly ICardGameDataStore _cardGameDataStore;
         private readonly Guid _cardTypeId;
@@ -31,7 +33,7 @@ namespace cgwo.ViewModels.Data
             set { SetValue(nameof(BackgroundColor), value); }
         }
 
-        [Mvvm.CalculateFrom(nameof(BackgroundColor))]
+        [CalculateFrom(nameof(BackgroundColor))]
         public Brush Background => new SolidColorBrush(BackgroundColor);
         //public Brush Background => new ImageBrush(new BitmapImage(new System.Uri("pack://application:,,,/Resources/Images/back.jpg", System.UriKind.Absolute)));
 
@@ -43,7 +45,7 @@ namespace cgwo.ViewModels.Data
             set { SetValue(nameof(SelectedElement), value); }
         }
 
-        public ICommand AddElement => new Mvvm.DelegateCommand((o) =>
+        public ICommand AddElement => new DelegateCommand((o) =>
         {
             var elementType = o.ToString();
             CardElement elementToAdd = null;
@@ -99,7 +101,7 @@ namespace cgwo.ViewModels.Data
             }
         });
 
-        public ICommand DeleteCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand DeleteCommand => new DelegateCommand(() =>
         {
             if (SelectedElement != null)
             {
@@ -108,7 +110,7 @@ namespace cgwo.ViewModels.Data
                 SelectedElement = null;
             }
         });
-        public ICommand ReloadCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand ReloadCommand => new DelegateCommand(() =>
         {
             LoadLayout();
             RaisePropertyChanged(nameof(Background));
@@ -147,7 +149,7 @@ namespace cgwo.ViewModels.Data
             element.ZIndex = _elements.Min(e => e.ZIndex) - 1;
         }
 
-        public ICommand SaveLayoutCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand SaveLayoutCommand => new DelegateCommand(() =>
         {
             SaveLayout();
         });        
@@ -175,7 +177,7 @@ namespace cgwo.ViewModels.Data
             _cardGameDataStore.SaveLayout(_cardTypeId, layout);
         }
 
-        public ICommand SaveImageCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand SaveImageCommand => new DelegateCommand(() =>
         {
             SaveCardImage();
         });

@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace Cogs.Mvvm
+namespace GorgleDevs.Wpf.Behaviours
 {
 	public class KeyPreviewBehaviour : Behavior<FrameworkElement>
 	{

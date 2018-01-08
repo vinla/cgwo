@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace cgwo.Mvvm
+namespace GorgleDevs.Wpf.Mvvm
 {
 	public class DelegateCommand : ICommand
 	{

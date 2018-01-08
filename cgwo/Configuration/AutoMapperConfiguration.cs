@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cogs.Common;
+﻿using Cogs.Common;
 using Cogs.Designer;
-using Cogs.Mvvm;
+using GorgleDevs.Wpf;
 
 namespace cgwo.Configuration
 {

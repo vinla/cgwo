@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using cgwo.Mvvm;
 using Cogs.Common;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels.Data
 {
-    public class CardAttributeViewModel : Mvvm.ViewModel
+    public class CardAttributeViewModel : ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly ICardGameDataStore _cardGameDataStore;
@@ -43,26 +43,26 @@ namespace cgwo.ViewModels.Data
             set { SetValue(nameof(Name), value); }
         }
 
-        [Mvvm.CalculateFrom(nameof(Name))]
+        [CalculateFrom(nameof(Name))]
         public bool HasChanges => IsNew || Name != _original.Name;
 
         public bool IsNew => _existingAttributes.Any(ca => ca.Id == _original.Id) == false;
 
-        [Mvvm.CalculateFrom(nameof(Name))]
+        [CalculateFrom(nameof(Name))]
         public bool AttributeNameInUse => _existingAttributes.Any(ca => ca.Name == Name.Trim() && ca.Id != _original.Id);
 
-        [Mvvm.CalculateFrom(nameof(Name))]
+        [CalculateFrom(nameof(Name))]
         public bool IsValid => String.IsNullOrEmpty(Name) == false && IsPropertyValid(nameof(Name)) && !AttributeNameInUse;
 
         public bool IsDeleted => _isDeleted;
 
-        public ICommand CancelCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand CancelCommand => new DelegateCommand(() =>
         {
             Name = _original.Name ?? String.Empty;
             _cancelEdit?.Invoke();
         });
 
-        public ICommand SaveCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand SaveCommand => new DelegateCommand(() =>
         {
             if (!IsValid)
                 return;
@@ -75,7 +75,7 @@ namespace cgwo.ViewModels.Data
             _cancelEdit?.Invoke();
         });
 
-        public ICommand DeleteCommand => new Mvvm.DelegateCommand(() =>
+        public ICommand DeleteCommand => new DelegateCommand(() =>
         {
             if (IsNew)
                 return;
@@ -88,7 +88,7 @@ namespace cgwo.ViewModels.Data
             }
         });
 
-        [Mvvm.ValidationFor(nameof(Name))]
+        [ValidationFor(nameof(Name))]
         private string ValidateProjectName(object value)
         {
             var whitelistRegex = "^[a-zA-Z0-9]*$";

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
-using cgwo.Mvvm;
 using Cogs.Common;
 using Cogs.Designer;
-using Cogs.Mvvm;
+using GorgleDevs.Wpf;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels.Data
 {
-    public class CardEditorViewModel : Mvvm.ViewModel
+    public class CardEditorViewModel : ViewModel
     {
         private readonly ICardGameDataStore _cardGameDataStore;
         private readonly IDialogService _dialogService;
@@ -43,7 +41,7 @@ namespace cgwo.ViewModels.Data
 
         public IEnumerable<CardAttributeValue> AttributeValues => _card.AttributeValues;
 
-        public ICommand UpdatePreview => new Mvvm.DelegateCommand(() =>
+        public ICommand UpdatePreview => new DelegateCommand(() =>
         {
             _elements = LayoutConverter.ToDesignerElements(_layout.Elements);
             foreach(var textElement in _elements.OfType<TextElement>())

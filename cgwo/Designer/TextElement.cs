@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace Cogs.Designer
 {
@@ -16,7 +17,7 @@ namespace Cogs.Designer
             set { SetValue(nameof(TextColor), value); }
         }
 
-        [cgwo.Mvvm.CalculateFrom(nameof(TextColor))]
+        [CalculateFrom(nameof(TextColor))]
         public Brush TextBrush => new SolidColorBrush(TextColor);
 
         public string Text

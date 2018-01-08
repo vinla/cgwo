@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogs.Common", "Cogs.Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogs.Core", "Cogs.Core\Cogs.Core.csproj", "{8F3527FF-6660-49A0-99E6-7763BAC08736}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GorgleDevs.Wpf", "GorgleDevs.Wpf\GorgleDevs.Wpf.csproj", "{C36CD563-3A01-4979-8E57-2A90E4064E8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8F3527FF-6660-49A0-99E6-7763BAC08736}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3527FF-6660-49A0-99E6-7763BAC08736}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3527FF-6660-49A0-99E6-7763BAC08736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C36CD563-3A01-4979-8E57-2A90E4064E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C36CD563-3A01-4979-8E57-2A90E4064E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C36CD563-3A01-4979-8E57-2A90E4064E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C36CD563-3A01-4979-8E57-2A90E4064E8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

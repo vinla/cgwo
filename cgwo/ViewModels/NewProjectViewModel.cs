@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
 using Cogs.Common;
+using GorgleDevs.Wpf.Mvvm;
 
 namespace cgwo.ViewModels
 {
-	public class NewProjectViewModel: Mvvm.ViewModel
+	public class NewProjectViewModel: ViewModel
 	{
         private readonly Action<ICardGameDataStore> _onDataStoreLoad;
-        private readonly Mvvm.IDialogService _dialogService;
+        private readonly IDialogService _dialogService;
 		private readonly ICardGameDataStoreFactory _dataStoreFactory;
-		public NewProjectViewModel(ICardGameDataStoreFactory dataStoreFactory, Mvvm.IDialogService dialogService, Action<ICardGameDataStore> onDataStoreLoad)
+		public NewProjectViewModel(ICardGameDataStoreFactory dataStoreFactory, IDialogService dialogService, Action<ICardGameDataStore> onDataStoreLoad)
 		{
             _onDataStoreLoad = onDataStoreLoad;
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
@@ -19,7 +20,7 @@ namespace cgwo.ViewModels
 			ErrorsChanged += (s, e) => RaisePropertyChanged(nameof(IsValid));			
 		}
 
-		public ICommand Cancel => new Mvvm.DelegateCommand(() =>
+		public ICommand Cancel => new DelegateCommand(() =>
 		{
             Cancelled = true;
 		});
@@ -30,18 +31,18 @@ namespace cgwo.ViewModels
             private set { SetValue(nameof(Cancelled), true); }
         }
 
-		public ICommand Browse => new Mvvm.DelegateCommand(() =>
+		public ICommand Browse => new DelegateCommand(() =>
 		{
             var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var dialog = _dialogService.ChooseFolder(myDocuments);
 
-            if(dialog.Result == Mvvm.DialogResult.Accept)
+            if(dialog.Result == DialogResult.Accept)
             {
                 SaveLocation = dialog.Path;
             }			
 		});
 
-        public ICommand Create => new Mvvm.DelegateCommand(() =>
+        public ICommand Create => new DelegateCommand(() =>
         {
             if (Path.IsPathRooted(SaveLocation))
             {
@@ -49,7 +50,7 @@ namespace cgwo.ViewModels
 
                 if (File.Exists(path))
                 {
-                    if (_dialogService.Prompt("Overwrite", "A project with this name already exists in this folder, do you want to overwrite it?") == Mvvm.DialogResult.Reject)
+                    if (_dialogService.Prompt("Overwrite", "A project with this name already exists in this folder, do you want to overwrite it?") == DialogResult.Reject)
                         return;
 
                     try
@@ -90,14 +91,14 @@ namespace cgwo.ViewModels
 			set { SetValue(nameof(ProjectName), value); }
 		}
 
-        [Mvvm.CalculateFrom(nameof(ProjectName))]
-        [Mvvm.CalculateFrom(nameof(SaveLocation))]
+        [CalculateFrom(nameof(ProjectName))]
+        [CalculateFrom(nameof(SaveLocation))]
 		public bool IsValid =>
 			HasErrors == false
 			&& String.IsNullOrEmpty(ProjectName) == false
 			&& String.IsNullOrEmpty(SaveLocation) == false;
 
-		[Mvvm.ValidationFor(nameof(ProjectName))]
+		[ValidationFor(nameof(ProjectName))]
 		private string ValidateProjectName(object value)
 		{
 			var validator = new Validation.FileNameValidation();
@@ -105,7 +106,7 @@ namespace cgwo.ViewModels
 			return validationResult.IsValid ? null : "Project name contains invalid characters";
 		}
 
-		[Mvvm.ValidationFor(nameof(SaveLocation))]
+		[ValidationFor(nameof(SaveLocation))]
 		private string ValidateSaveLocation(object value)
 		{
 			var validator = new Validation.FolderPathValidation();

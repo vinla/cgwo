@@ -5,12 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cgwo.Views"
              xmlns:vm="clr-namespace:cgwo.ViewModels"
-             xmlns:mvvm="clr-namespace:Cogs.Mvvm"             
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <mvvm:StringComparisonConverter x:Key="StringComparisonConverter"/>
-    </UserControl.Resources>
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" LastChildFill="True" Background="Gray">
             <Border DockPanel.Dock="Left" Width="5" Background="Gray" BorderThickness="0,0,1,0" BorderBrush="LightGray">

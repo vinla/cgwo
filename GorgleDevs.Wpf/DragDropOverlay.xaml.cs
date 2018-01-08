@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace cgwo
+namespace GorgleDevs.Wpf
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-	{
-		public MainWindow()
-		{
-			InitializeComponent();
-			DataContext = new ViewModels.MainViewModel(new Cogs.Core.JsonCardGameDataStoreFactory(), new GorgleDevs.Wpf.Mvvm.WindowsDialogService());
-		}
-	}
+    /// <summary>
+    /// Interaction logic for DragDropOverlay.xaml
+    /// </summary>
+    public partial class DragDropOverlay : UserControl
+    {
+        public DragDropOverlay()
+        {
+            InitializeComponent();
+        }
+    }
 }
