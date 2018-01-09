@@ -3,23 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:cgwo.Views"
+             xmlns:cogs="clr-namespace:cgwo.Views"
              xmlns:ctrl="clr-namespace:cgwo.Controls"
              xmlns:xcd="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:des="clr-namespace:Cogs.Designer"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:gb="clr-namespace:GorgleDevs.Wpf.Behaviours;assembly=GorgleDevs.Wpf"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <des:DesignerElementFactoryConverter x:Key="elementFactory"/>
+        <sys:String x:Key="Text">Text</sys:String>
+        <sys:String x:Key="Rectangle">Rectangle</sys:String>
+        <sys:String x:Key="Ellipse">Ellipse</sys:String>
+        <sys:String x:Key="Image">Image</sys:String>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        <Popup IsOpen="True" Placement="Absolute" PlacementRectangle="0,0,300,400">
+            <Grid Background="LightSteelBlue"/>
+        </Popup>
         <Grid>
-            <Border BorderBrush="Black" Background="{Binding Background}" BorderThickness="2" CornerRadius="5" Width="250" Height="350">
+            <Border x:Name="Designer" BorderBrush="Black" Background="{Binding Background}" BorderThickness="2" CornerRadius="5" Width="250" Height="350">
                 <i:Interaction.Behaviors>
-                    <gb:DropBehavior DropCommand="{Binding AddElement}"/>
+                    <gb:DropBehavior DropCommand="{Binding AddElement}" Converter="{StaticResource elementFactory}"/>
                     <gb:KeyPreviewBehaviour Key="Delete" Command="{Binding DeleteCommand}"/>
                 </i:Interaction.Behaviors>
                 <ctrl:DesignerCanvas Elements="{Binding Elements}" SelectedElement="{Binding SelectedElement, Mode=TwoWay}" Width="250" Height="350">
@@ -32,7 +43,7 @@
             <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <DockPanel LastChildFill="False" Margin="2">
                     <i:Interaction.Behaviors>
-                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="Text"/>
+                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="{Binding Source={StaticResource Text}, Converter={StaticResource elementFactory}}"/>
                         <gb:DragBehaviour DragData="Text" CanDrag="True"/>
                     </i:Interaction.Behaviors>
                     <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
@@ -45,7 +56,7 @@
                 </DockPanel>
                 <DockPanel LastChildFill="False" Margin="2">
                     <i:Interaction.Behaviors>
-                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="Rectangle"/>
+                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="{Binding Source={StaticResource Rectangle}, Converter={StaticResource elementFactory}}"/>
                         <gb:DragBehaviour DragData="Rectangle" CanDrag="True"/>
                     </i:Interaction.Behaviors>
                     <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
@@ -58,7 +69,7 @@
                 </DockPanel>
                 <DockPanel LastChildFill="False" Margin="2">
                     <i:Interaction.Behaviors>
-                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="Ellipse"/>
+                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="{Binding Source={StaticResource Ellipse}, Converter={StaticResource elementFactory}}"/>
                         <gb:DragBehaviour DragData="Ellipse" CanDrag="True"/>
                     </i:Interaction.Behaviors>
                     <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
@@ -70,9 +81,14 @@
                     </Grid>
                 </DockPanel>
                 <DockPanel LastChildFill="False" Margin="2">
+                    <i:Interaction.Behaviors>
+                        <gb:DoubleClickBehaviour Command="{Binding AddElement}" CommandParameter="{Binding Source={StaticResource Image}, Converter={StaticResource elementFactory}}"/>
+                        <gb:DragBehaviour DragData="Image" CanDrag="True"/>
+                    </i:Interaction.Behaviors>
                     <Grid DockPanel.Dock="Left" Width="3" Background="Black"></Grid>
                     <Grid DockPanel.Dock="Left" Background="LightGray" Width="28" Height="28">
-                        <Image Source="/Resources/Images/ToolButtons/text.png" Width="20" Height="20"/>
+                        <Rectangle Width="18" Height="16" Stroke="Black" StrokeThickness="2" Fill="Transparent"/>
+                        <Ellipse Width="18" Height="16" Stroke="Black" StrokeThickness="2" Fill="Transparent"/>
                     </Grid>
                     <Grid DockPanel.Dock="Left" Background="DarkGray" Height="28" Width="64">
                         <TextBlock Margin="3" VerticalAlignment="Center">Image</TextBlock>
@@ -105,7 +121,7 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Margin="3">Text</TextBlock>
-                            <TextBox Grid.Column="1" Margin="3" HorizontalAlignment="Stretch" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Grid.Column="1" Margin="3" HorizontalAlignment="Stretch" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
                             <TextBlock Margin="3" Grid.Row="1">Text Color</TextBlock>
                             <xcd:ColorPicker Grid.Row="1" Grid.Column="1" Margin="3" SelectedColor="{Binding TextColor}"/>
                             <TextBlock Margin="3" Grid.Row="2">Text Size</TextBlock>
@@ -142,6 +158,32 @@
                             <xcd:ColorPicker Grid.Column="1" Margin="3" SelectedColor="{Binding BackgroundColor}"/>
                             <TextBlock Grid.Row="1" Margin="3">Border</TextBlock>
                             <xcd:ColorPicker Grid.Row="1" Grid.Column="1" Margin="3" SelectedColor="{Binding BorderColor}"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type des:ImageElement}">
+                        <Grid DockPanel.Dock="Top" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="3">Image</TextBlock>
+                            <Grid Grid.Column="1" Background="Transparent">
+                                <Image Source="{Binding Image}" Width="120" Height="120" Stretch="Uniform"/>
+                                <Button Padding="3" Height="22" Width="96" Content="Choose image...">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType=Grid}}" Value="False">
+                                                    <Setter Property="Visibility" Value="Hidden"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
                         </Grid>
                     </DataTemplate>
                 </ContentControl.Resources>

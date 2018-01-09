@@ -109,8 +109,10 @@
       <DependentUpon>TextEditBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designer\CardElement.cs" />
+    <Compile Include="Designer\DesignerElementFactoryConverter.cs" />
     <Compile Include="Designer\EllipseElement.cs" />
     <Compile Include="Designer\HighlightAdorner.cs" />
+    <Compile Include="Designer\ImageElement.cs" />
     <Compile Include="Designer\IZIndexManager.cs" />
     <Compile Include="Designer\LayoutConverter.cs" />
     <Compile Include="Designer\RectangleElement.cs" />

@@ -48,6 +48,7 @@
     <Compile Include="CoreObject.cs" />
     <Compile Include="ElementLayout.cs" />
     <Compile Include="ICardGameDataStore.cs" />
+    <Compile Include="ImageElementLayout.cs" />
     <Compile Include="ProjectInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShapeElementLayout.cs" />

@@ -67,7 +67,7 @@ namespace GorgleDevs.Wpf
 		{
 			_adorner?.SetState(effects != DragDropEffects.None);
 			_layer?.Update();
-		}
+		}        
 	}
 
     public interface IDragSource
@@ -75,5 +75,10 @@ namespace GorgleDevs.Wpf
         bool CanDrag { get; }
         object StartDrag();
         void StopDrag();
+    }
+
+    public interface IDragData
+    {
+        void SetDropPosition(int screenX, int screenY);
     }
 }

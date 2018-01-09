@@ -47,57 +47,15 @@ namespace cgwo.ViewModels.Data
 
         public ICommand AddElement => new DelegateCommand((o) =>
         {
-            var elementType = o.ToString();
-            CardElement elementToAdd = null;
-            switch(elementType)
+            var element = o as CardElement;
+            
+            if(element != null)
             {
-                case "Text":
-                    elementToAdd = new TextElement
-                    {
-                        Left = 10,
-                        Top = 10,
-                        Height = 24,
-                        Width = 100,
-                        Text = "New text element",
-                        TextColor = Colors.Black,
-                        TextSize = 12
-                    };
-                    break;
-                case "Rectangle":
-                    elementToAdd = new RectangleElement
-                    {
-                        Left = 10,
-                        Top = 10,
-                        Height = 24,
-                        Width = 100,
-                        BackgroundColor = Colors.White,
-                        BorderColor = Colors.Black,
-                        BorderWidth = 1
-                    };
-                    break;
-                case "Ellipse":
-                    elementToAdd = new EllipseElement
-                    {
-                        Left = 10,
-                        Top = 10,
-                        Height = 24,
-                        Width = 24,
-                        BackgroundColor = Colors.White,
-                        BorderColor = Colors.Black,
-                        BorderWidth = 1
-                    };
-                    break;
-                default:
-                    throw new NotSupportedException("That value is not supported");
-            }
-
-            if(elementToAdd != null)
-            {
-                _elements.Add(elementToAdd);
-                elementToAdd.ZIndexManager = this;
-                BringToFront(elementToAdd);
+                _elements.Add(element);
+                element.ZIndexManager = this;
+                BringToFront(element);
                 RaisePropertyChanged(nameof(Elements));
-                SelectedElement = elementToAdd;
+                SelectedElement = element;
             }
         });
 
