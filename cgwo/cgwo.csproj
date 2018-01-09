@@ -99,6 +99,9 @@
     <Compile Include="Controls\DesignerCanvas.xaml.cs">
       <DependentUpon>DesignerCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImagePicker.xaml.cs">
+      <DependentUpon>ImagePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InlineFormButtons.xaml.cs">
       <DependentUpon>InlineFormButtons.xaml</DependentUpon>
     </Compile>
@@ -154,6 +157,10 @@
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\DesignerCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImagePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

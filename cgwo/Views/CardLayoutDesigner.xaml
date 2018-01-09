@@ -170,20 +170,7 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Margin="3">Image</TextBlock>
-                            <Grid Grid.Column="1" Background="Transparent">
-                                <Image Source="{Binding Image}" Width="120" Height="120" Stretch="Uniform"/>
-                                <Button Padding="3" Height="22" Width="96" Content="Choose image...">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType=Grid}}" Value="False">
-                                                    <Setter Property="Visibility" Value="Hidden"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Grid>
+                            <ctrl:ImagePicker Grid.Column="1" Width="120" Height="120"/>
                         </Grid>
                     </DataTemplate>
                 </ContentControl.Resources>
