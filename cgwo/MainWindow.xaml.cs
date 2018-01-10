@@ -23,7 +23,8 @@ namespace cgwo
 		public MainWindow()
 		{
 			InitializeComponent();
-			DataContext = new ViewModels.MainViewModel(new Cogs.Core.JsonCardGameDataStoreFactory(), new GorgleDevs.Wpf.Mvvm.WindowsDialogService());
+            var dialogService = new GorgleDevs.Wpf.Mvvm.WindowsDialogService(DialogHost);
+            DataContext = new ViewModels.MainViewModel(new Cogs.Core.JsonCardGameDataStoreFactory(), dialogService);
 		}
 	}
 }

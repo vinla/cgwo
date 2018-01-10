@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:cgwo.ViewModels"
         xmlns:v="clr-namespace:cgwo.Views"        
+        xmlns:dl="clr-namespace:cgwo.Views.Dialogs"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1024">
     <Grid Background="White">
@@ -28,6 +29,18 @@
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
-        
+
+        <dl:DialogFrame x:Name="DialogHost" DataContext="{x:Null}" Grid.RowSpan="2">
+            <dl:DialogFrame.Style>
+                <Style TargetType="dl:DialogFrame">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </dl:DialogFrame.Style>
+        </dl:DialogFrame>
+
     </Grid>
 </Window>

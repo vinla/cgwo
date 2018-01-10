@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\Data\CardEditorViewModel.cs" />
     <Compile Include="ViewModels\Data\CardTypeViewModel.cs" />
     <Compile Include="ViewModels\Data\LayoutViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ImagePickerDialog.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\ModuleViewModel.cs" />
@@ -146,6 +147,12 @@
     </Compile>
     <Compile Include="Views\CardTypes.xaml.cs">
       <DependentUpon>CardTypes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogFrame.xaml.cs">
+      <DependentUpon>DialogFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ImagePicker.xaml.cs">
+      <DependentUpon>ImagePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomePageView.xaml.cs">
       <DependentUpon>HomePageView.xaml</DependentUpon>
@@ -217,6 +224,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CardTypes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ImagePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

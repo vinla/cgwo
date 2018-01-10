@@ -1,9 +1,17 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace GorgleDevs.Wpf.Mvvm
 {
     public class WindowsDialogService : IDialogService
     {
+        private readonly FrameworkElement _dialogHost;        
+
+        public WindowsDialogService(FrameworkElement dialogHost)
+        {            
+            _dialogHost = dialogHost ?? throw new ArgumentNullException(nameof(dialogHost));
+        }
         public void Message(string message)
         {
             System.Windows.Forms.MessageBox.Show(message);
@@ -49,6 +57,27 @@ namespace GorgleDevs.Wpf.Mvvm
                 default:
                     throw new InvalidOperationException("unexpected dialog result");
             }
+        }
+
+        public async Task<DialogResult> ShowDialog(DialogViewModel viewModel)
+        {
+            var waitHandle = new System.Threading.ManualResetEvent(false);
+            _dialogHost.DataContext = viewModel;
+            viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(DialogViewModel.Result))
+                {
+                    _dialogHost.DataContext = null;
+                    if (viewModel.Result != DialogResult.None)
+                        waitHandle.Set();
+                }
+            };
+
+            return await Task.Factory.StartNew(() =>
+            {                
+                waitHandle.WaitOne();
+                return viewModel.Result;
+            });
         }
     }
 }

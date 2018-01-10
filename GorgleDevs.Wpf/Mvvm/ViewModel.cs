@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Input;
 
 namespace GorgleDevs.Wpf.Mvvm
 {
-	public abstract class ViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
+    public abstract class ViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 	{
 		private readonly Dictionary<string, object> _values;
 		private readonly Dictionary<string, List<MethodInfo>> _validators;

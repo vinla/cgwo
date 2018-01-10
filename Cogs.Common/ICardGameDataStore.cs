@@ -21,12 +21,5 @@ namespace Cogs.Common
         void SaveCard(Card card);
         IEnumerable<Card> GetCards();
 		void DeleteCard(Card card);
-
-	}    
-
-    public interface ICardGameDataStoreFactory
-    {
-        ICardGameDataStore Open(Dictionary<string, string> parameters);
-        ICardGameDataStore Create(Dictionary<string, string> parameters);
-    }
+	}  
 }

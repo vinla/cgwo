@@ -51,17 +51,20 @@
                                    Fill="{Binding Background}" Stroke="{Binding Border}" StrokeThickness="{Binding BorderWidth}" MouseLeftButtonUp="ItemMouseClick"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type des:ImageElement}">
-                    <Rectangle Fill="Transparent" StrokeDashArray="4,4" Stroke="Black" Opacity=".4" MouseLeftButtonUp="ItemMouseClick">
-                        <Rectangle.Style>
-                            <Style TargetType="Rectangle">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsDisplayOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Rectangle.Style>
-                    </Rectangle>
+                    <Grid Background="Transparent" Width="{Binding Width}" Height="{Binding Height}" MouseLeftButtonUp="ItemMouseClick">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Source="{Binding ImageSource}" IsHitTestVisible="False"/>
+                        <Rectangle Fill="Transparent" StrokeDashArray="4,4" Stroke="Black" Opacity=".4" IsHitTestVisible="False">
+                            <Rectangle.Style>
+                                <Style TargetType="Rectangle">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDisplayOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.Resources>
         </ItemsControl>

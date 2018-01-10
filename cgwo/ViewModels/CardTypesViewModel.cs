@@ -61,7 +61,7 @@ namespace cgwo.ViewModels
         public bool CanDelete => SelectedCardType != null && CardType != null && SelectedCardType.Id == CardType.Id;
 
 		public ICommand AddType => new DelegateCommand(() =>
-		{
+		{            
 			var newType = new CardType
 			{
 				Name = String.Empty

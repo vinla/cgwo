@@ -48,6 +48,8 @@
     <Compile Include="CoreObject.cs" />
     <Compile Include="ElementLayout.cs" />
     <Compile Include="ICardGameDataStore.cs" />
+    <Compile Include="ICardGameDataStoreFactory.cs" />
+    <Compile Include="IImageStore.cs" />
     <Compile Include="ImageElementLayout.cs" />
     <Compile Include="ProjectInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

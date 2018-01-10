@@ -16,12 +16,14 @@ namespace cgwo.ViewModels.Data
 {
     public class LayoutViewModel : ViewModel, IZIndexManager
     {
+        private readonly IDialogService _dialogService;
         private readonly ICardGameDataStore _cardGameDataStore;
         private readonly Guid _cardTypeId;
         private List<CardElement> _elements = new List<CardElement>();
 
-        public LayoutViewModel(ICardGameDataStore cardGameDataStore, Guid cardTypeId)
+        public LayoutViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService, Guid cardTypeId)
         {
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
             _cardTypeId = cardTypeId;
             LoadLayout();
@@ -73,6 +75,18 @@ namespace cgwo.ViewModels.Data
             LoadLayout();
             RaisePropertyChanged(nameof(Background));
             RaisePropertyChanged(nameof(Elements));
+        });
+
+        public ICommand SelectImage => new DelegateCommand(async (o) =>
+        {
+            var imageElement = o as ImageElement;
+
+            var dialogViewModel = new Dialogs.ImagePickerDialog(_dialogService, null);
+            var result = await _dialogService.ShowDialog(dialogViewModel);
+            if(result == DialogResult.Accept)
+            {
+                imageElement.ImageSource = dialogViewModel.SelectedImage.RawBytes;
+            }
         });
 
         public void BringForwards(CardElement element)
