@@ -25,11 +25,11 @@ namespace cgwo.Controls
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(ImagePicker));
+        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(byte[]), typeof(ImagePicker));
 
-        public ImageSource ImageSource
+        public byte[] ImageSource
         {
-            get { return (ImageSource)GetValue(ImageSourceProperty); }
+            get { return (byte[])GetValue(ImageSourceProperty); }
             set { SetValue(ImageSourceProperty, value); }
         }
 
@@ -40,11 +40,7 @@ namespace cgwo.Controls
                 openFileDialog.Filter = "Image files|*.png;*.jpg;*.bmp;*.tga;*.gif";
                 if(openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.UriSource = new Uri(openFileDialog.FileName, UriKind.Absolute);
-                    image.EndInit();
-                    ImageSource = image;
+                    ImageSource = System.IO.File.ReadAllBytes(openFileDialog.FileName);
                 }
             }
         }

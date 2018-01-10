@@ -11,6 +11,8 @@ namespace Cogs.Core
 
         public string BackgroundColor { get; set; }
 
+        public string BackgroundImage { get; set; }
+
         public List<JsonCardElement> Elements { get; set; }
 
         public static JsonCardLayout FromLayout(CardLayout layout)
@@ -18,6 +20,7 @@ namespace Cogs.Core
             return new JsonCardLayout
             {
                 BackgroundColor = layout.BackgroundColor,
+                BackgroundImage = layout.BackgroundImage,
                 Elements = layout.Elements.Select(el => new JsonCardElement
                 {
                     ElementType = el.GetType().Name,
@@ -33,6 +36,7 @@ namespace Cogs.Core
             return new CardLayout
             {
                 BackgroundColor = BackgroundColor,
+                BackgroundImage = BackgroundImage,
                 Elements = Elements.Select(el => layoutDeserializer.Deserialize(el)).ToList()
             };
         }

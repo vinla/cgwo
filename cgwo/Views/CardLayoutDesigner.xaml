@@ -100,10 +100,20 @@
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">
                 <TextBlock Margin="3" FontSize="14">Card Properties</TextBlock>
             </Border>
-            <UniformGrid Columns="2" Rows="1" DockPanel.Dock="Top" Margin="5">
+            <Grid DockPanel.Dock="Top" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <TextBlock Margin="3">Background Colour</TextBlock>
-                <xcd:ColorPicker Margin="3" SelectedColor="{Binding BackgroundColor}"/>
-            </UniformGrid>
+                <xcd:ColorPicker Grid.Column="1" Width="120" Margin="3" SelectedColor="{Binding BackgroundColor}"/>
+                <TextBlock Margin="3" Grid.Row="1">Background Image</TextBlock>
+                <ctrl:ImagePicker Width="120" Height="120" Grid.Row="1" Grid.Column="1" ImageSource="{Binding BackgroundImage, Mode=TwoWay}"/>
+            </Grid>
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">
                 <TextBlock Margin="3" FontSize="14">Element Properties</TextBlock>
             </Border>

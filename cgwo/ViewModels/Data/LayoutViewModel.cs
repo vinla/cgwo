@@ -35,9 +35,26 @@ namespace cgwo.ViewModels.Data
             set { SetValue(nameof(BackgroundColor), value); }
         }
 
+        public byte[] BackgroundImage
+        {
+            get { return GetValue<byte[]>(nameof(BackgroundImage)); }
+            set { SetValue(nameof(BackgroundImage), value); }
+        }
+
         [CalculateFrom(nameof(BackgroundColor))]
-        public Brush Background => new SolidColorBrush(BackgroundColor);
-        //public Brush Background => new ImageBrush(new BitmapImage(new System.Uri("pack://application:,,,/Resources/Images/back.jpg", System.UriKind.Absolute)));
+        [CalculateFrom(nameof(BackgroundImage))]
+        public Brush Background
+        {
+            get
+            {
+                if(BackgroundImage != null && BackgroundImage.Length > 0)
+                {
+                    return new ImageBrush((ImageSource)new ImageSourceConverter().ConvertFrom(BackgroundImage));
+                }
+
+                return new SolidColorBrush(BackgroundColor);
+            }
+        }
 
         public IEnumerable<CardElement> Elements => _elements.Select(x => x);
 
@@ -131,6 +148,7 @@ namespace cgwo.ViewModels.Data
             if(layout != null)
             {
                 BackgroundColor = (Color)ColorConverter.ConvertFromString(layout.BackgroundColor);
+                BackgroundImage = Convert.FromBase64String(layout.BackgroundImage ?? String.Empty);
                 _elements.AddRange(LayoutConverter.ToDesignerElements(layout.Elements));                
             }
         }
@@ -139,7 +157,8 @@ namespace cgwo.ViewModels.Data
         {
             var layout = new CardLayout
             {
-                BackgroundColor = BackgroundColor.ToHex()
+                BackgroundColor = BackgroundColor.ToHex(),
+                BackgroundImage = Convert.ToBase64String(BackgroundImage)
             };
 
             layout.Elements.AddRange(LayoutConverter.FromDesignerElements(Elements));
