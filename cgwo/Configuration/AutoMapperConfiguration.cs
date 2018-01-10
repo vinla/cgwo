@@ -1,4 +1,5 @@
-﻿using Cogs.Common;
+﻿using System;
+using Cogs.Common;
 using Cogs.Designer;
 using GorgleDevs.Wpf;
 
@@ -53,6 +54,16 @@ namespace cgwo.Configuration
                     .ForMember(
                         ell => ell.BorderColor,
                         opt => opt.ResolveUsing(src => ColorExtensionMethods.FromHex(src.BorderColor)));
+
+                cfg.CreateMap<ImageElement, ImageElementLayout>()
+                .ForMember(
+                    img => img.ImageSource,
+                    opt => opt.ResolveUsing(src => Convert.ToBase64String(src.ImageSource)));
+
+                cfg.CreateMap<ImageElementLayout, ImageElement>()
+                .ForMember(
+                    img => img.ImageSource,
+                    opt => opt.ResolveUsing(src => Convert.FromBase64String(src.ImageSource)));
             });
         }
     }

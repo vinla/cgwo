@@ -16,10 +16,12 @@ namespace Cogs.Designer
             {
                 if (element is TextElementLayout text)
                     results.Add(AutoMapper.Mapper.Map<TextElement>(text));
-                if (element is RectangleElementLayout rect)
+                else if (element is RectangleElementLayout rect)
                     results.Add(AutoMapper.Mapper.Map<RectangleElement>(rect));
-                if (element is EllipseElementLayout ellipse)
+                else if (element is EllipseElementLayout ellipse)
                     results.Add(AutoMapper.Mapper.Map<EllipseElement>(ellipse));
+                else if (element is ImageElementLayout image)
+                    results.Add(AutoMapper.Mapper.Map<ImageElement>(image));
             }
 
             return results;
@@ -37,6 +39,8 @@ namespace Cogs.Designer
                     results.Add(AutoMapper.Mapper.Map<RectangleElementLayout>(rect));
                 else if (element is EllipseElement ellipse)
                     results.Add(AutoMapper.Mapper.Map<EllipseElementLayout>(ellipse));
+                else if (element is ImageElement image)
+                    results.Add(AutoMapper.Mapper.Map<ImageElementLayout>(image));
             }
 
             return results;

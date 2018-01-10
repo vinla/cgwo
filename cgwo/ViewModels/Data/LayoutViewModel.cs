@@ -77,15 +77,13 @@ namespace cgwo.ViewModels.Data
             RaisePropertyChanged(nameof(Elements));
         });
 
-        public ICommand SelectImage => new DelegateCommand(async (o) =>
+        public ICommand SelectImage => new DelegateCommand((o) =>
         {
             var imageElement = o as ImageElement;
-
-            var dialogViewModel = new Dialogs.ImagePickerDialog(_dialogService, null);
-            var result = await _dialogService.ShowDialog(dialogViewModel);
+            var (result, path) = _dialogService.ChooseFile(String.Empty, "Images files|*.png;*.bmp;*.jpg;*.jpeg;*.gif");
             if(result == DialogResult.Accept)
             {
-                imageElement.ImageSource = dialogViewModel.SelectedImage.RawBytes;
+                imageElement.ImageSource = System.IO.File.ReadAllBytes(path);
             }
         });
 
