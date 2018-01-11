@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ctrl="clr-namespace:cgwo.Controls"
+             xmlns:cogs="clr-namespace:Cogs.Common;assembly=Cogs.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <cogs:AttributeType x:Key="AttributeType_Text">Text</cogs:AttributeType>
+        <cogs:AttributeType x:Key="AttributeType_Image">Image</cogs:AttributeType>
+    </UserControl.Resources>
     <Border BorderThickness="0,0,1,0" BorderBrush="Gray">
         <DockPanel LastChildFill="False">
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5,15,5,5">
@@ -62,8 +67,17 @@
                 </Border>
 
                 <StackPanel DockPanel.Dock="Top" Margin="28, 10, 0, 0" Orientation="Horizontal">
+                    <Border Height="24" Width="24" CornerRadius="3" Background="Gray">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Text="D" ToolTip="Default property"/>
+                    </Border>
                     <TextBox IsReadOnly="True" Width="120" Height="24" Text="Name" Background="{x:Static SystemColors.InactiveCaptionBrush}"/>
-                    <TextBlock VerticalAlignment="Center" FontStyle="Italic" Margin="3">(Default Property)</TextBlock>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Top" Margin="28, 3, 0, 0" Orientation="Horizontal">
+                    <Border Height="24" Width="24" CornerRadius="3" Background="Gray">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Text="D" ToolTip="Default property"/>
+                    </Border>
+                    <TextBox IsReadOnly="True" Width="120" Height="24" Text="Type" Background="{x:Static SystemColors.InactiveCaptionBrush}"/>
                 </StackPanel>
 
                 <ItemsControl ItemsSource="{Binding Attributes}" Margin="25, 0" DockPanel.Dock="Top">
@@ -78,8 +92,25 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox Width="120" Height="24" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="3,0">
+                                <Border Height="24" Width="24" CornerRadius="3" Background="Gray">
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" ToolTip="Text property">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Type}" Value="{StaticResource AttributeType_Text}">
+                                                        <Setter Property="Text" Value="T"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Type}" Value="{StaticResource AttributeType_Image}">
+                                                        <Setter Property="Text" Value="I"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+                                <TextBox Grid.Column="1" Width="120" Height="24" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="3,0">
                                     <TextBox.InputBindings>
                                         <KeyBinding Key="Return" Command="{Binding SaveCommand}"/>
                                         <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
@@ -101,7 +132,7 @@
                                         </Style>
                                     </TextBox.Style>
                                 </TextBox>
-                                <Button Grid.Column="1" Template="{StaticResource CircleButton}" Width="20" Height="20" Padding="4" Margin="2" Command="{Binding DeleteCommand}">
+                                <Button Grid.Column="2" Template="{StaticResource CircleButton}" Width="20" Height="20" Padding="4" Margin="2" Command="{Binding DeleteCommand}">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Style.Triggers>
@@ -113,7 +144,7 @@
                                     </Button.Style>
                                     <Image Source="/Resources/Images/bin.png"/>
                                 </Button>
-                                <ctrl:InlineFormButtons CanSave="{Binding IsValid}" SaveCommand="{Binding SaveCommand}" CancelCommand="{Binding CancelCommand}" Grid.Column="1">
+                                <ctrl:InlineFormButtons Grid.Column="2" CanSave="{Binding IsValid}" SaveCommand="{Binding SaveCommand}" CancelCommand="{Binding CancelCommand}">
                                     <ctrl:InlineFormButtons.Style>
                                         <Style TargetType="ctrl:InlineFormButtons">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -139,7 +170,8 @@
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
-                    <Hyperlink Command="{Binding AddAttribute}">Add attribute</Hyperlink>
+                    <Hyperlink Command="{Binding AddAttribute}" CommandParameter="{StaticResource AttributeType_Text}">Add text attribute</Hyperlink>
+                    <Hyperlink Command="{Binding AddAttribute}" CommandParameter="{StaticResource AttributeType_Image}">Add image attribute</Hyperlink>
                 </TextBlock>
             </DockPanel>
         </DockPanel>

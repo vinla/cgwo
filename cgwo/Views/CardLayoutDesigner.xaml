@@ -18,6 +18,10 @@
         <sys:String x:Key="Rectangle">Rectangle</sys:String>
         <sys:String x:Key="Ellipse">Ellipse</sys:String>
         <sys:String x:Key="Image">Image</sys:String>
+        <x:Array x:Key="ImageSources" Type="sys:String">
+            <sys:String>Image</sys:String>
+            <sys:String>Card Attribute</sys:String>
+        </x:Array>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -112,7 +116,7 @@
                 <TextBlock Margin="3">Background Colour</TextBlock>
                 <xcd:ColorPicker Grid.Column="1" Width="120" Margin="3" SelectedColor="{Binding BackgroundColor}"/>
                 <TextBlock Margin="3" Grid.Row="1">Background Image</TextBlock>
-                <ctrl:ImagePicker Width="120" Height="120" Grid.Row="1" Grid.Column="1" ImageSource="{Binding BackgroundImage, Mode=TwoWay}"/>
+                <ctrl:ImagePicker Width="120" Height="120" Grid.Row="1" Grid.Column="1" ImageData="{Binding BackgroundImage, Mode=TwoWay}"/>
             </Grid>
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">
                 <TextBlock Margin="3" FontSize="14">Element Properties</TextBlock>
@@ -178,22 +182,65 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="3">Image</TextBlock>
-                            <Grid Background="Transparent" Width="120" Height="120" Grid.Column="1">
-                                <Image Source="{Binding ImageSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform"/>
-                                <Button Padding="3" Height="22" Width="96" Content="Choose image..." Command="{Binding DataContext.SelectImage, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType=Grid}}" Value="False">
-                                                    <Setter Property="Visibility" Value="Hidden"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Grid>
+                            <TextBlock Margin="3">Image Source</TextBlock>
+                            <ComboBox Grid.Column="1" Margin="3" ItemsSource="{StaticResource ImageSources}" SelectedItem="{Binding ImageSource}" Width="120">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="3" Text="{Binding}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Grid.Row="1" Margin="3" Text="Image">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ImageSource}" Value="Card Attribute">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <ctrl:ImagePicker Grid.Row="1" Grid.Column="1" Margin="3" Width="120" Height="120" ImageData="{Binding ImageData, Converter={StaticResource Base64Converter}, Mode=TwoWay}">
+                                <ctrl:ImagePicker.Style>
+                                    <Style TargetType="ctrl:ImagePicker">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ImageSource}" Value="Card Attribute">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ctrl:ImagePicker.Style>
+                            </ctrl:ImagePicker>
+                            <TextBlock Grid.Row="1" Margin="3" Text="Source Attribute">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ImageSource}" Value="Image">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Margin="3" ItemsSource="{Binding DataContext.ImageAttributes, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding SourceAttribute}" Width="120">
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ImageSource}" Value="Image">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="3" Text="{Binding}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </Grid>
                     </DataTemplate>
                 </ContentControl.Resources>

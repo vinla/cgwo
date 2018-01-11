@@ -23,7 +23,7 @@ namespace cgwo.ViewModels.Data
             _updateCallback = updateCallback;
             _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));            
             _original = original;
-            _layoutViewModel = new LayoutViewModel(cardGameDataStore, _dialogService, original.Id);
+            _layoutViewModel = new LayoutViewModel(cardGameDataStore, _dialogService, this);
             LoadAttributes();
 
             _clone = new CardType
@@ -90,9 +90,10 @@ namespace cgwo.ViewModels.Data
 
         public IEnumerable<CardAttributeViewModel> Attributes => _attributes.Select(x => x);
 
-        public ICommand AddAttribute => new DelegateCommand(() =>
+        public ICommand AddAttribute => new DelegateCommand((o) =>
         {
-            var cardAttribute = new CardAttribute();
+            var attributeType = (AttributeType)o;
+            var cardAttribute = new CardAttribute { Type = attributeType };
             _attributes.Add(new CardAttributeViewModel(_cardGameDataStore, _dialogService, _original.Id, cardAttribute, CancelAddAttribute, () => RaisePropertyChanged(nameof(IsEditingAttribute))));
             RaisePropertyChanged(nameof(Attributes));
         });

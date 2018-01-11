@@ -53,7 +53,7 @@ namespace Cogs.Designer
                 case "Image":
                     element = new ImageElement
                     {
-                        
+                        ImageSource = "Image"
                     };
                     break;
                 default:

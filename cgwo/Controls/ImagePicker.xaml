@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Background="Transparent">
-        <Image Source="{Binding ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform"/>
+        <Image x:Name="Preview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform"/>
         <Button Padding="3" Height="22" Width="96" Content="Choose image..." Click="ChooseImageClick">
             <Button.Style>
                 <Style TargetType="Button">

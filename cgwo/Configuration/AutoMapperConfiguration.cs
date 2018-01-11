@@ -55,15 +55,8 @@ namespace cgwo.Configuration
                         ell => ell.BorderColor,
                         opt => opt.ResolveUsing(src => ColorExtensionMethods.FromHex(src.BorderColor)));
 
-                cfg.CreateMap<ImageElement, ImageElementLayout>()
-                .ForMember(
-                    img => img.ImageSource,
-                    opt => opt.ResolveUsing(src => Convert.ToBase64String(src.ImageSource)));
-
-                cfg.CreateMap<ImageElementLayout, ImageElement>()
-                .ForMember(
-                    img => img.ImageSource,
-                    opt => opt.ResolveUsing(src => Convert.FromBase64String(src.ImageSource)));
+                cfg.CreateMap<ImageElement, ImageElementLayout>();
+                cfg.CreateMap<ImageElementLayout, ImageElement>();                
             });
         }
     }
