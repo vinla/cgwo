@@ -52,7 +52,7 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type des:ImageElement}">
                     <Grid Background="Transparent" Width="{Binding Width}" Height="{Binding Height}" MouseLeftButtonUp="ItemMouseClick">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Source="{Binding ImageSource, Converter={StaticResource Base64Converter}}" IsHitTestVisible="False"/>
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Source="{Binding ImageData, Converter={StaticResource Base64Converter}}" IsHitTestVisible="False"/>
                         <Rectangle Fill="Transparent" StrokeDashArray="4,4" Stroke="Black" Opacity=".4" IsHitTestVisible="False">
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">

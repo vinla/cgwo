@@ -18,14 +18,14 @@ namespace cgwo.ViewModels.Data
     {
         private readonly IDialogService _dialogService;
         private readonly ICardGameDataStore _cardGameDataStore;
-        private readonly Guid _cardTypeId;
+        private readonly CardTypeViewModel _cardTypeViewModel;
         private List<CardElement> _elements = new List<CardElement>();
 
-        public LayoutViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService, Guid cardTypeId)
+        public LayoutViewModel(ICardGameDataStore cardGameDataStore, IDialogService dialogService, CardTypeViewModel cardTypeViewModel)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
-            _cardTypeId = cardTypeId;
+            _cardTypeViewModel = cardTypeViewModel ?? throw new ArgumentNullException(nameof(cardTypeViewModel));
             LoadLayout();
         }
 
@@ -143,7 +143,7 @@ namespace cgwo.ViewModels.Data
 
         private void LoadLayout()
         {
-            var layout = _cardGameDataStore.GetLayout(_cardTypeId);
+            var layout = _cardGameDataStore.GetLayout(_cardTypeViewModel.Id);
 
             if(layout != null)
             {
@@ -163,13 +163,15 @@ namespace cgwo.ViewModels.Data
 
             layout.Elements.AddRange(LayoutConverter.FromDesignerElements(Elements));
 
-            _cardGameDataStore.SaveLayout(_cardTypeId, layout);
+            _cardGameDataStore.SaveLayout(_cardTypeViewModel.Id, layout);
         }
 
         public ICommand SaveImageCommand => new DelegateCommand(() =>
         {
             SaveCardImage();
         });
+
+        public IEnumerable<String> ImageAttributes => _cardTypeViewModel.Attributes.Where(attr => attr.Type == AttributeType.Image).Select(attr => attr.Name);
 
         private void SaveCardImage()
         {

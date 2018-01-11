@@ -85,7 +85,7 @@
                     <DataTemplate x:Key="ImageEditor">
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                             <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
-                            <ctrl:ImagePicker Width="120" Height="120" ImageSource="{Binding Value, Converter={StaticResource Base64Converter}, Mode=TwoWay}"/>
+                            <ctrl:ImagePicker Width="120" Height="120" ImageData="{Binding Value, Converter={StaticResource Base64Converter}, Mode=TwoWay}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.Resources>
@@ -94,6 +94,7 @@
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.SaveCard}">Save</Button>
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.DeleteCard}">Delete</Button>
         </DockPanel>
+       
         <Border BorderThickness="2" BorderBrush="Black" Margin="25" Grid.Column="2" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.BackgroundColor}" VerticalAlignment="Top">
             <Border.Style>
                 <Style TargetType="Border">

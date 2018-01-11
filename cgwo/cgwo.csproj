@@ -148,12 +148,6 @@
     <Compile Include="Views\CardTypes.xaml.cs">
       <DependentUpon>CardTypes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\DialogFrame.xaml.cs">
-      <DependentUpon>DialogFrame.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Dialogs\ImagePicker.xaml.cs">
-      <DependentUpon>ImagePicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\HomePageView.xaml.cs">
       <DependentUpon>HomePageView.xaml</DependentUpon>
     </Compile>
@@ -225,14 +219,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CardTypes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Dialogs\DialogFrame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Dialogs\ImagePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
