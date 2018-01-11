@@ -90,9 +90,10 @@ namespace cgwo.ViewModels.Data
 
         public IEnumerable<CardAttributeViewModel> Attributes => _attributes.Select(x => x);
 
-        public ICommand AddAttribute => new DelegateCommand(() =>
+        public ICommand AddAttribute => new DelegateCommand((o) =>
         {
-            var cardAttribute = new CardAttribute();
+            var attributeType = (AttributeType)o;
+            var cardAttribute = new CardAttribute { Type = attributeType };
             _attributes.Add(new CardAttributeViewModel(_cardGameDataStore, _dialogService, _original.Id, cardAttribute, CancelAddAttribute, () => RaisePropertyChanged(nameof(IsEditingAttribute))));
             RaisePropertyChanged(nameof(Attributes));
         });

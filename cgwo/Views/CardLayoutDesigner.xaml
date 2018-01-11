@@ -180,20 +180,7 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Margin="3">Image</TextBlock>
-                            <Grid Background="Transparent" Width="120" Height="120" Grid.Column="1">
-                                <Image Source="{Binding ImageSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform"/>
-                                <Button Padding="3" Height="22" Width="96" Content="Choose image..." Command="{Binding DataContext.SelectImage, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType=Grid}}" Value="False">
-                                                    <Setter Property="Visibility" Value="Hidden"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Grid>
+                            <ctrl:ImagePicker Grid.Column="1" Width="120" Height="120" ImageSource="{Binding ImageSource, Converter={StaticResource Base64Converter}, Mode=TwoWay}"/>
                         </Grid>
                     </DataTemplate>
                 </ContentControl.Resources>

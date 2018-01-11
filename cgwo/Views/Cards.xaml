@@ -74,15 +74,21 @@
                 <TextBlock Margin="3" Width="60">Name</TextBlock>
                 <TextBox Margin="3" Width="120" Text="{Binding CardEditor.Name}"/>
             </StackPanel>
-            <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0" Focusable="False">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+            <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0" Focusable="False" ItemTemplateSelector="{StaticResource CardValueEditorDataTemplateSelector}">
+                <ItemsControl.Resources>
+                    <DataTemplate x:Key="TextEditor">
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                             <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
                             <TextBox Margin="3" Width="120" Text="{Binding Value}"/>
                         </StackPanel>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                    <DataTemplate x:Key="ImageEditor">
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                            <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
+                            <ctrl:ImagePicker Width="120" Height="120" ImageSource="{Binding Value, Converter={StaticResource Base64Converter}, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.Resources>
             </ItemsControl>
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.UpdatePreview}">Preview</Button>
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.SaveCard}">Save</Button>

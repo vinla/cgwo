@@ -43,6 +43,8 @@ namespace cgwo.ViewModels.Data
             set { SetValue(nameof(Name), value); }
         }
 
+        public AttributeType Type => _original.Type;
+
         [CalculateFrom(nameof(Name))]
         public bool HasChanges => IsNew || Name != _original.Name;
 

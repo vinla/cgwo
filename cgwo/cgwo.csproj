@@ -163,6 +163,7 @@
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\CardValueEditorDataTemplateSelector.cs" />
     <Page Include="Controls\DesignerCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

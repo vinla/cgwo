@@ -100,7 +100,7 @@ namespace cgwo.ViewModels.Data
             var (result, path) = _dialogService.ChooseFile(String.Empty, "Images files|*.png;*.bmp;*.jpg;*.jpeg;*.gif");
             if(result == DialogResult.Accept)
             {
-                imageElement.ImageSource = System.IO.File.ReadAllBytes(path);
+                imageElement.ImageSource = Convert.ToBase64String(System.IO.File.ReadAllBytes(path));
             }
         });
 

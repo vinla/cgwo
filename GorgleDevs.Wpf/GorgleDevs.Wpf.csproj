@@ -60,6 +60,8 @@
     <Compile Include="Behaviours\DoubleClickBehaviour.cs" />
     <Compile Include="ColorExtensionMethods.cs" />
     <Compile Include="Behaviours\KeyPreviewBehaviour.cs" />
+    <Compile Include="Converters\Base64Converter.cs" />
+    <Compile Include="Converters\ByteListImageConverter.cs" />
     <Compile Include="Converters\NegatingConverter.cs" />
     <Compile Include="Converters\StringComparisonConverter.cs" />
     <Compile Include="Behaviours\DragBehaviour.cs" />

@@ -102,7 +102,8 @@ namespace Cogs.Core
                     .Select(ca => new CardAttribute
                     {
                         Id = ca.Id,
-                        Name = ca.Name
+                        Name = ca.Name,
+                        Type = ca.Type
                     });
         }
 
@@ -115,6 +116,7 @@ namespace Cogs.Core
                 attributeData = new JsonCardAttribute
                 {
                     Id = attribute.Id,
+                    Type = attribute.Type,
                     CardTypeId = cardTypeId
                 };
                 _cardGameData.CardAttributes.Add(attributeData);
