@@ -88,7 +88,7 @@
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.SaveCard}">Save</Button>
             <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.DeleteCard}">Delete</Button>
         </DockPanel>
-        <Border BorderThickness="2" BorderBrush="Black" Margin="25" Grid.Column="2" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.BackgroundColor}" VerticalAlignment="Top">
+        <Border BorderThickness="2" BorderBrush="Black" Margin="25" Grid.Column="2" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.Background}" VerticalAlignment="Top">
             <Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
