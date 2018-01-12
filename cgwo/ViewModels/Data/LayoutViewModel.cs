@@ -158,7 +158,7 @@ namespace cgwo.ViewModels.Data
             var layout = new CardLayout
             {
                 BackgroundColor = BackgroundColor.ToHex(),
-                BackgroundImage = Convert.ToBase64String(BackgroundImage)
+                BackgroundImage = Convert.ToBase64String(BackgroundImage ?? new byte[0])
             };
 
             layout.Elements.AddRange(LayoutConverter.FromDesignerElements(Elements));
