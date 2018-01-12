@@ -161,6 +161,15 @@ namespace cgwo.ViewModels.Data
                 BackgroundImage = Convert.ToBase64String(BackgroundImage ?? new byte[0])
             };
 
+            foreach(var imageElement in Elements.OfType<ImageElement>())
+            {
+                if (imageElement.ImageSource == "Image")
+                    imageElement.LinkedAttribute = String.Empty;
+                else if (imageElement.ImageSource == "Card Attribute")
+                    imageElement.ImageData = String.Empty;
+            }
+                
+
             layout.Elements.AddRange(LayoutConverter.FromDesignerElements(Elements));
 
             _cardGameDataStore.SaveLayout(_cardTypeViewModel.Id, layout);

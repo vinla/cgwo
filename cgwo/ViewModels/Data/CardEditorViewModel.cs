@@ -61,6 +61,16 @@ namespace cgwo.ViewModels.Data
                     }
                 }
             }
+            
+            foreach(var imageElement in _elements.OfType<ImageElement>().Where(img => img.ImageSource == "Card Attribute"))
+            {
+                var attributeValue = _card.AttributeValues.SingleOrDefault(av => av.CardAttribute.Name == imageElement.LinkedAttribute);
+                if (attributeValue != null)
+                {
+                    imageElement.ImageData = attributeValue.Value;
+                }
+            }
+
             RaisePropertyChanged(nameof(Elements));
             RaisePropertyChanged(nameof(Background));
         });        

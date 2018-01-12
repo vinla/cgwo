@@ -6,6 +6,6 @@ namespace Cogs.Common
     {
         public string ImageSource { get; set; }
         public string ImageData { get; set; }
-        public Guid LinkedAttribute { get; set; }
+        public string LinkedAttribute { get; set; }
     }
 }
