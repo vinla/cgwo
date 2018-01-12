@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -177,10 +178,32 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
                 element.Left += moveVector.X;
             }
         }
-
-        private void ThumbMouseDown(object sender, MouseButtonEventArgs e)
+        
+        private void ThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
-            
+            if (_actionStack.Any())
+            {
+                var resizeAction = _actionStack.Peek() as ResizeAction;
+                if (resizeAction != null)
+                    resizeAction.SetComplete();
+            }
+        }
+
+        private void ThumbDragStarted(object sender, DragStartedEventArgs e)
+        {
+            var thumb = sender as Thumb;
+            var element = (thumb.DataContext as LayoutElement);
+            _actionStack.Push(new ResizeAction(element));
+        }
+
+        private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (_actionStack.Any())
+            {
+                var resizeAction = _actionStack.Peek() as ResizeAction;
+                if (resizeAction != null && resizeAction.IsComplete == false)
+                    resizeAction.Update(e.HorizontalChange, e.VerticalChange);
+            }
         }
 
         private bool DragRectThresholdExceeded => _dragRect.Size.Width > 3 || _dragRect.Size.Height > 3;
@@ -190,7 +213,12 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
     
     public abstract class DesignerAction
     {
+        public bool IsComplete { get; private set; }
 
+        public void SetComplete()
+        {
+            IsComplete = true;
+        }
     }
 
     public class MoveAction : DesignerAction
@@ -199,8 +227,19 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
     }
 
     public class ResizeAction : DesignerAction
-    {
+    {        
+        private readonly LayoutElement _element;        
 
+        public ResizeAction(LayoutElement element)
+        {
+            _element = element;
+        }
+
+        public void Update(double dx, double dy)
+        {                        
+            _element.Width += dx;
+            _element.Height += dy;
+        }
     }
 
     public enum MouseAction

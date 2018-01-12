@@ -66,14 +66,14 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                             <Border Margin="2" Grid.RowSpan="5" Grid.ColumnSpan="5" BorderBrush="Green" BorderThickness="2"/>
-                            <Thumb Grid.Column="0" Grid.Row="0" Style="{StaticResource ResizeThumb}" Cursor="SizeNWSE" MouseDown="ThumbMouseDown"/>
+                            <Thumb Grid.Column="0" Grid.Row="0" Style="{StaticResource ResizeThumb}" Cursor="SizeNWSE"/>
                             <Thumb Grid.Column="2" Grid.Row="0" Style="{StaticResource ResizeThumb}" Cursor="SizeNS"/>
                             <Thumb Grid.Column="4" Grid.Row="0" Style="{StaticResource ResizeThumb}" Cursor="SizeNESW"/>
                             <Thumb Grid.Column="0" Grid.Row="2" Style="{StaticResource ResizeThumb}" Cursor="SizeWE"/>
                             <Thumb Grid.Column="4" Grid.Row="2" Style="{StaticResource ResizeThumb}" Cursor="SizeWE"/>
                             <Thumb Grid.Column="0" Grid.Row="4" Style="{StaticResource ResizeThumb}" Cursor="SizeNESW"/>
                             <Thumb Grid.Column="2" Grid.Row="4" Style="{StaticResource ResizeThumb}" Cursor="SizeNS"/>
-                            <Thumb Grid.Column="4" Grid.Row="4" Style="{StaticResource ResizeThumb}" Cursor="SizeNWSE"/>
+                            <Thumb Grid.Column="4" Grid.Row="4" Style="{StaticResource ResizeThumb}" Cursor="SizeNWSE" DragStarted="ThumbDragStarted" DragDelta="ThumbDragDelta" DragCompleted="ThumbDragCompleted"/>
                     </Grid>
                     </Grid>
                 </DataTemplate>
