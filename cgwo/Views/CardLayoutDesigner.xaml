@@ -225,7 +225,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <ComboBox Grid.Row="1" Grid.Column="1" Margin="3" ItemsSource="{Binding DataContext.ImageAttributes, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding SourceAttribute}" Width="120">
+                            <ComboBox Grid.Row="1" Grid.Column="1" Margin="3" ItemsSource="{Binding DataContext.ImageAttributes, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding LinkedAttribute}" Width="120">
                                 <ComboBox.Style>
                                     <Style TargetType="ComboBox">
                                         <Style.Triggers>

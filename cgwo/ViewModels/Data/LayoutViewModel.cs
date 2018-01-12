@@ -158,8 +158,17 @@ namespace cgwo.ViewModels.Data
             var layout = new CardLayout
             {
                 BackgroundColor = BackgroundColor.ToHex(),
-                BackgroundImage = Convert.ToBase64String(BackgroundImage)
+                BackgroundImage = Convert.ToBase64String(BackgroundImage ?? new byte[0])
             };
+
+            foreach(var imageElement in Elements.OfType<ImageElement>())
+            {
+                if (imageElement.ImageSource == "Image")
+                    imageElement.LinkedAttribute = String.Empty;
+                else if (imageElement.ImageSource == "Card Attribute")
+                    imageElement.ImageData = String.Empty;
+            }
+                
 
             layout.Elements.AddRange(LayoutConverter.FromDesignerElements(Elements));
 
