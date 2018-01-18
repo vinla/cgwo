@@ -292,6 +292,10 @@
       <Project>{8f3527ff-6660-49a0-99e6-7763bac08736}</Project>
       <Name>Cogs.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Cogs.Data.Sqlite\Cogs.Data.Sqlite.csproj">
+      <Project>{7a5351a6-fb72-4b0c-bced-c58f51d84cae}</Project>
+      <Name>Cogs.Data.Sqlite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GorgleDevs.Wpf\GorgleDevs.Wpf.csproj">
       <Project>{c36cd563-3a01-4979-8e57-2a90e4064e8a}</Project>
       <Name>GorgleDevs.Wpf</Name>

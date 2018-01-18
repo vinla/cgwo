@@ -24,7 +24,7 @@ namespace cgwo
 		{
 			InitializeComponent();
             var dialogService = new GorgleDevs.Wpf.Mvvm.WindowsDialogService(DialogHost);
-            DataContext = new ViewModels.MainViewModel(new Cogs.Core.JsonCardGameDataStoreFactory(), dialogService);
+            DataContext = new ViewModels.MainViewModel(new Cogs.Data.Sqlite.SqliteCardGameDataStoreFactory(), dialogService);
 		}
 	}
 }
