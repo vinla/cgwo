@@ -7,5 +7,7 @@ namespace Cogs.Common
     public class CardType : CoreObject
     {
         public string Name { get; set; }
+
+        public string ImageData { get; set; }
     }
 }

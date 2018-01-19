@@ -81,6 +81,7 @@ namespace cgwo.ViewModels.Data
 
         public ICommand SaveCard => new DelegateCommand(() =>
         {
+            _card.ImageData = CardImageComposer.CreateCardImageBase64(_card, _layout);
             _cardGameDataStore.SaveCard(_card);
 			_cardUpdated?.Invoke(_card);
         });

@@ -66,7 +66,8 @@ namespace Cogs.Core
                 _cardGameData.CardTypes.Select(ct => new CardType
                 {
                     Id = ct.Id,
-                    Name = ct.Name
+                    Name = ct.Name,
+                    ImageData = ct.ImageData
                 });
         }
 
@@ -78,7 +79,8 @@ namespace Cogs.Core
 			{
                 cardTypeData = new JsonCardType
                 {
-                    Id = cardType.Id
+                    Id = cardType.Id,
+                    ImageData = cardType.ImageData
                 };
                 _cardGameData.CardTypes.Add(cardTypeData);				
 			}
@@ -160,7 +162,8 @@ namespace Cogs.Core
             {
                 Id = card.Id,
                 CardTypeId = card.CardType.Id,
-                Name = card.Name
+                Name = card.Name,
+                ImageData = card.ImageData
             });
 
             _cardGameData.CardAttributeValues.AddRange(card.AttributeValues.Select(av => new JsonCardAttributeValue
@@ -189,7 +192,8 @@ namespace Cogs.Core
                 results.Add(new Card(cardTypes.Single(ct => ct.Id == jsonCard.CardTypeId), cardAttributeValues)
                 {
 					Id = jsonCard.Id,
-                    Name = jsonCard.Name
+                    Name = jsonCard.Name,
+                    ImageData = jsonCard.ImageData
                 });
             }
 
@@ -202,6 +206,16 @@ namespace Cogs.Core
 			_cardGameData.CardAttributeValues.RemoveAll(c => c.CardId == card.Id);
 			SaveChanges();
 		}
+
+        public void UpdateCardTypeImage(Guid cardTypeId, byte[] imageData)
+        {
+            var cardType = _cardGameData.CardTypes.SingleOrDefault(ct => ct.Id == cardTypeId);
+            if (cardType == null)
+                throw new InvalidOperationException("Unable to find card type to update");
+
+            cardType.ImageData = Convert.ToBase64String(imageData);
+            SaveChanges();
+        }
 
         private void SaveChanges()
         {

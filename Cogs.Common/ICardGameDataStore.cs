@@ -21,5 +21,6 @@ namespace Cogs.Common
         void SaveCard(Card card);
         IEnumerable<Card> GetCards();
 		void DeleteCard(Card card);
+        void UpdateCardTypeImage(Guid cardTypeId, byte[] imageData);
 	}  
 }
