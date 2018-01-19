@@ -18,6 +18,8 @@ namespace Cogs.Common
 
         public CardType CardType => _cardType;
 
-        public IEnumerable<CardAttributeValue> AttributeValues => _attributeValues;        
+        public IEnumerable<CardAttributeValue> AttributeValues => _attributeValues;
+
+        public string ImageData { get; set; }
     }
 }

@@ -7,5 +7,7 @@ namespace Cogs.Core
         public Guid Id { get; set; }
         public Guid CardTypeId { get; set; }
         public string Name { get; set; }
+
+        public string ImageData { get; set; }
     }
 }

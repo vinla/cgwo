@@ -95,6 +95,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CardImageComposer.cs" />
     <Compile Include="Configuration\AutoMapperConfiguration.cs" />
     <Compile Include="Controls\DesignerCanvas.xaml.cs">
       <DependentUpon>DesignerCanvas.xaml</DependentUpon>
