@@ -18,7 +18,8 @@ namespace cgwo.ViewModels
         {
             _cardGameDataStore = cardGameDataStore ?? throw new ArgumentNullException(nameof(cardGameDataStore));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(cardGameDataStore));
-            _cardTypes = _cardGameDataStore.GetCardTypes();			
+            _cardTypes = _cardGameDataStore.GetCardTypes();
+			SelectedCardType = _cardTypes.FirstOrDefault();
         }
 
         public IEnumerable<CardType> CardTypes => _cardTypes.Select(x => x);

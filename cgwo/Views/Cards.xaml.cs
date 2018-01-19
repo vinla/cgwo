@@ -24,5 +24,16 @@ namespace cgwo.Views
         {
             InitializeComponent();
         }
-    }
+
+		private void ShowCardTypes(object sender, MouseButtonEventArgs e)
+		{
+			CardTypeSelector.IsOpen = true;
+			e.Handled = true;
+		}
+
+		private void CloseCardTypes(object sender, MouseButtonEventArgs e)
+		{
+			CardTypeSelector.IsOpen = false;
+		}
+	}
 }

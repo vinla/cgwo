@@ -13,29 +13,15 @@
             <gb:KeyPreviewBehaviour Key="N" Modifiers="Ctrl" Command="{Binding AddCard}" CommandParameter="{Binding SelectedCardType}"/>
         </i:Interaction.Behaviors>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Border BorderBrush="Gray" BorderThickness="0,0,1,0">
             <DockPanel>
                 <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
-                    <TextBlock FontSize="14">Actions</TextBlock>
-                </Border>
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                    <ComboBox ItemsSource="{Binding CardTypes}" SelectedItem="{Binding SelectedCardType}" Width="100" Margin="3">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Button Margin="3" Command="{Binding AddCard}" CommandParameter="{Binding SelectedCardType}">Add card</Button>
-                </StackPanel>
-                <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
                     <TextBlock FontSize="14">Cards</TextBlock>
                 </Border>
-                <ListView ItemsSource="{Binding Cards}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectedItem="{Binding SelectedCard}" Width="180">
+                <ListView ItemsSource="{Binding Cards}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectedItem="{Binding SelectedCard}">
                     <ListView.Resources>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Template" Value="{StaticResource CardTypeListItem}"/>
@@ -43,16 +29,13 @@
                     </ListView.Resources>
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="5">
-                                <Grid>
-                                    <Border Width="50" Height="70" BorderBrush="Black" BorderThickness="1" Background="LightSteelBlue" CornerRadius="3" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
-                                    <Image Width="50" Height="70" Source="{Binding ImageData, Converter={StaticResource Base64Converter}}" ToolTip="{Binding Name}" HorizontalAlignment="Center"/>
-                                </Grid>
+                                <Image Width="50" Height="70" Source="{Binding ImageData, Converter={StaticResource Base64Converter}}" ToolTip="{Binding Name}" HorizontalAlignment="Center"/>
                                 <TextBlock Margin="3" Text="{Binding Name}" MaxWidth="45" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
                             </StackPanel>
                         </DataTemplate>
@@ -60,55 +43,120 @@
                 </ListView>
             </DockPanel>
         </Border>
-        <DockPanel Width="220" LastChildFill="False" Grid.Column="1">
-            <DockPanel.Style>
-                <Style TargetType="DockPanel">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding CardEditor}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DockPanel.Style>
-            <Border BorderBrush="Gray" BorderThickness="0,0,0,1" DockPanel.Dock="Top" Margin="8">
-                <TextBlock FontSize="14">Card Details</TextBlock>
-            </Border>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10,0">
-                <TextBlock Margin="3" Width="60">Name</TextBlock>
-                <TextBox Margin="3" Width="120" Text="{Binding CardEditor.Name}"/>
-            </StackPanel>
-            <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0" Focusable="False" ItemTemplateSelector="{StaticResource CardValueEditorDataTemplateSelector}">
-                <ItemsControl.Resources>
-                    <DataTemplate x:Key="TextEditor">
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                            <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
-                            <TextBox Margin="3" Width="120" Text="{Binding Value}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                    <DataTemplate x:Key="ImageEditor">
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                            <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
-                            <ctrl:ImagePicker Width="120" Height="120" ImageData="{Binding Value, Converter={StaticResource Base64Converter}, Mode=TwoWay}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.Resources>
-            </ItemsControl>
-            <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.UpdatePreview}">Preview</Button>
-            <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.SaveCard}">Save</Button>
-            <Button Margin="13,3" DockPanel.Dock="Top" Command="{Binding CardEditor.DeleteCard}">Delete</Button>
+        <DockPanel Width="600" LastChildFill="False" Grid.Column="1">
+            <DockPanel DockPanel.Dock="Top" LastChildFill="False" Background="LightGray">
+                <Grid DockPanel.Dock="Left" Background="LightGray">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseUp">
+                            <i:InvokeCommandAction Command="{Binding AddCard}" CommandParameter="{Binding SelectedCardType}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Width="3" Background="Black"/>
+                    <Grid Grid.Column="1" Width="20" Background="LightGray">
+                        <Image Source="/Resources/Images/find.png" Margin="3"/>
+                    </Grid>
+                    <Grid Grid.Column="2" Background="Gray">
+                        <TextBlock Padding="6" VerticalAlignment="Center" Text="{Binding SelectedCardType.Name, StringFormat=New {0}}"></TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="3" Width="20" Background="Gray" MouseUp="ShowCardTypes">
+                        <Image Source="/Resources/Images/chevron-down.png" Margin="3"/>
+                        <Popup x:Name="CardTypeSelector" IsOpen="False" StaysOpen="False" HorizontalAlignment="Stretch">
+                            <ListView ItemsSource="{Binding CardTypes}" SelectedItem="{Binding SelectedCardType}" MouseUp="CloseCardTypes">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="5" Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Popup>
+                    </Grid>
+                </Grid>
+                <Grid DockPanel.Dock="Right" Background="LightGray">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseUp">
+                            <i:InvokeCommandAction Command="{Binding CardEditor.SaveCard}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Width="3" Background="Black"/>
+                    <Grid Grid.Column="1" Width="20" Background="LightGray">
+                        <Image Source="/Resources/Images/tick.png" Margin="3"/>
+                    </Grid>
+                    <Grid Grid.Column="2" Background="Gray">
+                        <TextBlock Padding="6" VerticalAlignment="Center">Save</TextBlock>
+                    </Grid>
+                </Grid>
+                <Grid DockPanel.Dock="Right" Background="LightGray">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseUp">
+                            <i:InvokeCommandAction Command="{Binding CardEditor.DeleteCard}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Width="3" Background="Black"/>
+                    <Grid Grid.Column="1" Width="20" Background="LightGray">
+                        <Image Source="/Resources/Images/bin.png" Margin="3"/>
+                    </Grid>
+                    <Grid Grid.Column="2" Background="Gray">
+                        <TextBlock Padding="6" VerticalAlignment="Center">Delete</TextBlock>
+                    </Grid>
+                </Grid>
+            </DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="1" Margin="5">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10,0">
+                        <TextBlock Margin="3" Width="60">Name</TextBlock>
+                        <TextBox Margin="3" Width="120" Text="{Binding CardEditor.Name}"/>
+                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0" Focusable="False" ItemTemplateSelector="{StaticResource CardValueEditorDataTemplateSelector}">
+                        <ItemsControl.Resources>
+                            <DataTemplate x:Key="TextEditor">
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                    <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
+                                    <TextBox Margin="3" Width="120" Text="{Binding Value}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                            <DataTemplate x:Key="ImageEditor">
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                    <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
+                                    <ctrl:ImagePicker Width="120" Height="120" ImageData="{Binding Value, Converter={StaticResource Base64Converter}, Mode=TwoWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                    </ItemsControl>
+                </DockPanel>
+
+                <Border BorderThickness="2" BorderBrush="Black" Margin="25" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.BackgroundColor}" VerticalAlignment="Top">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CardEditor}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <ctrl:DesignerCanvas Elements="{Binding CardEditor.Elements}" IsDisplayOnly="True"/>
+                </Border>
+            </Grid>
         </DockPanel>
-       
-        <Border BorderThickness="2" BorderBrush="Black" Margin="25" Grid.Column="2" CornerRadius="5" Width="250" Height="350" Background="{Binding CardEditor.BackgroundColor}" VerticalAlignment="Top">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding CardEditor}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-            <ctrl:DesignerCanvas Elements="{Binding CardEditor.Elements}" IsDisplayOnly="True"/>
-        </Border>
     </Grid>
 </UserControl>

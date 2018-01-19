@@ -19,6 +19,31 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate TargetType="Button" x:Key="StyleButton">
+        <Grid DockPanel.Dock="Left" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="Highlight" Grid.Column="0" Width="2" Background="OrangeRed"/>
+            <Grid Grid.Column="1" Width="16" Background="LightGray">
+                <Image Source="/Resources/Images/find.png" Margin="2"/>
+            </Grid>
+            <Grid Grid.Column="2" Background="Gray">
+                <ContentPresenter Margin="{TemplateBinding Padding}"/>
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter TargetName="Highlight" Property="Background" Value="Green"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Highlight" Property="Background" Value="White"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <ControlTemplate TargetType="Button" x:Key="CircleButton">
         <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
             <Ellipse x:Name="Host" Stroke="Gray" Fill="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
