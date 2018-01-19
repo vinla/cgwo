@@ -44,32 +44,7 @@ namespace cgwo.ViewModels.Data
         public ICommand UpdatePreview => new DelegateCommand(() =>
         {
             _elements = LayoutConverter.ToDesignerElements(_layout.Elements);
-            foreach(var textElement in _elements.OfType<TextElement>())
-            {
-                var matches = Regex.Matches(textElement.Text, "{([A-Za-z0-9]+)}");
-                foreach(var match in matches.Cast<Match>().Where(m => m.Success))
-                {
-                    if (match.Groups[1].Value == "Name")
-                        textElement.Text = textElement.Text.Replace(match.Value, _card.Name);
-                    else
-                    {
-                        var attribute = _card.AttributeValues.SingleOrDefault(attr => attr.CardAttribute.Name == match.Groups[1].Value);
-                        if (attribute != null)
-                        {
-                            textElement.Text = textElement.Text.Replace(match.Value, attribute.Value);
-                        }
-                    }
-                }
-            }
-            
-            foreach(var imageElement in _elements.OfType<ImageElement>().Where(img => img.ImageSource == "Card Attribute"))
-            {
-                var attributeValue = _card.AttributeValues.SingleOrDefault(av => av.CardAttribute.Name == imageElement.LinkedAttribute);
-                if (attributeValue != null)
-                {
-                    imageElement.ImageData = attributeValue.Value;
-                }
-            }
+            CardElementMapper.MapElementValues(_card, _elements);
 
             RaisePropertyChanged(nameof(Elements));
             RaisePropertyChanged(nameof(BackgroundColor));

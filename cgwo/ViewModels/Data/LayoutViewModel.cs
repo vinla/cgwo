@@ -173,7 +173,7 @@ namespace cgwo.ViewModels.Data
             layout.Elements.AddRange(LayoutConverter.FromDesignerElements(Elements));
 
             _cardGameDataStore.SaveLayout(_cardTypeViewModel.Id, layout);
-            // TODO: Update the thumbnail image for the card
+            _cardGameDataStore.UpdateCardTypeImage(_cardTypeViewModel.Id, CardImageComposer.CreateCardImage(layout));
         }        
 
         public IEnumerable<String> ImageAttributes => _cardTypeViewModel.Attributes.Where(attr => attr.Type == AttributeType.Image).Select(attr => attr.Name);        
