@@ -47,12 +47,23 @@ namespace cgwo.ViewModels.Data
             CardElementMapper.MapElementValues(_card, _elements);
 
             RaisePropertyChanged(nameof(Elements));
-            RaisePropertyChanged(nameof(BackgroundColor));
+            RaisePropertyChanged(nameof(Background));
         });        
+        
+		public Brush Background
+		{
+			get
+			{
+				if (_layout.BackgroundImage != null && _layout.BackgroundImage.Length > 0)
+				{
+					return new ImageBrush((ImageSource)new ImageSourceConverter().ConvertFrom(Convert.FromBase64String(_layout.BackgroundImage)));
+				}
 
-        public Brush BackgroundColor => new SolidColorBrush(ColorExtensionMethods.FromHex(_layout.BackgroundColor));
+				return new SolidColorBrush(ColorExtensionMethods.FromHex(_layout.BackgroundColor));
+			}
+		}
 
-        public IEnumerable<CardElement> Elements => _elements;
+		public IEnumerable<CardElement> Elements => _elements;
 
         public ICommand SaveCard => new DelegateCommand(() =>
         {
@@ -66,8 +77,8 @@ namespace cgwo.ViewModels.Data
 			if (_dialogService.Prompt("Confirm delete", "Are you sure you want to delete this card?") == DialogResult.Accept)
 			{
 				_cardGameDataStore.DeleteCard(_card);
-				_cardUpdated?.Invoke(null);
+				_cardUpdated?.Invoke(null);				
 			}
-		});
+		});		
     }
 }
