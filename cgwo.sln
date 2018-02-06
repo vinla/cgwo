@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GorgleDevs.Wpf", "GorgleDev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GorgleDevs.Wpf.Samples", "GorgleDevs.Wpf.Samples\GorgleDevs.Wpf.Samples.csproj", "{6671464F-6AF2-4A52-9BF7-B132A5CF5C97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogs.Data.LiteDb", "Cogs.Data.LiteDb\Cogs.Data.LiteDb.csproj", "{F763693B-1979-4182-882D-21F63A3582F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6671464F-6AF2-4A52-9BF7-B132A5CF5C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6671464F-6AF2-4A52-9BF7-B132A5CF5C97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6671464F-6AF2-4A52-9BF7-B132A5CF5C97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F763693B-1979-4182-882D-21F63A3582F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F763693B-1979-4182-882D-21F63A3582F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F763693B-1979-4182-882D-21F63A3582F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F763693B-1979-4182-882D-21F63A3582F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

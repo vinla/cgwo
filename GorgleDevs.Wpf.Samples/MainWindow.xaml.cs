@@ -24,14 +24,7 @@ namespace GorgleDevs.Wpf.Samples
         {
             InitializeComponent();
 
-            DataContext = new
-            {
-                Elements = new[]
-                {
-                    new DesignCanvas.LayoutElement{ Left = 100, Top = 100, Width = 100, Height = 25},
-                    new DesignCanvas.LayoutElement{ Left = 100, Top = 200, Width = 25, Height = 25}
-                }
-            };
+			DataContext = new MainViewModel();           
         }
     }
 }

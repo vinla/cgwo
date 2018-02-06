@@ -15,3 +15,7 @@
 /GorgleDevs.Wpf.Samples/bin/Debug
 /GorgleDevs.Wpf.Samples/obj/Debug
 /Cogs.Data.Sqlite
+/Cogs.Data.LiteDb/bin/Debug
+/Cogs.Data.LiteDb/obj
+/GorgleDevs.Wpf/obj/Release
+/GorgleDevs.Wpf.Samples/obj/Release

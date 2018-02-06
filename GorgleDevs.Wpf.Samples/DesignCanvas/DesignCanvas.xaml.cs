@@ -21,15 +21,19 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
     /// </summary>
     public partial class DesignCanvas : UserControl
     {
-        private Rect _dragRect;
+		private readonly Guidelines _guidelines;
+		private Rect _dragRect;
         private Point? _mouseDownPoint, _currentMousePoint, _lastKnownMousePoint;
         private LayoutElement _mouseDownTarget;
-        private Stack<DesignerAction> _actionStack;        
+        private Stack<DesignerAction> _actionStack;
+		private DragAction _dragAction;
         
         public DesignCanvas()
         {
             InitializeComponent();
             _actionStack = new Stack<DesignerAction>();
+			_guidelines = new Guidelines();
+			_guidelines.SetGrid(10);
         }
 
         public static readonly DependencyProperty ElementsProperty = DependencyProperty.Register(nameof(Elements), typeof(IEnumerable<LayoutElement>), typeof(DesignCanvas));
@@ -170,15 +174,11 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         }
 
         private void DragSelected()
-        {            
-            var moveVector = MoveVector;
-            foreach (var element in Elements.Where(el => el.Selected))
-            {
-                element.Top += moveVector.Y;
-                element.Left += moveVector.X;
-            }
+        {
+			if (_dragAction == null)
+				_dragAction = new DragAction(Elements.Where(el => el.Selected), _guidelines);
+			_dragAction.Update(MoveVector);
         }
-        
         private void ThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
             if (_actionStack.Any())
@@ -208,8 +208,8 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 
         private bool DragRectThresholdExceeded => _dragRect.Size.Width > 3 || _dragRect.Size.Height > 3;
 
-        private Point MoveVector => new Point((int)(_currentMousePoint.Value.X - _lastKnownMousePoint.Value.X), (int)(_currentMousePoint.Value.Y - _lastKnownMousePoint.Value.Y));
-    }   
+        private Vector MoveVector => new Vector((int)(_currentMousePoint.Value.X - _lastKnownMousePoint.Value.X), (int)(_currentMousePoint.Value.Y - _lastKnownMousePoint.Value.Y));		
+	}   
     
     public abstract class DesignerAction
     {
@@ -249,4 +249,27 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         DragSelect,
         DragItems
     }
+
+	public class Guidelines
+	{
+		private int _gridSize;
+		public void SetGrid(int gridSize)
+		{
+			_gridSize = gridSize;
+		}
+
+		public Point SnapPointToGrid(Point p)
+		{
+			int gridX = (int)(p.X / _gridSize) + 1;
+			int gridY = (int)(p.Y / _gridSize) + 1;
+
+			var distX = (gridX * _gridSize) - p.X;
+			var distY = (gridY * _gridSize) - p.Y;
+
+			p.X = distX < _gridSize / 2f ? gridX * _gridSize : (gridX - 1) * _gridSize;
+			p.Y = distY < _gridSize / 2f ? gridY * _gridSize : (gridY - 1) * _gridSize;
+
+			return p;
+		}		
+	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cogs.Common
 {
-    public interface ICardGameDataStore
+	public interface ICardGameDataStore
     {
         ProjectInfo GetProjectInfo();
         void SetProjectInfo(ProjectInfo projectInfo);
