@@ -16,21 +16,28 @@ using System.Windows.Shapes;
 
 namespace GorgleDevs.Wpf.Samples.DesignCanvas
 {
-    /// <summary>
-    /// Interaction logic for DesignCanvas.xaml
-    /// </summary>
-    public partial class DesignCanvas : UserControl
+	/// <summary>
+	/// Interaction logic for DesignCanvas.xaml
+	/// </summary>
+	public partial class DesignCanvas : UserControl
     {
         private Rect _dragRect;
         private Point? _mouseDownPoint, _currentMousePoint, _lastKnownMousePoint;
         private LayoutElement _mouseDownTarget;
-        private Stack<DesignerAction> _actionStack;        
+		private DesignerAction _currentAction;
         
         public DesignCanvas()
         {
-            InitializeComponent();
-            _actionStack = new Stack<DesignerAction>();
+            InitializeComponent();            
         }
+
+		public static DependencyProperty ActionManagerProperty = DependencyProperty.Register(nameof(ActionManager), typeof(ActionManager), typeof(DesignCanvas));
+
+		public ActionManager ActionManager
+		{
+			get { return (ActionManager)GetValue(ActionManagerProperty); }
+			set { SetValue(ActionManagerProperty, value); }
+		}
 
         public static readonly DependencyProperty ElementsProperty = DependencyProperty.Register(nameof(Elements), typeof(IEnumerable<LayoutElement>), typeof(DesignCanvas));
 
@@ -86,6 +93,12 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
             if (e.ChangedButton == MouseButton.Left)
             {
                 var mouseAction = GetMouseAction();
+
+				if(_currentAction is MoveAction)
+				{
+					ActionManager?.Push(_currentAction);
+					_currentAction = null;
+				}
 
                 switch(mouseAction)
                 {
@@ -170,77 +183,41 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         }
 
         private void DragSelected()
-        {            
-            var moveVector = MoveVector;
-            foreach (var element in Elements.Where(el => el.Selected))
-            {
-                element.Top += moveVector.Y;
-                element.Left += moveVector.X;
-            }
+        {
+			var moveAction = _currentAction as MoveAction ?? new MoveAction(Elements.Where(el => el.Selected));
+			moveAction.Update(MoveVector);
+			_currentAction = moveAction;
         }
         
         private void ThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
-            if (_actionStack.Any())
-            {
-                var resizeAction = _actionStack.Peek() as ResizeAction;
-                if (resizeAction != null)
-                    resizeAction.SetComplete();
-            }
+            
+            var resizeAction = _currentAction as ResizeAction;
+			if (resizeAction != null)
+			{
+				resizeAction.SetComplete();
+				ActionManager?.Push(resizeAction);
+			}
         }
 
         private void ThumbDragStarted(object sender, DragStartedEventArgs e)
         {
             var thumb = sender as Thumb;
             var element = (thumb.DataContext as LayoutElement);
-            _actionStack.Push(new ResizeAction(element));
+			_currentAction = new ResizeAction(element, (string)thumb.Tag);
         }
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            if (_actionStack.Any())
-            {
-                var resizeAction = _actionStack.Peek() as ResizeAction;
-                if (resizeAction != null && resizeAction.IsComplete == false)
-                    resizeAction.Update(e.HorizontalChange, e.VerticalChange);
-            }
+        {			
+            var resizeAction = _currentAction as ResizeAction;
+            if (resizeAction != null && resizeAction.IsComplete == false)
+                resizeAction.Update(e.HorizontalChange, e.VerticalChange);            
         }
 
         private bool DragRectThresholdExceeded => _dragRect.Size.Width > 3 || _dragRect.Size.Height > 3;
 
         private Point MoveVector => new Point((int)(_currentMousePoint.Value.X - _lastKnownMousePoint.Value.X), (int)(_currentMousePoint.Value.Y - _lastKnownMousePoint.Value.Y));
     }   
-    
-    public abstract class DesignerAction
-    {
-        public bool IsComplete { get; private set; }
-
-        public void SetComplete()
-        {
-            IsComplete = true;
-        }
-    }
-
-    public class MoveAction : DesignerAction
-    {
-
-    }
-
-    public class ResizeAction : DesignerAction
-    {        
-        private readonly LayoutElement _element;        
-
-        public ResizeAction(LayoutElement element)
-        {
-            _element = element;
-        }
-
-        public void Update(double dx, double dy)
-        {                        
-            _element.Width += dx;
-            _element.Height += dy;
-        }
-    }
 
     public enum MouseAction
     {

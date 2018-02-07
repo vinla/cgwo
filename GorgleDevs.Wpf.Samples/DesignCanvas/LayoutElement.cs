@@ -35,6 +35,20 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         }
 
         public Rect Bounds => new Rect(Left, Top, Width, Height);
-       
+
+		public LayoutElement Clone()
+		{
+			var clone = new LayoutElement();
+			clone.CopyValuesFrom(this);
+			return clone;
+		}
+
+		public void CopyValuesFrom(LayoutElement element)
+		{
+			Top = element.Top;
+			Left = element.Left;
+			Width = element.Width;
+			Height = element.Height;
+		}
     }
 }

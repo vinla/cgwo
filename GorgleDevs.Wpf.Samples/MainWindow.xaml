@@ -8,6 +8,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <dc:DesignCanvas Elements="{Binding Elements}" Background="Bisque"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <dc:DesignCanvas Elements="{Binding LayoutDocument.Elements}" ActionManager="{Binding ActionManager}" Background="Bisque"/>
+        <StackPanel Grid.Column="1" Margin="5" Width="100">
+            <Button Margin="5" Content="Undo" Command="{Binding Undo}"></Button>
+            <Button Margin="5" Content="Redo" Command="{Binding Redo}"></Button>
+            <Button Margin="5" Content="Delete" Command="{Binding Delete}"></Button>
+            <Button Margin="5" Content="Add" Command="{Binding Add}"></Button>
+        </StackPanel>
     </Grid>
 </Window>

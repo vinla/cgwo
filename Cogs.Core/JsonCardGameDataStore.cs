@@ -173,7 +173,15 @@ namespace Cogs.Core
                 Value = av.Value
             }));
 
-            SaveChanges();
+			using (var database = new LiteDB.LiteDatabase("c:\\utilities\\test.cogs"))
+			{
+				using (var stream = new MemoryStream(Convert.FromBase64String(card.ImageData)))
+				{
+					database.FileStorage.Upload("testcard", "test.png", stream);
+				}
+			}
+
+			SaveChanges();
         }
 
         public IEnumerable<Card> GetCards()
