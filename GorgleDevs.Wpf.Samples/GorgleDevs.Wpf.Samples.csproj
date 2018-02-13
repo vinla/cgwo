@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DesignCanvas\DragAction2.cs" />
+    <Compile Include="DesignCanvas\GuideLines.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="DesignCanvas\DesignCanvas.xaml">
       <SubType>Designer</SubType>

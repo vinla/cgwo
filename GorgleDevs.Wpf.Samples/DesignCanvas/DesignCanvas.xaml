@@ -28,13 +28,6 @@
     </UserControl.Resources>
     <Grid>
         <ItemsControl ItemsSource="{Binding Elements}" Margin="0">
-            <i:Interaction.Behaviors>
-                <b:AttachAdornerBehaviour>
-                    <b:AttachAdornerBehaviour.AdornerFactory>
-                        <local:GridAdornerFactory GridSize="10,10"/>
-                    </b:AttachAdornerBehaviour.AdornerFactory>
-                </b:AttachAdornerBehaviour>
-            </i:Interaction.Behaviors>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Margin="0"/>

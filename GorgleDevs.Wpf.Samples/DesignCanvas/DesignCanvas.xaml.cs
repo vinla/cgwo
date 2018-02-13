@@ -26,7 +26,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         private Point? _mouseDownPoint, _currentMousePoint, _lastKnownMousePoint;
         private LayoutElement _mouseDownTarget;
         private Stack<DesignerAction> _actionStack;
-		private DragAction _dragAction;
+		private DragAction2 _dragAction;
         
         public DesignCanvas()
         {
@@ -106,6 +106,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
                 }
                     
                 _mouseDownPoint = null;
+				_dragAction = null;
                 ReleaseMouseCapture();
                 UpdateDragRect();                                             
             }
@@ -176,7 +177,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         private void DragSelected()
         {
 			if (_dragAction == null)
-				_dragAction = new DragAction(Elements.Where(el => el.Selected), _guidelines);
+				_dragAction = new DragAction2(Elements.Where(el => el.Selected));
 			_dragAction.Update(MoveVector);
         }
         private void ThumbDragCompleted(object sender, DragCompletedEventArgs e)
@@ -248,28 +249,5 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         Click,
         DragSelect,
         DragItems
-    }
-
-	public class Guidelines
-	{
-		private int _gridSize;
-		public void SetGrid(int gridSize)
-		{
-			_gridSize = gridSize;
-		}
-
-		public Point SnapPointToGrid(Point p)
-		{
-			int gridX = (int)(p.X / _gridSize) + 1;
-			int gridY = (int)(p.Y / _gridSize) + 1;
-
-			var distX = (gridX * _gridSize) - p.X;
-			var distY = (gridY * _gridSize) - p.Y;
-
-			p.X = distX < _gridSize / 2f ? gridX * _gridSize : (gridX - 1) * _gridSize;
-			p.Y = distY < _gridSize / 2f ? gridY * _gridSize : (gridY - 1) * _gridSize;
-
-			return p;
-		}		
-	}
+    }	
 }

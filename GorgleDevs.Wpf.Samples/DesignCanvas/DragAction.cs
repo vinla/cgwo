@@ -4,13 +4,13 @@ using System.Windows;
 
 namespace GorgleDevs.Wpf.Samples.DesignCanvas
 {
-	public class DragAction
+	public class DragActionZ
 	{
 		private readonly List<LayoutElement> _draggedElements;
 		private readonly Guidelines _guidelines;
 		private Point _trackingPoint;		
 		
-		public DragAction(IEnumerable<LayoutElement> elements, Guidelines guidelines)
+		public DragActionZ(IEnumerable<LayoutElement> elements, Guidelines guidelines)
 		{
 			_draggedElements = elements.ToList();
 			_guidelines = guidelines;			

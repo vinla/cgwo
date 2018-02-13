@@ -26,5 +26,10 @@ namespace GorgleDevs.Wpf.Samples
 
 			DataContext = new MainViewModel();           
         }
-    }
+
+		private void KeyPress(object sender, KeyEventArgs e)
+		{
+			var temp = 1;
+		}
+	}
 }

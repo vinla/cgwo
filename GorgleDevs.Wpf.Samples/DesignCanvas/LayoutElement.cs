@@ -1,10 +1,14 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using GorgleDevs.Wpf.Mvvm;
 
 namespace GorgleDevs.Wpf.Samples.DesignCanvas
 {
     public class LayoutElement : ViewModel
     {
+		private readonly Guid _id = Guid.NewGuid();
+		public Guid Id => _id;
+		
         public double Top
         {
             get { return GetValue<double>(nameof(Top)); }
