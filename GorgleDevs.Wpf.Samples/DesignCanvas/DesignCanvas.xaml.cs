@@ -21,6 +21,8 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 	/// </summary>
 	public partial class DesignCanvas : UserControl
     {
+		private readonly Guidelines _guidelines;
+		private readonly GuidelinesAdorner _guidelinesAdorner;
         private Rect _dragRect;
         private Point? _mouseDownPoint, _currentMousePoint, _lastKnownMousePoint;
         private LayoutElement _mouseDownTarget;
@@ -28,7 +30,19 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         
         public DesignCanvas()
         {
-            InitializeComponent();            
+            InitializeComponent();
+			_guidelines = new Guidelines();
+			_guidelinesAdorner = new GuidelinesAdorner(this, _guidelines);
+			Loaded += (s, e) =>
+			{
+				var adornerLayer = AdornerLayer.GetAdornerLayer(this);
+				adornerLayer.Add(_guidelinesAdorner);
+			};
+
+			_guidelines.LinesUpdated += (s, e) =>
+			{
+				_guidelinesAdorner.InvalidateVisual();
+			};
         }
 
 		public static DependencyProperty ActionManagerProperty = DependencyProperty.Register(nameof(ActionManager), typeof(ActionManager), typeof(DesignCanvas));
@@ -96,6 +110,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 
 				if(_currentAction is MoveAction)
 				{
+					_currentAction.SetComplete();
 					ActionManager?.Push(_currentAction);
 					_currentAction = null;
 				}
@@ -184,7 +199,11 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 
         private void DragSelected()
         {
-			var moveAction = _currentAction as MoveAction ?? new MoveAction(Elements.Where(el => el.Selected));
+			var moveAction = _currentAction as MoveAction
+				?? new MoveAction(
+					Elements.Where(el => el.Selected), 
+					_guidelines.GenerateGuidelines(Elements.Where(el => el.Selected == false).Select(el => el.Bounds)));
+
 			moveAction.Update(MoveVector);
 			_currentAction = moveAction;
         }
@@ -204,19 +223,19 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         {
             var thumb = sender as Thumb;
             var element = (thumb.DataContext as LayoutElement);
-			_currentAction = new ResizeAction(element, (string)thumb.Tag);
+			_currentAction = new ResizeAction(element, (string)thumb.Tag, _guidelines.GenerateGuidelines(Elements.Where(el => el != element).Select(el => el.Bounds)));
         }
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
         {			
             var resizeAction = _currentAction as ResizeAction;
-            if (resizeAction != null && resizeAction.IsComplete == false)
-                resizeAction.Update(e.HorizontalChange, e.VerticalChange);            
+			if (resizeAction != null && resizeAction.IsComplete == false)
+				resizeAction.Update(new Vector(e.HorizontalChange, e.VerticalChange));
         }
 
         private bool DragRectThresholdExceeded => _dragRect.Size.Width > 3 || _dragRect.Size.Height > 3;
 
-        private Point MoveVector => new Point((int)(_currentMousePoint.Value.X - _lastKnownMousePoint.Value.X), (int)(_currentMousePoint.Value.Y - _lastKnownMousePoint.Value.Y));
+        private Vector MoveVector => new Vector((int)(_currentMousePoint.Value.X - _lastKnownMousePoint.Value.X), (int)(_currentMousePoint.Value.Y - _lastKnownMousePoint.Value.Y));
     }   
 
     public enum MouseAction

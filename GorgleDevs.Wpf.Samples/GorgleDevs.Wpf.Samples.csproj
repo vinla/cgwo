@@ -71,11 +71,15 @@
     </Compile>
     <Compile Include="DesignCanvas\ActionManager.cs" />
     <Compile Include="DesignCanvas\AddElementAction.cs" />
+    <Compile Include="DesignCanvas\Bounds.cs" />
     <Compile Include="DesignCanvas\DeleteElementAction.cs" />
     <Compile Include="DesignCanvas\DesignCanvas.xaml.cs">
       <DependentUpon>DesignCanvas.xaml</DependentUpon>
     </Compile>
     <Compile Include="DesignCanvas\DesignerAction.cs" />
+    <Compile Include="DesignCanvas\Guideline.cs" />
+    <Compile Include="DesignCanvas\Guidelines.cs" />
+    <Compile Include="DesignCanvas\GuidelinesAdorner.cs" />
     <Compile Include="DesignCanvas\LayoutDocument.cs" />
     <Compile Include="DesignCanvas\LayoutElement.cs" />
     <Compile Include="DesignCanvas\MoveAction.cs" />

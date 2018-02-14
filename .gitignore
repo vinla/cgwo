@@ -16,3 +16,9 @@
 /GorgleDevs.Wpf.Samples/obj/Debug
 /Cogs.Data.Sqlite
 /GorgleDevs.Wpf/obj/Release
+/Cogs.Data.LiteDb/bin/Debug
+/Cogs.Data.LiteDb/obj
+/GorgleDevs.Wpf.Samples/obj/Release/GorgleDevs.Wpf.Samples.csproj.CoreCompileInputs.cache
+/GorgleDevs.Wpf.Samples/obj/Release/GorgleDevs.Wpf.Samples_MarkupCompile.cache
+/GorgleDevs.Wpf.Samples/obj/Release/GorgleDevs.Wpf.Samples_MarkupCompile.lref
+/GorgleDevs.Wpf.Samples/obj/Release

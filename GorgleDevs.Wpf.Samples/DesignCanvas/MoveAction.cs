@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -6,31 +7,44 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 {
 	public class MoveAction : DesignerAction
     {
+		private readonly Guidelines _guidelines;
 		private readonly List<LayoutElement> _elements;
-		private Point _moveVector;
+		private Point _referencePoint;
+		private Dictionary<Guid, Point> _startingPoints;
+		private Dictionary<Guid, Point> _updatedPoints;
+		private Rect _trackingRect;
 
-		public MoveAction(IEnumerable<LayoutElement> elements)
+		public MoveAction(IEnumerable<LayoutElement> elements, Guidelines guidelines)
 		{
+			_guidelines = guidelines;
 			_elements = elements.ToList();
+			_trackingRect = Bounds.FromRectangles(_elements.Select(el => el.Bounds));
+			_startingPoints = _elements.ToDictionary(x => x.Id, x => x.Bounds.TopLeft);
+			_referencePoint = _trackingRect.TopLeft;
 		}
 
-		public void Update(Point moveVector)
+		public void Update(Vector moveVector)
 		{
-			_moveVector.Offset(moveVector.X, moveVector.Y);
+			_trackingRect.Offset(moveVector);
+			var tempRect = _guidelines.SnapRectangle(_trackingRect);
+			var overallDelta = tempRect.TopLeft - _referencePoint;
 
-			_elements.ForEach(el =>
+			foreach (var el in _elements)
 			{
-				el.Left += moveVector.X;
-				el.Top += moveVector.Y;
-			});
+				el.Top = _startingPoints[el.Id].Y + overallDelta.Y;
+				el.Left = _startingPoints[el.Id].X + overallDelta.X;
+			}
+
+			_updatedPoints = _elements.ToDictionary(x => x.Id, x => x.Bounds.TopLeft);
 		}
 
 		public override void Undo()
 		{
 			_elements.ForEach(el =>
 			{
-				el.Left -= _moveVector.X;
-				el.Top -= _moveVector.Y;
+				var startingPoint = _startingPoints[el.Id];
+				el.Left = startingPoint.X;
+				el.Top = startingPoint.Y;
 			});
 		}
 
@@ -38,9 +52,15 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 		{
 			_elements.ForEach(el =>
 			{
-				el.Left += _moveVector.X;
-				el.Top += _moveVector.Y;
+				var endPoint = _updatedPoints[el.Id];
+				el.Left = endPoint.X;
+				el.Top = endPoint.Y;
 			});
+		}
+
+		protected override void AfterCompleted()
+		{
+			_guidelines.HideAll();
 		}
 	}
 }
