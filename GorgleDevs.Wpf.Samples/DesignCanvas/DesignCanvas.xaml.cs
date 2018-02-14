@@ -22,6 +22,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
     public partial class DesignCanvas : UserControl
     {
 		private readonly Guidelines _guidelines;
+		private readonly GuidelinesAdorner _guidelinesAdorner;
 		private Rect _dragRect;
         private Point? _mouseDownPoint, _currentMousePoint, _lastKnownMousePoint;
         private LayoutElement _mouseDownTarget;
@@ -33,7 +34,18 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
             InitializeComponent();
             _actionStack = new Stack<DesignerAction>();
 			_guidelines = new Guidelines();
-			_guidelines.SetGrid(10);
+			_guidelinesAdorner = new GuidelinesAdorner(this, _guidelines);
+
+			Loaded += (s, e) =>
+			{
+				var adornerLayer = AdornerLayer.GetAdornerLayer(this);
+				adornerLayer.Add(_guidelinesAdorner);
+			};
+
+			_guidelines.LinesUpdated += (s, e) =>
+			{
+				_guidelinesAdorner.InvalidateVisual();
+			};
         }
 
         public static readonly DependencyProperty ElementsProperty = DependencyProperty.Register(nameof(Elements), typeof(IEnumerable<LayoutElement>), typeof(DesignCanvas));
@@ -43,6 +55,8 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
             get { return (IEnumerable<LayoutElement>)GetValue(ElementsProperty); }
             set { SetValue(ElementsProperty, value); }
         }
+
+		public Guidelines Guidelines => _guidelines;
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -107,6 +121,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
                     
                 _mouseDownPoint = null;
 				_dragAction = null;
+				_guidelines.HideAll();
                 ReleaseMouseCapture();
                 UpdateDragRect();                                             
             }
@@ -177,7 +192,10 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
         private void DragSelected()
         {
 			if (_dragAction == null)
-				_dragAction = new DragAction2(Elements.Where(el => el.Selected));
+			{
+				_guidelines.GenerateGuidelines(Elements.Where(el => el.Selected == false).Select(el => el.Bounds));
+				_dragAction = new DragAction2(Elements.Where(el => el.Selected), _guidelines);
+			}
 			_dragAction.Update(MoveVector);
         }
         private void ThumbDragCompleted(object sender, DragCompletedEventArgs e)

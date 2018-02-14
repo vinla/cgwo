@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="DesignCanvas\DragAction2.cs" />
     <Compile Include="DesignCanvas\GuideLines.cs" />
+    <Compile Include="DesignCanvas\GuidelinesAdorner.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="DesignCanvas\DesignCanvas.xaml">
       <SubType>Designer</SubType>
@@ -73,7 +74,6 @@
     <Compile Include="DesignCanvas\DesignCanvas.xaml.cs">
       <DependentUpon>DesignCanvas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DesignCanvas\DragAction.cs" />
     <Compile Include="DesignCanvas\GridAdorner.cs" />
     <Compile Include="DesignCanvas\LayoutElement.cs" />
     <Compile Include="MainWindow.xaml.cs">

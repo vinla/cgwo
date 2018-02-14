@@ -18,7 +18,8 @@ namespace GorgleDevs.Wpf.Samples
 			_elements = new[]
 			{
 				new DesignCanvas.LayoutElement{ Left = 105, Top = 80, Width = 100, Height = 25},
-				new DesignCanvas.LayoutElement{ Left = 96, Top = 290, Width = 25, Height = 25}
+				new DesignCanvas.LayoutElement{ Left = 96, Top = 290, Width = 25, Height = 25},
+				new DesignCanvas.LayoutElement{ Left = 196, Top = 190, Width = 50, Height = 125}
 			};
 			GridSize = new Size(10, 10);
 		}

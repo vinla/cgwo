@@ -84,5 +84,6 @@
         <Canvas Name="SelectionCanvas">
             <Rectangle Name="SelectionRectangle" Fill="Transparent" IsHitTestVisible="False" Stroke="Gray" StrokeDashArray="3,3" Visibility="Hidden"/>
         </Canvas>
+        <Canvas Name="GuidelinesCanvas"></Canvas>
     </Grid>
 </UserControl>
