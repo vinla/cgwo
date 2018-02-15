@@ -114,6 +114,8 @@
       <DependentUpon>TextEditBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designer\Actions\ActionManager.cs" />
+    <Compile Include="Designer\Actions\AddElementAction.cs" />
+    <Compile Include="Designer\Actions\DeleteElementsAction.cs" />
     <Compile Include="Designer\Actions\DesignerAction.cs" />
     <Compile Include="Designer\Actions\MoveAction.cs" />
     <Compile Include="Designer\Actions\ResizeAction.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="Designer\ImageElement.cs" />
     <Compile Include="Designer\IZIndexManager.cs" />
     <Compile Include="Designer\LayoutConverter.cs" />
+    <Compile Include="Designer\LayoutDocument.cs" />
     <Compile Include="Designer\RectangleElement.cs" />
     <Compile Include="Designer\ResizeAdorner.cs" />
     <Compile Include="Designer\ShapeElement.cs" />

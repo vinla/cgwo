@@ -61,8 +61,8 @@ namespace Cogs.Designer
             }
             
             var offset = parameter != null ? (Point)parameter : new Point(10, 10);
-            element.Left = offset.X;
-            element.Top = offset.Y;
+            element.Left = (int)offset.X;
+            element.Top = (int)offset.Y;
             element.Width = 120;
             element.Height = 24;
 

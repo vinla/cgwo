@@ -56,6 +56,11 @@ namespace Cogs.Designer
 			set { SetValue(nameof(Selected), value); }
 		}
 
+		public object Clone()
+		{
+			return MemberwiseClone();
+		}
+
 		public IZIndexManager ZIndexManager { get; set; }
 
         public ICommand SendToBack => new DelegateCommand(() => ZIndexManager?.SendToBack(this));

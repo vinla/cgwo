@@ -32,14 +32,14 @@
             <Grid Background="LightSteelBlue"/>
         </Popup>
         <Grid>
-            <Border x:Name="Designer" BorderBrush="Black" Background="{Binding Background}" BorderThickness="2" CornerRadius="5" Width="250" Height="350">
+            <Border x:Name="Designer" BorderBrush="Black" Background="{Binding LayoutDocument.Background}" BorderThickness="2" CornerRadius="5" Width="250" Height="350">
                 <i:Interaction.Behaviors>
                     <gb:DropBehavior DropCommand="{Binding AddElement}" Converter="{StaticResource elementFactory}"/>
                     <gb:KeyPreviewBehaviour Key="Delete" Command="{Binding DeleteCommand}"/>
                 </i:Interaction.Behaviors>
-                <ctrl:DesignerCanvas Elements="{Binding Elements}" Width="250" Height="350">
+                <ctrl:DesignerCanvas Elements="{Binding LayoutDocument.Elements}" ActionManager="{Binding ActionManager}" Width="250" Height="350">
                     <ctrl:DesignerCanvas.InputBindings>
-                        <KeyBinding Key="Delete" Command="{Binding DeleteItem}"/>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteItems}"/>
                     </ctrl:DesignerCanvas.InputBindings>
                 </ctrl:DesignerCanvas>
             </Border>
@@ -114,9 +114,9 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Margin="3">Background Colour</TextBlock>
-                <xcd:ColorPicker Grid.Column="1" Width="120" Margin="3" SelectedColor="{Binding BackgroundColor}"/>
+                <xcd:ColorPicker Grid.Column="1" Width="120" Margin="3" SelectedColor="{Binding LayoutDocument.BackgroundColor}"/>
                 <TextBlock Margin="3" Grid.Row="1">Background Image</TextBlock>
-                <ctrl:ImagePicker Width="120" Height="120" Grid.Row="1" Grid.Column="1" ImageData="{Binding BackgroundImage, Mode=TwoWay}"/>
+                <ctrl:ImagePicker Width="120" Height="120" Grid.Row="1" Grid.Column="1" ImageData="{Binding LayoutDocument.BackgroundImage, Mode=TwoWay}"/>
             </Grid>
             <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="5">
                 <TextBlock Margin="3" FontSize="14">Element Properties</TextBlock>
@@ -288,6 +288,8 @@
                 <TextBlock Margin="3" FontSize="14">Actions</TextBlock>
             </Border>
             <UniformGrid Columns="2" Rows="2" Margin="5" DockPanel.Dock="Top">
+                <Button Margin="3" Command="{Binding UndoCommand}">Undo</Button>
+                <Button Margin="3" Command="{Binding RedoCommand}">Redo</Button>
                 <Button Margin="3" Command="{Binding DeleteCommand}">Delete</Button>
                 <Button Margin="3" Command="{Binding ReloadCommand}">Reload</Button>
                 <Button Margin="3" Command="{Binding SaveLayoutCommand}">Save Layout</Button>
