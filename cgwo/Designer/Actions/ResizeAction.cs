@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Windows;
+using GorgleDevs.Wpf;
 
-namespace GorgleDevs.Wpf.Samples.DesignCanvas
+namespace Cogs.Designer.Actions
 {
 	public class ResizeAction : DesignerAction
     {
 		private readonly Guidelines _guidelines;
-		private readonly LayoutElement _original;
-		private readonly LayoutElement _final;
-        private readonly LayoutElement _element;
+		private readonly Rect _original;		
+        private readonly CardElement _element;
 		private readonly string _direction;
+		private Rect _final;
 		private Point _trackingPoint;
 		private Point _referencePoint;
 
-        public ResizeAction(LayoutElement element, string direction, Guidelines guidelines)
+        public ResizeAction(CardElement element, string direction, Guidelines guidelines)
         {
             _element = element;
 			_direction = direction;
-			_original = element.Clone();
-			_final = element.Clone();
+			_original = element.Bounds;
+			_final = element.Bounds;
 			_guidelines = guidelines;
 			_trackingPoint = GetTrackingPoint(element, direction);
 			_referencePoint = _trackingPoint;
@@ -71,17 +72,17 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 				_element.Height = newHeight;
 			}
 
-			_final.CopyValuesFrom(_element);
+			_final = _element.Bounds;
         }
 
 		public override void Undo()
 		{
-			_element.CopyValuesFrom(_original);
+			_element.SetBounds(_original);
 		}
 
 		public override void Redo()
 		{
-			_element.CopyValuesFrom(_final);
+			_element.SetBounds(_final);
 		}
 
 		protected override void AfterCompleted()
@@ -89,7 +90,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 			_guidelines.HideAll();
 		}
 
-		private static Point GetTrackingPoint(LayoutElement element, string direction)
+		private static Point GetTrackingPoint(CardElement element, string direction)
 		{
 			var point = Bounds.CenterOf(element.Bounds);
 			if (direction.Contains("Top"))
@@ -106,5 +107,5 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 
 			return point;
 		}
-	}		
+	}	
 }

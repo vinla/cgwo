@@ -1,11 +1,17 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
 using GorgleDevs.Wpf.Mvvm;
 
 namespace Cogs.Designer
 {
     public abstract class CardElement : ViewModel
     {
-        public double Top
+		private Guid _id = Guid.NewGuid();
+
+		public Guid Id => _id;
+
+		public double Top
         {
             get { return GetValue<double>(nameof(Top)); }
             set { SetValue(nameof(Top), value); }
@@ -28,13 +34,29 @@ namespace Cogs.Designer
             set { SetValue(nameof(Height), value); }
         }
 
-        public int ZIndex
+		public Rect Bounds => new Rect(Left, Top, Width, Height);
+
+		public int ZIndex
         {
             get { return GetValue<int>(nameof(ZIndex)); }
             set { SetValue(nameof(ZIndex), value); }
         }
 
-        public IZIndexManager ZIndexManager { get; set; }
+		public void SetBounds(Rect bounds)
+		{
+			Left = bounds.Left;
+			Top = bounds.Top;
+			Width = bounds.Width;
+			Height = bounds.Height;
+		}
+
+		public bool Selected
+		{
+			get { return GetValue<bool>(nameof(Selected)); }
+			set { SetValue(nameof(Selected), value); }
+		}
+
+		public IZIndexManager ZIndexManager { get; set; }
 
         public ICommand SendToBack => new DelegateCommand(() => ZIndexManager?.SendToBack(this));
         public ICommand SendBackwards => new DelegateCommand(() => ZIndexManager?.SendBackwards(this));

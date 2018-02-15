@@ -5,68 +5,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cgwo.Controls"
              xmlns:des="clr-namespace:Cogs.Designer"
+             xmlns:wpf="clr-namespace:GorgleDevs.Wpf;assembly=GorgleDevs.Wpf"
              mc:Ignorable="d" 
              Focusable="True"
              KeyboardNavigation.DirectionalNavigation="Contained"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Focusable="True" Background="Transparent">
-        <ItemsControl ItemsSource="{Binding Elements, RelativeSource={RelativeSource AncestorType=UserControl}}" x:Name="itemsHost">
+    <UserControl.Resources>
+        <Style x:Key="ResizeThumb" TargetType="Thumb">
+            <Setter Property="Width" Value="6"/>
+            <Setter Property="Height" Value="6"/>
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Background" Value="LimeGreen"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Opacity="{TemplateBinding Opacity}" Fill="{TemplateBinding Background}"/>
+                            <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="Transparent" Stroke="{TemplateBinding Foreground}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Elements, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas MouseLeftButtonDown="CanvasClick" Background="Transparent"/>
+                    <Canvas />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
                     <Setter Property="Canvas.Top" Value="{Binding Top}"/>
                     <Setter Property="Canvas.Left" Value="{Binding Left}"/>
-                    <Setter Property="Width" Value="{Binding Width}"/>
-                    <Setter Property="Height" Value="{Binding Height}"/>
-                    <Setter Property="Canvas.ZIndex" Value="{Binding ZIndex}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type des:TextElement}">
-                    <Grid Width="{Binding Width}" Height="{Binding Height}" Background="Transparent" PreviewMouseLeftButtonUp="ItemMouseClick">
-                        <Rectangle Fill="Transparent" StrokeDashArray="4,4" Stroke="Black" IsHitTestVisible="False" Opacity=".4">
-                            <Rectangle.Style>
-                                <Style TargetType="Rectangle">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsDisplayOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                        <local:TextEditBox Margin="2" Text="{Binding Text, Mode=TwoWay}" FontSize="{Binding TextSize}" Foreground="{Binding TextBrush}" IsEnabled="{Binding IsDisplayOnly, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NegatingConverter}}"/>
-                    </Grid>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <wpf:AdornedControl IsAdornerVisible="{Binding Selected}">
+                        <wpf:AdornedControl.Adornment>
+                            <wpf:ResizeOverlay ThumbStyle="{StaticResource ResizeThumb}" BorderBrush="Green" BorderThickness="1" ResizeStarted="ResizeStarted" ResizeDelta="ResizeDelta" ResizeCompleted="ResizeCompleted"/>
+                        </wpf:AdornedControl.Adornment>
+                        <Rectangle Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="3" Width="{Binding Width}" Height="{Binding Height}" Fill="LightBlue"/>
+                    </wpf:AdornedControl>
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type des:RectangleElement}">
-                    <Rectangle Width="{Binding Width}" Height="{Binding Height}"
-                            Fill="{Binding Background}" Stroke="{Binding Border}" StrokeThickness="{Binding BorderWidth}" MouseLeftButtonUp="ItemMouseClick"/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type des:EllipseElement}">
-                    <Ellipse Width="{Binding Width}" Height="{Binding Height}"
-                                   Fill="{Binding Background}" Stroke="{Binding Border}" StrokeThickness="{Binding BorderWidth}" MouseLeftButtonUp="ItemMouseClick"/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type des:ImageElement}">
-                    <Grid Background="Transparent" Width="{Binding Width}" Height="{Binding Height}" MouseLeftButtonUp="ItemMouseClick">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Source="{Binding ImageData, Converter={StaticResource Base64Converter}}" IsHitTestVisible="False"/>
-                        <Rectangle Fill="Transparent" StrokeDashArray="4,4" Stroke="Black" Opacity=".4" IsHitTestVisible="False">
-                            <Rectangle.Style>
-                                <Style TargetType="Rectangle">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsDisplayOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.Resources>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <Canvas Name="SelectionCanvas">
+            <Rectangle Name="SelectionRectangle" Fill="Transparent" IsHitTestVisible="False" Stroke="Gray" StrokeDashArray="3,3" Visibility="Hidden"/>
+        </Canvas>
     </Grid>
 </UserControl>

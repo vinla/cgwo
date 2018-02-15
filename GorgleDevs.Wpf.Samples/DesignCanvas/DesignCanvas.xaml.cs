@@ -208,7 +208,7 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 			_currentAction = moveAction;
         }
         
-        private void ThumbDragCompleted(object sender, DragCompletedEventArgs e)
+        private void ResizeCompleted(object sender, ResizeCompletedEventArgs e)
         {
             
             var resizeAction = _currentAction as ResizeAction;
@@ -219,18 +219,18 @@ namespace GorgleDevs.Wpf.Samples.DesignCanvas
 			}
         }
 
-        private void ThumbDragStarted(object sender, DragStartedEventArgs e)
+        private void ResizeStarted(object sender, ResizeStartedEventArgs e)
         {
-            var thumb = sender as Thumb;
-            var element = (thumb.DataContext as LayoutElement);
-			_currentAction = new ResizeAction(element, (string)thumb.Tag, _guidelines.GenerateGuidelines(Elements.Where(el => el != element).Select(el => el.Bounds)));
+            var overlay = sender as ResizeOverlay;
+            var element = (overlay.DataContext as LayoutElement);
+			_currentAction = new ResizeAction(element, e.Position.ToString(), _guidelines.GenerateGuidelines(Elements.Where(el => el != element).Select(el => el.Bounds)));			
         }
 
-        private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
+        private void ResizeDelta(object sender, ResizeDeltaEventArgs e)
         {			
             var resizeAction = _currentAction as ResizeAction;
 			if (resizeAction != null && resizeAction.IsComplete == false)
-				resizeAction.Update(new Vector(e.HorizontalChange, e.VerticalChange));
+				resizeAction.Update(e.Delta);
         }
 
         private bool DragRectThresholdExceeded => _dragRect.Size.Width > 3 || _dragRect.Size.Height > 3;

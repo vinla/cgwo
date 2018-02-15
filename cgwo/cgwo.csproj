@@ -113,9 +113,16 @@
     <Compile Include="Controls\TextEditBox.xaml.cs">
       <DependentUpon>TextEditBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Designer\Actions\ActionManager.cs" />
+    <Compile Include="Designer\Actions\DesignerAction.cs" />
+    <Compile Include="Designer\Actions\MoveAction.cs" />
+    <Compile Include="Designer\Actions\ResizeAction.cs" />
     <Compile Include="Designer\CardElement.cs" />
     <Compile Include="Designer\DesignerElementFactoryConverter.cs" />
     <Compile Include="Designer\EllipseElement.cs" />
+    <Compile Include="Designer\Guideline.cs" />
+    <Compile Include="Designer\Guidelines.cs" />
+    <Compile Include="Designer\GuidelinesAdorner.cs" />
     <Compile Include="Designer\HighlightAdorner.cs" />
     <Compile Include="Designer\ImageElement.cs" />
     <Compile Include="Designer\IZIndexManager.cs" />

@@ -37,7 +37,7 @@
                     <gb:DropBehavior DropCommand="{Binding AddElement}" Converter="{StaticResource elementFactory}"/>
                     <gb:KeyPreviewBehaviour Key="Delete" Command="{Binding DeleteCommand}"/>
                 </i:Interaction.Behaviors>
-                <ctrl:DesignerCanvas Elements="{Binding Elements}" SelectedElement="{Binding SelectedElement, Mode=TwoWay}" Width="250" Height="350">
+                <ctrl:DesignerCanvas Elements="{Binding Elements}" Width="250" Height="350">
                     <ctrl:DesignerCanvas.InputBindings>
                         <KeyBinding Key="Delete" Command="{Binding DeleteItem}"/>
                     </ctrl:DesignerCanvas.InputBindings>
