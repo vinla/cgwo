@@ -42,11 +42,10 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="5">
-                                <Grid>
-                                    <Border Width="50" Height="70" BorderBrush="Black" BorderThickness="1" Background="LightSteelBlue" CornerRadius="3" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
-                                    <Image Width="50" Height="70" Source="{Binding ImageData, Converter={StaticResource Base64Converter}}" ToolTip="{Binding Name}" HorizontalAlignment="Center"/>
-                                </Grid>
-                                <TextBlock Margin="3" Text="{Binding Name}" MaxWidth="45" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
+                                <StackPanel>
+                                    <Image Width="50" Height="70" Source="{Binding ImageData, Converter={StaticResource Base64Converter}}" ToolTip="{Binding Name}" HorizontalAlignment="Center" Stretch="Fill"/>
+                                    <TextBlock Margin="3" Text="{Binding Name}" MaxWidth="45" HorizontalAlignment="Center" ToolTip="{Binding Name}"/>
+                                </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

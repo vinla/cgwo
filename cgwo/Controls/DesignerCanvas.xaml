@@ -39,6 +39,7 @@
                 <Style TargetType="ContentPresenter">
                     <Setter Property="Canvas.Top" Value="{Binding Top}"/>
                     <Setter Property="Canvas.Left" Value="{Binding Left}"/>
+                    <Setter Property="Canvas.ZIndex" Value="{Binding ZIndex}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>

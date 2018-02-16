@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:cgwo.ViewModels"
         xmlns:v="clr-namespace:cgwo.Views"                
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1024">
+        Title="MainWindow" Height="768" Width="1366">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

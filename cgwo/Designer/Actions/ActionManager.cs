@@ -11,6 +11,11 @@ namespace Cogs.Designer.Actions
 
 		public ActionManager()
 		{
+			Reset();
+		}
+
+		public void Reset()
+		{
 			_actions = new List<DesignerAction>();
 			_index = -1;
 		}

@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Resources\Dictionaries\CommonStyles.xaml"/>
                 <ResourceDictionary Source="Resources\Dictionaries\ControlTemplates.xaml"/>
                 <ResourceDictionary Source="Resources\Dictionaries\StaticResources.xaml"/>
+                <ResourceDictionary Source="Resources\Dictionaries\MenuStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

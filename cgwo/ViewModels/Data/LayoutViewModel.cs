@@ -72,8 +72,12 @@ namespace cgwo.ViewModels.Data
 
         public ICommand ReloadCommand => new DelegateCommand(() =>
         {
-            LoadLayout();
-			RaisePropertyChanged(nameof(LayoutDocument));
+			if (_dialogService.Prompt("Reload layout", "Do you want to reload the layout? This will revert all changes made since your last save.") == DialogResult.Accept)
+			{				
+				LoadLayout();
+				_actionManager.Reset();
+				RaisePropertyChanged(nameof(LayoutDocument));
+			}
         });
 
 		public ICommand UndoCommand => new DelegateCommand(() =>
@@ -95,6 +99,30 @@ namespace cgwo.ViewModels.Data
                 imageElement.ImageSource = Convert.ToBase64String(System.IO.File.ReadAllBytes(path));
             }
         });
+
+		public ICommand BringFowardsCommand => new DelegateCommand(() =>
+		{
+			foreach (var element in _layoutDocument.Elements.Where(el => el.Selected))
+				BringForwards(element);
+		});
+
+		public ICommand BringToFrontCommand => new DelegateCommand(() =>
+		{
+			foreach (var element in _layoutDocument.Elements.Where(el => el.Selected))
+				BringToFront(element);
+		});
+
+		public ICommand SendBackwardsCommand => new DelegateCommand(() =>
+		{
+			foreach (var element in _layoutDocument.Elements.Where(el => el.Selected))
+				SendBackwards(element);
+		});
+
+		public ICommand SendToBackCommand => new DelegateCommand(() =>
+		{
+			foreach (var element in _layoutDocument.Elements.Where(el => el.Selected))
+				SendToBack(element);
+		});
 
         public void BringForwards(CardElement element)
         {
