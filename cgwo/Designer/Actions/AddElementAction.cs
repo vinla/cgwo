@@ -1,30 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cogs.Designer.Actions
 {
 	public class AddElementAction : DesignerAction
 	{
-		private readonly CardElement _newElement;
+		private readonly List<CardElement> _newElements;
 		private readonly LayoutDocument _layoutDocument;
 
 		public AddElementAction(LayoutDocument layoutDocument, CardElement newElement)
 		{
 			_layoutDocument = layoutDocument;
-			_newElement = newElement;
+			_newElements = new List<CardElement> { newElement };
+		}
+
+		public AddElementAction(LayoutDocument layoutDocument, IEnumerable<CardElement> newElements)
+		{
+			_layoutDocument = layoutDocument;
+			_newElements = newElements.ToList();
 		}
 
 		public override void Redo()
 		{
-			_layoutDocument.Elements.Add(_newElement);
+			foreach(var element in _newElements)
+				_layoutDocument.Elements.Add(element);
 		}
 
 		public override void Undo()
 		{
-			_layoutDocument.Elements.Remove(_newElement);
+			foreach(var element in _newElements)
+				_layoutDocument.Elements.Remove(element);
 		}
 	}
 }

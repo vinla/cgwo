@@ -58,7 +58,16 @@ namespace Cogs.Designer
 
 		public object Clone()
 		{
-			return MemberwiseClone();
+			return Clone(true);
+		}
+
+		public object Clone(bool cloneId)
+		{
+			var clone = MemberwiseClone() as CardElement;
+			if (cloneId == false)
+				clone._id = Guid.NewGuid();
+
+			return clone;
 		}
 
 		public IZIndexManager ZIndexManager { get; set; }

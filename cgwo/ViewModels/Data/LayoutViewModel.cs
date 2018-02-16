@@ -124,6 +124,32 @@ namespace cgwo.ViewModels.Data
 				SendToBack(element);
 		});
 
+		public ICommand CopyCommand => new DelegateCommand(() =>
+		{
+			CardElementClipboard.SetElements(_layoutDocument.Elements.Where(el => el.Selected));
+		});
+
+		public ICommand CutCommand => new DelegateCommand(() =>
+		{
+			CopyCommand.Execute(null);
+			DeleteCommand.Execute(null);
+		});
+
+		public ICommand PasteCommand => new DelegateCommand(() =>
+		{
+			SelectElement(null);
+			var elements = CardElementClipboard.GetElements().ToList();
+			foreach(var element in elements)
+			{
+				element.Top += 5;
+				element.Left += 5;
+			}
+
+			var addCommand = new AddElementAction(_layoutDocument, elements);
+			addCommand.Redo();
+			_actionManager.Push(addCommand);			
+		});
+
         public void BringForwards(CardElement element)
         {
             var currentZIndex = element.ZIndex;

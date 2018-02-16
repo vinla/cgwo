@@ -48,9 +48,9 @@
                 <MenuItem Header="Undo" Command="{Binding UndoCommand}"/>
                 <MenuItem Header="Redo" Command="{Binding RedoCommand}"/>
                 <Separator/>
-                <MenuItem Header="Copy"/>
-                <MenuItem Header="Cut"/>
-                <MenuItem Header="Paste"/>
+                <MenuItem Header="Copy" Command="{Binding CopyCommand}"/>
+                <MenuItem Header="Cut" Command="{Binding CutCommand}"/>
+                <MenuItem Header="Paste" Command="{Binding PasteCommand}"/>
                 <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
             </MenuItem>
             <MenuItem Header="Layout" Padding="5">
