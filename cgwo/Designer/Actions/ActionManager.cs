@@ -38,6 +38,8 @@ namespace Cogs.Designer.Actions
 				_index++;
 				_actions[_index].Redo();
 			}
-		}		
+		}
+
+		public DesignerAction Latest => _index > -1 ? _actions[_index] : null;
 	}
 }

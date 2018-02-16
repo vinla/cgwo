@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="Designer\Actions\ActionManager.cs" />
     <Compile Include="Designer\Actions\AddElementAction.cs" />
+    <Compile Include="Designer\Actions\ChangePropertyAction.cs" />
     <Compile Include="Designer\Actions\DeleteElementsAction.cs" />
     <Compile Include="Designer\Actions\DesignerAction.cs" />
     <Compile Include="Designer\Actions\MoveAction.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Designer\ShapeElement.cs" />
     <Compile Include="Designer\TextElement.cs" />
     <Compile Include="Designer\ThumbPosition.cs" />
+    <Compile Include="Designer\TrackedChangeBehavior.cs" />
     <Compile Include="Validation\ProjectNameValidation.cs" />
     <Compile Include="ViewModels\CardsViewModel.cs" />
     <Compile Include="ViewModels\Data\CardAttributeViewModel.cs" />
