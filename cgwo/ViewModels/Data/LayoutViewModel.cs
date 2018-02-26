@@ -139,15 +139,27 @@ namespace cgwo.ViewModels.Data
 		{
 			SelectElement(null);
 			var elements = CardElementClipboard.GetElements().ToList();
+
 			foreach(var element in elements)
 			{
 				element.Top += 5;
 				element.Left += 5;
+				element.ZIndexManager = this;
+				element.Selected = true;
+				element.PropertyChanged += (s, e) =>
+				{
+					if (e.PropertyName == nameof(element.Selected))
+					{
+						RaisePropertyChanged(nameof(SelectedElement));
+					}
+				};
+
+				BringToFront(element);
 			}
 
-			var addCommand = new AddElementAction(_layoutDocument, elements);
-			addCommand.Redo();
-			_actionManager.Push(addCommand);			
+			var addElementAction = new AddElementAction(_layoutDocument, elements);
+			addElementAction.Redo();
+			_actionManager.Push(addElementAction);
 		});
 
         public void BringForwards(CardElement element)

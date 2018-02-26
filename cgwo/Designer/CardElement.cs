@@ -70,6 +70,7 @@ namespace Cogs.Designer
 			return clone;
 		}
 
+		[Newtonsoft.Json.JsonIgnore]
 		public IZIndexManager ZIndexManager { get; set; }
 
         public ICommand SendToBack => new DelegateCommand(() => ZIndexManager?.SendToBack(this));
