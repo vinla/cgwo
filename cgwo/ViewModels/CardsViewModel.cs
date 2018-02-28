@@ -38,6 +38,7 @@ namespace cgwo.ViewModels
 
             var card = new Card(cardType, attributes.Select(attr => new CardAttributeValue(attr)));
 			CardEditor = new Data.CardEditorViewModel(_cardGameDataStore, _dialogService, card, AfterCardUpdate);
+			CardEditor.UpdatePreview();
         });        
 
         public Data.CardEditorViewModel CardEditor
@@ -61,7 +62,7 @@ namespace cgwo.ViewModels
 				if (SelectedCard != null)
 				{
 					CardEditor = new Data.CardEditorViewModel(_cardGameDataStore, _dialogService, SelectedCard, AfterCardUpdate);
-					//CardEditor.UpdatePreview.Execute(null);
+					CardEditor.UpdatePreview();
 				}
 				else
 					CardEditor = null;

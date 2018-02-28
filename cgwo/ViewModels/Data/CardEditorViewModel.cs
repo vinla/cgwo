@@ -41,15 +41,7 @@ namespace cgwo.ViewModels.Data
 				{
 					if(e.PropertyName == nameof(NamedValueViewModel.Value))
 					{
-						foreach(var element in _elements.OfType<TextElement>())
-						{
-							var text = element.BaseText;
-							foreach(var cv in _cardValues)
-							{
-								text = text.Replace("{" + cv.Name + "}", cv.Value);
-							}
-							element.Text = text;
-						}
+						UpdatePreview();
 					}
 				};
 			}
@@ -87,5 +79,18 @@ namespace cgwo.ViewModels.Data
 				_cardUpdated?.Invoke(null);				
 			}
 		});		
+
+		public void UpdatePreview()
+		{
+			foreach (var element in _elements.OfType<TextElement>())
+			{
+				var text = element.BaseText;
+				foreach (var cv in _cardValues)
+				{
+					text = text.Replace("{" + cv.Name + "}", cv.ValueOrDefault);
+				}
+				element.Text = text;
+			}
+		}
     }	
 }

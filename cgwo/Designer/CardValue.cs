@@ -10,6 +10,8 @@ namespace Cogs.Designer
 		public abstract string Value { get; set; }
 
 		public virtual bool CanEdit => true;
+
+		public string ValueOrDefault => string.IsNullOrEmpty(Value) ? "{"+Name+"}" : Value;
 	}
 
 	public class CardNameValueViewModel : NamedValueViewModel
