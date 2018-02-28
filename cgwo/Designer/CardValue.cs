@@ -9,7 +9,7 @@ namespace Cogs.Designer
 
 		public abstract string Value { get; set; }
 
-		public virtual bool CanEdit => true;
+		public virtual string Editor => string.Empty;
 
 		public string ValueOrDefault => string.IsNullOrEmpty(Value) ? "{"+Name+"}" : Value;
 	}
@@ -34,6 +34,8 @@ namespace Cogs.Designer
 				RaisePropertyChanged(nameof(Value));
 			}
 		}
+
+		public override string Editor => "TextEditor";
 	}
 
 	public class CardTypeValueViewModel : NamedValueViewModel
@@ -48,8 +50,6 @@ namespace Cogs.Designer
 		public override string Name => "Type";
 
 		public override string Value { get => _card.CardType.Name; set => throw new System.NotSupportedException(); }
-
-		public override bool CanEdit => false;
 	}
 
 	public class CardAttributeValueViewModel : NamedValueViewModel
@@ -70,6 +70,22 @@ namespace Cogs.Designer
 			{
 				_cardAttributeValue.Value = value;
 				RaisePropertyChanged(nameof(Value));
+			}
+		}
+
+		public override string Editor
+		{
+			get
+			{
+				switch(_cardAttributeValue.CardAttribute.Type)
+				{
+					case AttributeType.Text:
+						return "TextEditor";
+					case AttributeType.Image:
+						return "ImageEditor";
+					default:
+						throw new System.NotSupportedException();
+				}
 			}
 		}
 	}

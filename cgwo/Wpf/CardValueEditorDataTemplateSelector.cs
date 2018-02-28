@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Cogs.Common;
+using Cogs.Designer;
 
 namespace cgwo.Wpf
 {
@@ -15,15 +16,9 @@ namespace cgwo.Wpf
         {
             if (container is FrameworkElement element)
             {
-                if (item is CardAttributeValue cardAttributeValue)
+                if (item is NamedValueViewModel valueViewModel)
                 {
-                    switch (cardAttributeValue.CardAttribute.Type)
-                    {
-                        case AttributeType.Text:
-                            return element.FindResource("TextEditor") as DataTemplate;
-                        case AttributeType.Image:
-                            return element.FindResource("ImageEditor") as DataTemplate;
-                    }
+					return element.FindResource(valueViewModel.Editor) as DataTemplate;					
                 }
             }
 

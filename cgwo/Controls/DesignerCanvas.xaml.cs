@@ -74,7 +74,7 @@ namespace cgwo.Controls
 
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
-			if (e.ChangedButton == MouseButton.Left)
+			if (e.ChangedButton == MouseButton.Left && !IsDisplayOnly)
 			{
 				_mouseDownPoint = e.GetPosition(this);
 				_mouseDownTarget = Elements.Where(el => el.Bounds.Contains(_mouseDownPoint.Value)).LastOrDefault();
@@ -115,7 +115,7 @@ namespace cgwo.Controls
 
 		protected override void OnMouseUp(MouseButtonEventArgs e)
 		{
-			if (e.ChangedButton == MouseButton.Left)
+			if (e.ChangedButton == MouseButton.Left && !IsDisplayOnly)
 			{
 				var mouseAction = GetMouseAction();
 

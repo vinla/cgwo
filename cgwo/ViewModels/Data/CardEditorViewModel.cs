@@ -41,13 +41,13 @@ namespace cgwo.ViewModels.Data
 				{
 					if(e.PropertyName == nameof(NamedValueViewModel.Value))
 					{
-						UpdatePreview();
+						UpdatePreview(cardValue);
 					}
 				};
 			}
 		}
 
-        public IEnumerable<NamedValueViewModel> Values => _cardValues.Where(cv => cv.CanEdit);
+        public IEnumerable<NamedValueViewModel> Values => _cardValues.Where(cv => String.IsNullOrEmpty(cv.Editor) == false);
         
 		public Brush Background
 		{
@@ -80,7 +80,7 @@ namespace cgwo.ViewModels.Data
 			}
 		});		
 
-		public void UpdatePreview()
+		public void UpdateTextItems()
 		{
 			foreach (var element in _elements.OfType<TextElement>())
 			{
@@ -90,6 +90,32 @@ namespace cgwo.ViewModels.Data
 					text = text.Replace("{" + cv.Name + "}", cv.ValueOrDefault);
 				}
 				element.Text = text;
+			}
+		}
+
+		public void UpdatePreview()
+		{
+			UpdateTextItems();
+			foreach (var image in _elements.OfType<ImageElement>().Where(el => el.ImageSource == "Card Attribute"))
+			{
+				var valueProvider = _cardValues.SingleOrDefault(cv => cv.Name == image.LinkedAttribute);
+				if (valueProvider != null)
+					image.ImageData = valueProvider.Value;
+			}
+		}
+
+		public void UpdatePreview(NamedValueViewModel changed)
+		{
+			if (changed.Editor == "TextEditor")
+			{
+				UpdateTextItems();
+			}
+			else if(changed.Editor == "ImageEditor")
+			{
+				foreach(var image in _elements.OfType<ImageElement>().Where(el => el.ImageSource == "Card Attribute" && el.LinkedAttribute == changed.Name))
+				{
+					image.ImageData = changed.Value;
+				}
 			}
 		}
     }	
