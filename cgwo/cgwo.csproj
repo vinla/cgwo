@@ -122,6 +122,7 @@
     <Compile Include="Designer\Actions\ResizeAction.cs" />
     <Compile Include="Designer\CardElement.cs" />
     <Compile Include="Designer\CardElementClipboard.cs" />
+    <Compile Include="Designer\CardValue.cs" />
     <Compile Include="Designer\DesignerElementFactoryConverter.cs" />
     <Compile Include="Designer\EllipseElement.cs" />
     <Compile Include="Designer\Guideline.cs" />

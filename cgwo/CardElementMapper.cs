@@ -8,7 +8,7 @@ namespace cgwo
 {
     public static class CardElementMapper
     {
-        public static void MapElementValues(Card card, IEnumerable<CardElement> elements)
+		public static void MapElementValues(Card card, IEnumerable<CardElement> elements)
         {
             foreach (var textElement in elements.OfType<TextElement>())
             {

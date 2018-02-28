@@ -61,7 +61,7 @@ namespace cgwo.ViewModels
 				if (SelectedCard != null)
 				{
 					CardEditor = new Data.CardEditorViewModel(_cardGameDataStore, _dialogService, SelectedCard, AfterCardUpdate);
-					CardEditor.UpdatePreview.Execute(null);
+					//CardEditor.UpdatePreview.Execute(null);
 				}
 				else
 					CardEditor = null;

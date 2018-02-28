@@ -122,25 +122,15 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <DockPanel Grid.Column="1" Margin="5">
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10,0">
-                        <TextBlock Margin="3" Width="60">Name</TextBlock>
-                        <TextBox Margin="3" Width="120" Text="{Binding CardEditor.Name}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding CardEditor.AttributeValues}" DockPanel.Dock="Top" Margin="10,0" Focusable="False" ItemTemplateSelector="{StaticResource CardValueEditorDataTemplateSelector}">
-                        <ItemsControl.Resources>
-                            <DataTemplate x:Key="TextEditor">
+                    <ItemsControl ItemsSource="{Binding CardEditor.Values}" DockPanel.Dock="Top" Margin="10,0" Focusable="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                                    <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
-                                    <TextBox Margin="3" Width="120" Text="{Binding Value}"/>
+                                    <TextBlock Margin="3" Width="60" Text="{Binding Name}"/>
+                                    <TextBox Margin="3" Width="120" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                             </DataTemplate>
-                            <DataTemplate x:Key="ImageEditor">
-                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                                    <TextBlock Margin="3" Width="60" Text="{Binding CardAttribute.Name}"/>
-                                    <ctrl:ImagePicker Width="120" Height="120" ImageData="{Binding Value, Converter={StaticResource Base64Converter}, Mode=TwoWay}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.Resources>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </DockPanel>
 

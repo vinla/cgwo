@@ -7,7 +7,7 @@ namespace Cogs.Designer
 {
     public abstract class CardElement : ViewModel
     {
-		private Guid _id = Guid.NewGuid();
+		private Guid _id = Guid.NewGuid();		
 
 		public Guid Id => _id;
 

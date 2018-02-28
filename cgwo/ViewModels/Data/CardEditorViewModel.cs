@@ -16,6 +16,7 @@ namespace cgwo.ViewModels.Data
         private readonly ICardGameDataStore _cardGameDataStore;
         private readonly IDialogService _dialogService;
         private readonly Card _card;
+		private readonly List<NamedValueViewModel> _cardValues;
         private readonly CardLayout _layout;
 		private readonly Action<Card> _cardUpdated;		
         private IEnumerable<CardElement> _elements;
@@ -26,29 +27,35 @@ namespace cgwo.ViewModels.Data
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 			_cardUpdated = cardUpdated;
             _card = card ?? throw new ArgumentNullException(nameof(card));
-            _layout = _cardGameDataStore.GetLayout(card.CardType.Id);
-        }
 
-        public string Name
-        {
-            get { return _card.Name; }
-            set
-            {
-                _card.Name = value;
-                RaisePropertyChanged(nameof(Name));
-            }
-        }
+			_cardValues = _card.AttributeValues.Select(attr => new CardAttributeValueViewModel(attr)).Cast<NamedValueViewModel>().ToList();
+			_cardValues.Insert(0, new CardNameValueViewModel(_card));
+			_cardValues.Insert(1, new CardTypeValueViewModel(_card));
 
-        public IEnumerable<CardAttributeValue> AttributeValues => _card.AttributeValues;
+			_layout = _cardGameDataStore.GetLayout(card.CardType.Id);
+			_elements = LayoutConverter.ToDesignerElements(_layout.Elements);
+			
+			foreach(var cardValue in _cardValues)
+			{
+				cardValue.PropertyChanged += (s, e) =>
+				{
+					if(e.PropertyName == nameof(NamedValueViewModel.Value))
+					{
+						foreach(var element in _elements.OfType<TextElement>())
+						{
+							var text = element.BaseText;
+							foreach(var cv in _cardValues)
+							{
+								text = text.Replace("{" + cv.Name + "}", cv.Value);
+							}
+							element.Text = text;
+						}
+					}
+				};
+			}
+		}
 
-        public ICommand UpdatePreview => new DelegateCommand(() =>
-        {
-            _elements = LayoutConverter.ToDesignerElements(_layout.Elements);
-            CardElementMapper.MapElementValues(_card, _elements);
-
-            RaisePropertyChanged(nameof(Elements));
-            RaisePropertyChanged(nameof(Background));
-        });        
+        public IEnumerable<NamedValueViewModel> Values => _cardValues.Where(cv => cv.CanEdit);
         
 		public Brush Background
 		{
@@ -80,5 +87,5 @@ namespace cgwo.ViewModels.Data
 				_cardUpdated?.Invoke(null);				
 			}
 		});		
-    }
+    }	
 }
