@@ -11,7 +11,7 @@ namespace cgwo.ViewModels.Data
     {
         private readonly IDialogService _dialogService;
         private readonly ICardGameDataStore _cardGameDataStore;
-        private readonly IEnumerable<CardAttribute> _existingAttributes;
+        private IEnumerable<CardAttribute> _existingAttributes;
         private readonly Guid _cardTypeId;
         private readonly CardAttribute _original;
         private readonly Action _cancelEdit;
@@ -71,7 +71,8 @@ namespace cgwo.ViewModels.Data
 
             Name = Name.Trim();
             _original.Name = Name;
-            _cardGameDataStore.SaveCardAttribute(_cardTypeId, _original);            
+            _cardGameDataStore.SaveCardAttribute(_cardTypeId, _original);
+			_existingAttributes = _cardGameDataStore.GetCardAttributes(_cardTypeId);
 
             RaisePropertyChanged(nameof(IsNew));
             _cancelEdit?.Invoke();
@@ -85,7 +86,8 @@ namespace cgwo.ViewModels.Data
             if (_dialogService.Prompt("Confirm delete", "Are you sure you want to delete this attribute?") == DialogResult.Accept)
             {
                 _cardGameDataStore.DeleteCardAttribute(_original);
-                _isDeleted = true;
+				_existingAttributes = _cardGameDataStore.GetCardAttributes(_cardTypeId);
+				_isDeleted = true;
                 _cancelEdit?.Invoke();
             }
         });

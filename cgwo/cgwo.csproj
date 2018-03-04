@@ -308,9 +308,9 @@
       <Project>{7d6d205f-3417-4131-9a34-3cf12a9de18a}</Project>
       <Name>Cogs.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cogs.Core\Cogs.Core.csproj">
-      <Project>{8f3527ff-6660-49a0-99e6-7763bac08736}</Project>
-      <Name>Cogs.Core</Name>
+    <ProjectReference Include="..\Cogs.Data.LiteDb\Cogs.Data.LiteDb.csproj">
+      <Project>{30a13c4f-4ae9-4807-82fa-b65d2f6b4515}</Project>
+      <Name>Cogs.Data.LiteDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\GorgleDevs.Wpf\GorgleDevs.Wpf.csproj">
       <Project>{c36cd563-3a01-4979-8e57-2a90e4064e8a}</Project>

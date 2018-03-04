@@ -1,13 +1,11 @@
-﻿using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Cogs.Common
 {
     public class CardType : CoreObject
     {
-        public string Name { get; set; }
+        public string Name { get; set; }        
 
-        public string ImageData { get; set; }
+		public List<CardAttribute> Attributes { get; set; }
     }
 }

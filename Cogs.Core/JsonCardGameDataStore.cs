@@ -67,7 +67,7 @@ namespace Cogs.Core
                 {
                     Id = ct.Id,
                     Name = ct.Name,
-                    ImageData = ct.ImageData
+                    //ImageData = ct.ImageData
                 });
         }
 
@@ -80,7 +80,7 @@ namespace Cogs.Core
                 cardTypeData = new JsonCardType
                 {
                     Id = cardType.Id,
-                    ImageData = cardType.ImageData
+                    //ImageData = cardType.ImageData
                 };
                 _cardGameData.CardTypes.Add(cardTypeData);				
 			}
