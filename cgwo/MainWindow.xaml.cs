@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using cgwo.Configuration;
 
 namespace cgwo
 {
@@ -23,7 +24,7 @@ namespace cgwo
 		public MainWindow()
 		{
 			InitializeComponent();
-            var dialogService = new GorgleDevs.Wpf.Mvvm.WindowsDialogService(DialogHost);
+            var dialogService = new GorgleDevs.Wpf.Mvvm.WindowsDialogService(DialogHost);			
             DataContext = new ViewModels.MainViewModel(new Cogs.Data.LiteDb.LiteDbCardGameDataStoreFactory(), dialogService);
 		}
 	}

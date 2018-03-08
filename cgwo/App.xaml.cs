@@ -15,8 +15,12 @@ namespace cgwo
 	{
         protected override void OnStartup(StartupEventArgs e)
         {
-            Configuration.AutoMapperConfiguration.ConfigureMaps();
-            base.OnStartup(e);
+			AutoMapper.Mapper.Initialize(cfg =>
+			{
+				cfg.AddProfile<Configuration.AutoMapperClientProfile>();
+				cfg.AddProfile<Cogs.Data.LiteDb.AutoMapperLiteDbProfile>();
+			});
+			base.OnStartup(e);
         }
     }
 }

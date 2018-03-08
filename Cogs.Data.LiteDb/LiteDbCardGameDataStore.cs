@@ -12,7 +12,7 @@ namespace Cogs.Data.LiteDb
 
 		public LiteDbCardGameDataStore(string filePath)
 		{
-			_connectionString = filePath;
+			_connectionString = filePath;			
 		}
 
 		public void DeleteCard(Card card)
@@ -97,18 +97,7 @@ namespace Cogs.Data.LiteDb
 				var jsonCard = Mapper.Map<Json.Card>(card);
 				var cardStore = dataStore.GetCollection<Json.Card>();
 				cardStore.Delete(card.Id);
-				cardStore.Insert(jsonCard);
-
-				// Store the image data for the card
-				var imageKey = "CARDIMG_" + card.Id;
-				dataStore.FileStorage.Delete(imageKey);
-				using (var dataStream = dataStore.FileStorage.OpenWrite(imageKey, imageKey))
-				{
-					using (var writer = new System.IO.StreamWriter(dataStream))
-					{
-						writer.Write(card.ImageData);
-					}											
-				}
+				cardStore.Insert(jsonCard);								
 			}
 		}
 
@@ -147,7 +136,6 @@ namespace Cogs.Data.LiteDb
 				var cardLayoutStore = dataStore.GetCollection<Json.CardLayout>();
 				cardLayoutStore.Delete(jsonLayout.Id);
 				cardLayoutStore.Insert(jsonLayout);
-				// Save background image in file store
 			}
 		}
 
@@ -161,7 +149,22 @@ namespace Cogs.Data.LiteDb
 
 		public void UpdateCardTypeImage(Guid cardTypeId, byte[] imageData)
 		{
-			throw new NotImplementedException();
+			SaveImage("CT_" + cardTypeId, imageData);
+		}
+
+		private void SaveImage(string imageKey, byte[] imageData)
+		{
+			using (var dataStore = new LiteDB.LiteDatabase(_connectionString))
+			{
+				dataStore.FileStorage.Delete(imageKey);
+				using (var dataStream = dataStore.FileStorage.OpenWrite(imageKey, imageKey))
+				{
+					using (var writer = new System.IO.StreamWriter(dataStream))
+					{
+						writer.Write(imageData);
+					}
+				}
+			}
 		}
 	}
 }
