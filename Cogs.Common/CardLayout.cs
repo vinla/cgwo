@@ -11,8 +11,8 @@ namespace Cogs.Common
 
         public string BackgroundColor { get; set; }
 
-        public string BackgroundImage { get; set; }
+        public byte[] BackgroundImage { get; set; }
 
-        public List<ElementLayout> Elements { get; set; }
+        public List<ElementLayout> Elements { get; set; }		
     }
 }

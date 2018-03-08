@@ -1,26 +1,39 @@
-﻿using System;
+﻿using System.ComponentModel;
 
 namespace Cogs.Common
 {
-    public class ImageData
-    {
-        private readonly Guid _reference;
-        private readonly IImageStore _imageStore;
-        private byte[] _data;
+	public class ImageData : INotifyPropertyChanged
+	{
+		private readonly string _key;
+		private byte[] _data;
+		private bool _hasChanged;
 
-        public ImageData(Guid reference, byte[] data)
-        {
-            _reference = reference;
-            _data = data;
-        }
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        public ImageData(Guid reference, IImageStore imageStore)
-        {
-            _reference = reference;
-            _imageStore = imageStore;
-        }
+		public ImageData(string key)
+		{
+			_key = key;
+		}
 
-        public Guid Reference => _reference;
-        public byte[] RawBytes => _data ?? (_data = _imageStore.GetImageData(_reference));
-    }
+		public string Key => _key;
+
+		public void LoadFromSource(byte[] sourceData)
+		{
+			_data = sourceData;
+			_hasChanged = false;
+		}
+
+		public byte[] Data
+		{
+			get => _data;
+			set
+			{
+				_data = value;
+				_hasChanged = true;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Data)));
+			}
+		}
+
+		public bool HasChanged => _hasChanged;
+	}
 }

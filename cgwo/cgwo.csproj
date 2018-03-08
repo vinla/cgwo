@@ -139,13 +139,14 @@
     <Compile Include="Designer\TextElement.cs" />
     <Compile Include="Designer\ThumbPosition.cs" />
     <Compile Include="Designer\TrackedChangeBehavior.cs" />
+    <Compile Include="ImageCache.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Validation\ProjectNameValidation.cs" />
     <Compile Include="ViewModels\CardsViewModel.cs" />
     <Compile Include="ViewModels\Data\CardAttributeViewModel.cs" />
     <Compile Include="ViewModels\Data\CardEditorViewModel.cs" />
     <Compile Include="ViewModels\Data\CardTypeViewModel.cs" />
     <Compile Include="ViewModels\Data\LayoutViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\ImagePickerDialog.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\ModuleViewModel.cs" />
@@ -174,6 +175,7 @@
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wpf\CardValueEditorDataTemplateSelector.cs" />
+    <Compile Include="Wpf\ImageSourceConverter.cs" />
     <Page Include="Controls\DesignerCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

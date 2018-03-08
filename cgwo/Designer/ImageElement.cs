@@ -11,9 +11,9 @@ namespace Cogs.Designer
             set { SetValue(nameof(ImageSource), value); }
         }     
         
-        public string ImageData
+        public byte[] ImageData
         {
-            get { return GetValue<string>(nameof(ImageData)); }
+            get { return GetValue<byte[]>(nameof(ImageData)); }
             set { SetValue(nameof(ImageData), value); }
         }
 

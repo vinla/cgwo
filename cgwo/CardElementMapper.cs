@@ -35,7 +35,7 @@ namespace cgwo
                 var attributeValue = card.AttributeValues.SingleOrDefault(av => av.CardAttribute.Name == imageElement.LinkedAttribute);
                 if (attributeValue != null)
                 {
-                    imageElement.ImageData = attributeValue.Value;
+					imageElement.ImageData = System.Convert.FromBase64String(attributeValue.Value);
                 }
             }
         }

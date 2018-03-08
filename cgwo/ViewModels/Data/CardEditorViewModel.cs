@@ -55,7 +55,7 @@ namespace cgwo.ViewModels.Data
 			{
 				if (_layout.BackgroundImage != null && _layout.BackgroundImage.Length > 0)
 				{
-					return new ImageBrush((ImageSource)new ImageSourceConverter().ConvertFrom(Convert.FromBase64String(_layout.BackgroundImage)));
+					return new ImageBrush((ImageSource)new ImageSourceConverter().ConvertFrom(_layout.BackgroundImage));
 				}
 
 				return new SolidColorBrush(ColorExtensionMethods.FromHex(_layout.BackgroundColor));
@@ -100,7 +100,7 @@ namespace cgwo.ViewModels.Data
 			{
 				var valueProvider = _cardValues.SingleOrDefault(cv => cv.Name == image.LinkedAttribute);
 				if (valueProvider != null)
-					image.ImageData = valueProvider.Value;
+					image.ImageData = Convert.FromBase64String(valueProvider.Value);
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace cgwo.ViewModels.Data
 			{
 				foreach(var image in _elements.OfType<ImageElement>().Where(el => el.ImageSource == "Card Attribute" && el.LinkedAttribute == changed.Name))
 				{
-					image.ImageData = changed.Value;
+					image.ImageData = Convert.FromBase64String(changed.Value);
 				}
 			}
 		}

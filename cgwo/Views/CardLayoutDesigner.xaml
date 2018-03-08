@@ -242,7 +242,7 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <ctrl:ImagePicker Grid.Row="1" Grid.Column="1" Margin="3" Width="120" Height="120" ImageData="{Binding ImageData, Converter={StaticResource Base64Converter}, Mode=TwoWay}">
+                                    <ctrl:ImagePicker Grid.Row="1" Grid.Column="1" Margin="3" Width="120" Height="120" ImageData="{Binding ImageData, Mode=TwoWay}">
                                         <ctrl:ImagePicker.Style>
                                             <Style TargetType="ctrl:ImagePicker">
                                                 <Style.Triggers>

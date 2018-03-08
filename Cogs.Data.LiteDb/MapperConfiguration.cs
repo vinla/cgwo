@@ -7,23 +7,22 @@ namespace Cogs.Data.LiteDb
 	{
 		public AutoMapperLiteDbProfile()
 		{
-
 			CreateMap<Json.CardLayout, Common.CardLayout>()
-				.ForMember
-				(
+				.ForMember(
+					dest => dest.BackgroundImage,
+					opt => opt.Ignore()
+				)
+				.ForMember(
 					dest => dest.Elements,
 					opt => opt.ResolveUsing(src => src.Elements.Select(el => ElementLayoutConverter.FromJson(el)))
 				);
 
 			CreateMap<Common.CardLayout, Json.CardLayout>()
-				.ForMember(dest => dest.Id, opt => opt.Ignore())
+				.ForMember(dest => dest.Id, opt => opt.Ignore())				
 				.ForMember(
-				dest => dest.Elements,
-				opt => opt.ResolveUsing(src => src.Elements.Select(el => new Json.ElementLayout
-				{
-					ElementType = el.GetType().Name,
-					JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(el)
-				})));
+					dest => dest.Elements,
+					opt => opt.ResolveUsing(src => src.Elements.Select(el => ElementLayoutConverter.ToJson(el)))
+				);
 
 			CreateMap<Json.CardAttribute, Common.CardAttribute>()
 				.ForMember

@@ -5,11 +5,14 @@ using GorgleDevs.Wpf.Mvvm;
 
 namespace Cogs.Designer
 {
-    public abstract class CardElement : ViewModel
-    {
-		private Guid _id = Guid.NewGuid();		
+	public abstract class CardElement : ViewModel
+	{
+		public CardElement()
+		{
+			Id = Guid.NewGuid();
+		}
 
-		public Guid Id => _id;
+		public Guid Id { get; set; }
 
 		public double Top
         {
@@ -65,7 +68,7 @@ namespace Cogs.Designer
 		{
 			var clone = MemberwiseClone() as CardElement;
 			if (cloneId == false)
-				clone._id = Guid.NewGuid();
+				clone.Id = Guid.NewGuid();
 
 			return clone;
 		}

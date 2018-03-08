@@ -28,8 +28,7 @@ namespace cgwo.ViewModels.Data
 			_actionManager = new ActionManager();
             LoadLayout();
 
-			_layoutDocument.Elements.CollectionChanged += (s, e) => RaisePropertyChanged(nameof(SelectedElement));
-			
+			_layoutDocument.Elements.CollectionChanged += (s, e) => RaisePropertyChanged(nameof(SelectedElement));			
         }
 
 		public LayoutDocument LayoutDocument => _layoutDocument;
@@ -96,7 +95,7 @@ namespace cgwo.ViewModels.Data
             var (result, path) = _dialogService.ChooseFile(String.Empty, "Images files|*.png;*.bmp;*.jpg;*.jpeg;*.gif");
             if(result == DialogResult.Accept)
             {
-                imageElement.ImageSource = Convert.ToBase64String(System.IO.File.ReadAllBytes(path));
+				imageElement.ImageData = System.IO.File.ReadAllBytes(path);
             }
         });
 
@@ -202,11 +201,11 @@ namespace cgwo.ViewModels.Data
         private void LoadLayout()
         {
             var layout = _cardGameDataStore.GetLayout(_cardTypeViewModel.Id);
-
+			
             if(layout != null)
             {
                 _layoutDocument.BackgroundColor = (Color)ColorConverter.ConvertFromString(layout.BackgroundColor);
-                _layoutDocument.BackgroundImage = Convert.FromBase64String(layout.BackgroundImage ?? String.Empty);
+				_layoutDocument.BackgroundImage = layout.BackgroundImage;
 				var elements = LayoutConverter.ToDesignerElements(layout.Elements);
 				foreach (var element in elements)
 				{
@@ -224,18 +223,18 @@ namespace cgwo.ViewModels.Data
 
         private void SaveLayout()
         {
-            var layout = new CardLayout
-            {
-                BackgroundColor = _layoutDocument.BackgroundColor.ToHex(),
-                BackgroundImage = Convert.ToBase64String(_layoutDocument.BackgroundImage ?? new byte[0])
+			var layout = new CardLayout
+			{
+				BackgroundColor = _layoutDocument.BackgroundColor.ToHex(),
+				BackgroundImage = _layoutDocument.BackgroundImage ?? new byte[0]
             };
 
             foreach(var imageElement in _layoutDocument.Elements.OfType<ImageElement>())
             {
-                if (imageElement.ImageSource == "Image")
-                    imageElement.LinkedAttribute = String.Empty;
-                else if (imageElement.ImageSource == "Card Attribute")
-                    imageElement.ImageData = String.Empty;
+				if (imageElement.ImageSource == "Image")
+					imageElement.LinkedAttribute = String.Empty;
+				else if (imageElement.ImageSource == "Card Attribute")
+					imageElement.ImageData = null;
             }
                 
 

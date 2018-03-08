@@ -9,10 +9,12 @@ namespace Cogs.Data.LiteDb
 	public class LiteDbCardGameDataStore : ICardGameDataStore
 	{
 		private readonly string _connectionString;
+		private readonly IImageStore _imageStore;
 
 		public LiteDbCardGameDataStore(string filePath)
 		{
-			_connectionString = filePath;			
+			_connectionString = filePath;
+			_imageStore = new ImageStore(_connectionString);
 		}
 
 		public void DeleteCard(Card card)
@@ -77,8 +79,16 @@ namespace Cogs.Data.LiteDb
 		{
 			using (var dataStore = new LiteDB.LiteDatabase(_connectionString))
 			{
-				var jsonLayout = dataStore.GetCollection<Json.CardLayout>().FindById(cardTypeId);
-				return jsonLayout != null ? Mapper.Map<CardLayout>(jsonLayout) : null;
+				var jsonLayout = dataStore.GetCollection<Json.CardLayout>().FindById(cardTypeId);				
+				var layout = jsonLayout != null ? Mapper.Map<CardLayout>(jsonLayout) : null;
+				if (layout != null)
+				{
+					layout.BackgroundImage = Images.Retrieve(ImageIdGenerator.LayoutBackground(cardTypeId));
+					foreach (var imageElement in layout.Elements.OfType<ImageElementLayout>())
+						imageElement.ImageData = Images.Retrieve(ImageIdGenerator.LayoutElement(imageElement.Id));
+				}
+
+				return layout;
 			}
 		}
 
@@ -136,6 +146,11 @@ namespace Cogs.Data.LiteDb
 				var cardLayoutStore = dataStore.GetCollection<Json.CardLayout>();
 				cardLayoutStore.Delete(jsonLayout.Id);
 				cardLayoutStore.Insert(jsonLayout);
+
+				if (layout.BackgroundImage != null)
+					Images.Save(ImageIdGenerator.LayoutBackground(cardTypeId), layout.BackgroundImage);
+				foreach (var imageElement in layout.Elements.OfType<ImageElementLayout>().Where(img => img.ImageData != null))
+					Images.Save(ImageIdGenerator.LayoutElement(imageElement.Id), imageElement.ImageData);
 			}
 		}
 
@@ -151,6 +166,8 @@ namespace Cogs.Data.LiteDb
 		{
 			SaveImage("CT_" + cardTypeId, imageData);
 		}
+
+		public IImageStore Images => _imageStore;		
 
 		private void SaveImage(string imageKey, byte[] imageData)
 		{

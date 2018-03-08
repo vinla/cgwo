@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 
 namespace Cogs.Common
 {
     public interface IImageStore
     {
-        IEnumerable<Guid> GetImageReferences();
-        byte[] GetImageData(Guid imageReference);
-        void SaveImageData(Guid imageReference, byte[] imageData);
-    }
+		string ImportFromFile(string path);
+		byte[] Retrieve(string imageKey);
+		void Save(string imageKey, byte[] data);
+		void Save(Common.ImageData imageData);
+	}
 }

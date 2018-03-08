@@ -80,8 +80,8 @@ namespace cgwo
 
         private static Brush GetBackground(CardLayout layout)
         {
-            if (String.IsNullOrEmpty(layout.BackgroundImage) == false)
-                return new ImageBrush((ImageSource)new ImageSourceConverter().ConvertFrom(Convert.FromBase64String(layout.BackgroundImage)));
+            if (layout.BackgroundImage != null && layout.BackgroundImage.Length > 0)
+                return new ImageBrush((ImageSource)new ImageSourceConverter().ConvertFrom(layout.BackgroundImage));
             else if(String.IsNullOrEmpty(layout.BackgroundColor) == false)
                 return new SolidColorBrush((Color)ColorConverter.ConvertFromString(layout.BackgroundColor));
 

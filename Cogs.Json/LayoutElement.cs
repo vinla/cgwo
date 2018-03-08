@@ -6,7 +6,7 @@ using System.Text;
 namespace Cogs.Json
 {
 	public class ElementLayout
-	{
+	{		
 		public string ElementType { get; set; }
 		public string JsonData { get; set; }
 	}

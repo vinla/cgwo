@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cgwo", "cgwo\cgwo.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogs.Common", "Cogs.Common\Cogs.Common.csproj", "{7D6D205F-3417-4131-9A34-3CF12A9DE18A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogs.Core", "Cogs.Core\Cogs.Core.csproj", "{8F3527FF-6660-49A0-99E6-7763BAC08736}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GorgleDevs.Wpf", "GorgleDevs.Wpf\GorgleDevs.Wpf.csproj", "{C36CD563-3A01-4979-8E57-2A90E4064E8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GorgleDevs.Wpf.Samples", "GorgleDevs.Wpf.Samples\GorgleDevs.Wpf.Samples.csproj", "{6671464F-6AF2-4A52-9BF7-B132A5CF5C97}"
@@ -31,10 +29,6 @@ Global
 		{7D6D205F-3417-4131-9A34-3CF12A9DE18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D6D205F-3417-4131-9A34-3CF12A9DE18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D6D205F-3417-4131-9A34-3CF12A9DE18A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F3527FF-6660-49A0-99E6-7763BAC08736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F3527FF-6660-49A0-99E6-7763BAC08736}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F3527FF-6660-49A0-99E6-7763BAC08736}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F3527FF-6660-49A0-99E6-7763BAC08736}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C36CD563-3A01-4979-8E57-2A90E4064E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C36CD563-3A01-4979-8E57-2A90E4064E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C36CD563-3A01-4979-8E57-2A90E4064E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
