@@ -58,5 +58,7 @@ namespace Cogs.Data.LiteDb
 		public static string LayoutBackground(Guid cardTypeId) => $"LBG_{cardTypeId}";
 
 		public static string LayoutElement(Guid elementId) => $"IMGEL_{elementId}";
+
+		public static string CardImageValue(Guid cardId, Guid attributeId) => $"CV_{cardId}_{attributeId}";
 	}
 }

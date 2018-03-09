@@ -60,11 +60,34 @@ namespace Cogs.Data.LiteDb
 
 		public IEnumerable<Card> GetCards()
 		{
+			var results = new List<Card>();
 			using (var dataStore = new LiteDB.LiteDatabase(_connectionString))
 			{
-				return dataStore.GetCollection<Json.Card>().FindAll().Select(Mapper.Map<Card>);
-				// TODO: Need to get the images for the cards (maybe we should be doing this separately and async)
+				var cards = dataStore.GetCollection<Json.Card>().FindAll();
+				var cardTypes = dataStore.GetCollection<Json.CardType>().FindAll().Select(Mapper.Map<CardType>);
+
+				foreach(var card in cards)
+				{
+					var cardType = cardTypes.Single(ct => ct.Id == card.CardTypeId);
+
+					var values = card.Values.Select(v => new CardAttributeValue(cardType.Attributes.Single(cta => cta.Id == v.CardAttributeId))
+					{
+						Value = v.AttributeType == Json.AttributeType.Image ? 
+							Convert.ToBase64String(Images.Retrieve(ImageIdGenerator.CardImageValue(card.Id, v.CardAttributeId))) :
+							v.Value
+					});
+
+					var result = new Card(cardType, values)
+					{
+						Id = card.Id,
+						Name = card.Name
+					};
+
+					results.Add(result);
+				}				
 			}
+
+			return results;
 		}
 
 		public IEnumerable<CardType> GetCardTypes()
@@ -105,6 +128,14 @@ namespace Cogs.Data.LiteDb
 			using (var dataStore = new LiteDB.LiteDatabase(_connectionString))
 			{
 				var jsonCard = Mapper.Map<Json.Card>(card);
+
+				foreach(var imageValue in jsonCard.Values.Where(v => v.AttributeType == Json.AttributeType.Image))
+				{
+					var id = ImageIdGenerator.CardImageValue(jsonCard.Id, imageValue.CardAttributeId);
+					Images.Save(id, Convert.FromBase64String(imageValue.Value));
+					imageValue.Value = id;
+				}
+
 				var cardStore = dataStore.GetCollection<Json.Card>();
 				cardStore.Delete(card.Id);
 				cardStore.Insert(jsonCard);								

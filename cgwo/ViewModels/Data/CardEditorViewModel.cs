@@ -99,7 +99,7 @@ namespace cgwo.ViewModels.Data
 			foreach (var image in _elements.OfType<ImageElement>().Where(el => el.ImageSource == "Card Attribute"))
 			{
 				var valueProvider = _cardValues.SingleOrDefault(cv => cv.Name == image.LinkedAttribute);
-				if (valueProvider != null)
+				if (valueProvider != null && !String.IsNullOrEmpty(valueProvider.Value))
 					image.ImageData = Convert.FromBase64String(valueProvider.Value);
 			}
 		}

@@ -7,5 +7,8 @@ namespace Cogs.Json
 {
 	public class CardValue
 	{
+		public Guid CardAttributeId { get; set; }
+		public string Value { get; set; }
+		public AttributeType AttributeType { get; set; }
 	}
 }
